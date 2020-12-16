@@ -72,7 +72,7 @@ class _InputPageState extends State<InputPage> {
                   Container(
                     height: 300,
                     decoration: BoxDecoration(
-                      color: DarkCharcoal,
+                      color: CharlestonGreen,
                     ),
                     child: GradesList(),
                   )

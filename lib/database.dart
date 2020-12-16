@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
-import 'module.dart';
+import 'classes/module.dart';
 
 class DBProvider {
   DBProvider._();
