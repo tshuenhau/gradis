@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class Module {
   Module(
-      {@required this.id,
+      {this.id,
       @required this.name,
       @required this.grade,
       @required this.credits});
 
-  int id;
+  int id = 0;
   final String name;
   final double grade;
   final int credits;
