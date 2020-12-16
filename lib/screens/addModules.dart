@@ -47,8 +47,8 @@ class AddTaskScreen extends StatelessWidget {
                 ),
               ),
               color: RaisinBlack,
-              onPressed: () {
-                DBProvider.db.insertModule(Module(id: 0, name: newModuleName, grade: 4.5, credits: 4));
+              onPressed: () async {
+                await DBProvider.db.insertModule(Module(id: 0, name: newModuleName, grade: 4.5, credits: 4));
                 Navigator.pop(context);
               },
             ),
