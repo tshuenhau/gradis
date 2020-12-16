@@ -57,7 +57,7 @@ class DBProvider {
           id: maps[i]['id'],
           name: maps[i]['name'],
           grade: maps[i]['grade'],
-          credits: maps[i]['credits']);
+          credits: maps[i]['credits'].toInt());
     });
   }
 
@@ -85,5 +85,10 @@ class DBProvider {
       // Pass the Module's id as a whereArg to prevent SQL injection.
       whereArgs: [id],
     );
+  }
+
+  deleteAll() async {
+    final db = await database;
+    await db.rawDelete("Delete from modules");
   }
 }

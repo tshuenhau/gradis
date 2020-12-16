@@ -14,26 +14,29 @@ class _GradesListState extends State<GradesList> {
   Future<List<Module>> modules = DBProvider.db.getAllModules();
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Module>>(builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        List<Module> mods = snapshot.data;
-        return ListView.builder(
-          shrinkWrap: true,
-          itemCount: mods.length,
-          itemBuilder: (context, index) {
-            return ModuleTile(
-              moduleName: mods[index].name,
-              credits: mods[index].credits,
-              grade: mods[index].grade,
+    return FutureBuilder<List<Module>>(
+        future: modules,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<Module> mods = snapshot.data;
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: mods.length,
+              itemBuilder: (context, index) {
+                return ModuleTile(
+                  moduleName: mods[index].name,
+                  credits: mods[index].credits,
+                  grade: mods[index].grade,
+                );
+              },
             );
-          },
-        );
-      } else {
-        return Container(
-            //TODO: TH you can design this container when there are no modules in DB if you want
+          } else {
+            return Container(
+              //TODO: TH you can design this container when there are no modules in DB if you want
+              child: Text('wat'),
             );
-      }
-    });
+          }
+        });
   }
 }
 //   @override
