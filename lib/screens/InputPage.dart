@@ -28,7 +28,7 @@ class _InputPageState extends State<InputPage> {
                     'Gradis',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 50.0,
+                      fontSize: 35.0,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
