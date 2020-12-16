@@ -7,7 +7,7 @@ class Module {
       @required this.grade,
       @required this.credits});
 
-  final int id;
+  int id;
   final String name;
   final double grade;
   final int credits;

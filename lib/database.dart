@@ -36,7 +36,8 @@ class DBProvider {
 
   Future<void> insertModule(Module module) async {
     final Database db = await database;
-
+    var table = await db.rawQuery("SELECT MAX(id) + 1 AS id FROM modules");
+    module.id = table.first["id"];
     await db.insert(
       'modules',
       module.toMap(),

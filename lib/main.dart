@@ -1,59 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'database.dart';
-import 'module.dart';
+//import 'package:provider/provider.dart';
+import 'package:gradis/screens/InputPage.dart';
+import 'package:gradis/constants.dart';
 
-void main() async {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  int id = 0;
-  String name;
-  double grade;
-  int credits;
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(
-          'Name',
-        ),
-        TextFormField(
-          onSaved: (text) {
-            name = text;
-          },
-        ),
-        Text(
-          'Grade',
-        ),
-        TextFormField(
-          onSaved: (text) {
-            grade = double.parse(text);
-          },
-        ),
-        Text(
-          'credits',
-        ),
-        TextFormField(
-          onSaved: (text) {
-            credits = int.parse(text);
-          },
-        ),
-        FlatButton(
-          child: Text('Insert Module'),
-          onPressed: () {
-            DBProvider.db.insertModule(
-              Module(id: id, name: name, grade: grade, credits: credits),
-            );
-          },
-        )
-      ],
+    return MaterialApp(
+      theme: ThemeData.dark(),
+      home: InputPage(),
     );
   }
 }
