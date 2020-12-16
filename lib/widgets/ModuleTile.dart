@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gradis/widgets/EditableTextField.dart';
 
 class ModuleTile extends StatefulWidget {
-  bool _iseditingText = false;
-  TextEditingController _editingController;
-  String initialText = "initial text";
   final String moduleName;
   final int credits;
   final double grade;
@@ -19,19 +16,7 @@ class ModuleTile extends StatefulWidget {
 }
 
 class _ModuleTileState extends State<ModuleTile> {
-  
-  @override
-  void initState(){
-    super.initState();
-    widget._editingController = TextEditingController(text: "init text");
-  
-  }
 
-  @override
-  void dispose(){
-    widget._editingController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
