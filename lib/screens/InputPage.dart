@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/widgets/GradesList.dart';
 import 'package:gradis/screens/addModules.dart';
+import 'package:gradis/classes/ModulesData.dart';
+import 'package:provider/provider.dart';
+import 'package:gradis/classes/module.dart';
 
 
 class InputPage extends StatefulWidget {
@@ -10,6 +13,11 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  @override
+  void initState(){
+    Provider.of<ModulesData>(context, listen: false).getModulesFromDB();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,12 +96,27 @@ class _InputPageState extends State<InputPage> {
                           ),
                         ),
                       ]),
-                  Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                      color: CharlestonGreen,
-                    ),
-                    child: GradesList(),
+                  FutureBuilder<List<Module>>(
+                      future: Provider.of<ModulesData>(context).dbModules,
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                          return Container(
+                            height: 300,
+                            decoration: BoxDecoration(
+                              color: CharlestonGreen,
+                            ),
+                            child: GradesList(),
+                          );
+                        }
+                        else 
+                        return Container(
+                            height: 300,
+                            decoration: BoxDecoration(
+                              color: CharlestonGreen,
+                            ),
+                            child: Text("Loading"),
+                          );
+                      }
                   )
                 ],
               ),

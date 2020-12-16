@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradis/classes/ModulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/database.dart';
 import 'package:gradis/classes/module.dart';
@@ -47,8 +48,10 @@ class AddTaskScreen extends StatelessWidget {
                 ),
               ),
               color: RaisinBlack,
-              onPressed: () async {
-                await DBProvider.db.insertModule(Module(id: 0, name: newModuleName, grade: 4.5, credits: 4));
+              onPressed: () {
+                final module = Module(id: 0, name: newModuleName, grade: 4.5, credits: 4);
+                Provider.of<ModulesData>(context, listen: false).addModule(module);
+                //await DBProvider.db.deleteAll();
                 Navigator.pop(context);
               },
             ),
