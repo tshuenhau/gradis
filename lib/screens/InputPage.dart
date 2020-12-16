@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/widgets/GradesList.dart';
+import 'package:gradis/screens/addModules.dart';
+
 
 class InputPage extends StatefulWidget {
   @override
@@ -12,6 +14,23 @@ class _InputPageState extends State<InputPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: CharlestonGreen,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: LightSilver,
+          child: 
+            Icon(Icons.add),
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => SingleChildScrollView(
+                      child:Container(
+                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: AddTaskScreen(),
+                      )
+                  )
+              );
+            }
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

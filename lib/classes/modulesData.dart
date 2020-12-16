@@ -8,4 +8,7 @@ class ModulesData extends ChangeNotifier{
     Module(id: 0, name: "CS1231", grade: 4.5, credits: 4),
     Module(id: 0, name: "IS1103", grade: 1.5, credits: 4),
   ];
+  void updateTask( ){
+
+  }
 }
