@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 
 
-class EditableTextField extends StatefulWidget {
+class EditableTextField extends StatefulWidget { // constructor takes in the text, the module, and its type: Module/Credits/Grade
   final String initialText;
   final Module module;
   final String type;
@@ -45,13 +45,15 @@ class _EditableTextFieldState extends State<EditableTextField> {
               text = newValue;
               _isEditingText = false;
             });
+
+            //the widget.module.XXX is just the original module data
               final String name = widget.type == "name" ? text: widget.module.name;
               final int credits = widget.type == "credits" ? int.parse(text) : widget.module.credits;
               print(credits);
               final double grade = widget.type == "grade" ? double.parse(text) : widget.module.grade;
               final Module newModule= Module(id: widget.module.id, name: name, credits: credits, grade: grade);
               Provider.of<ModulesData>(context, listen: false).updateModule(newModule);
-              //TODO: bruh here is where i do the updateModule. i think it work.
+              //TODO: bruh here is where i do the updateModule. p janky but it work.
           },
           autofocus: true,
           controller: _editingController,
