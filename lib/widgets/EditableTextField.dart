@@ -15,26 +15,28 @@ class _EditableTextFieldState extends State<EditableTextField> {
   String text;
 
   @override
-  void initState(){
+  void initState() {
     text = widget.initialText;
     super.initState();
     _editingController = TextEditingController(text: widget.initialText);
   }
+
   @override
-  void dispose(){
+  void dispose() {
     _editingController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     if (_isEditingText)
       return Container(
         width: 60,
         child: TextField(
-          onSubmitted: (newValue){
+          onSubmitted: (newValue) {
             setState(() {
               text = newValue;
-              _isEditingText =false;
+              _isEditingText = false;
             });
           },
           autofocus: true,
@@ -42,18 +44,17 @@ class _EditableTextFieldState extends State<EditableTextField> {
         ),
       );
     return InkWell(
-      onTap: () {
-        setState(() {
-          _isEditingText = true;
-        });
-      },
-      child: Text(
-        text,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 18.0,
-        ),
-      )
-    );
+        onTap: () {
+          setState(() {
+            _isEditingText = true;
+          });
+        },
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
+        ));
   }
 }

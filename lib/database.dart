@@ -35,6 +35,7 @@ class DBProvider {
   }
 
   Future<void> insertModule(Module module) async {
+    //insets new module into DB
     final Database db = await database;
     var table = await db.rawQuery("SELECT MAX(id) + 1 AS id FROM modules");
     module.id = table.first["id"];
@@ -45,8 +46,8 @@ class DBProvider {
     );
   }
 
-// A method that retrieves all the modules from the modules table.
   Future<List<Module>> getAllModules() async {
+    // used to get all Modules from SQLite DB
     final Database db = await database;
 
     final List<Map<String, dynamic>> maps = await db.query('modules');
@@ -61,7 +62,7 @@ class DBProvider {
   }
 
   Future<void> updateModule(Module module) async {
-    // Get a reference to the database.
+    // takes a new module and replaces old module by matching their ids
     final db = await database;
 
     // Update the given Module.
@@ -75,7 +76,7 @@ class DBProvider {
   }
 
   Future<void> deleteModule(int id) async {
-    // Get a reference to the database.
+    // deletes module by matching the id
     final db = await database;
 
     await db.delete(
