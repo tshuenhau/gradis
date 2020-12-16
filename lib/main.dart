@@ -12,9 +12,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         create: (context) => ModulesData(),
-        child: MaterialApp(
-          theme: ThemeData.dark(),
-          home: InputPage(),
+        child: GestureDetector(
+          onTap: (){
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+              FocusManager.instance.primaryFocus.unfocus();
+            }
+          },
+            child: MaterialApp(
+            theme: ThemeData.dark(),
+            home: InputPage(),
+          ),
         ),
     );
   }

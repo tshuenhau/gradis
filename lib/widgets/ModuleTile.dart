@@ -24,9 +24,11 @@ class _ModuleTileState extends State<ModuleTile> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,  
             children: [
               //TODO: these stuff be long maybe find a way to shorten it so it dont look so cancer
-              EditableTextField(initialText: modulesData.modules[widget.index].name, module:modulesData.modules[widget.index], type: "name"),
-              EditableTextField(initialText: modulesData.modules[widget.index].credits.toString(), module:modulesData.modules[widget.index], type: "credits"),
-              EditableTextField(initialText: modulesData.modules[widget.index].grade.toString(), module: modulesData.modules[widget.index], type: "grade"),
+              Expanded(
+                child: EditableTextField(initialText: modulesData.modules[widget.index].name, module:modulesData.modules[widget.index], type: "name")
+                ),
+              Expanded(child: EditableTextField(initialText: modulesData.modules[widget.index].credits.toString(), module:modulesData.modules[widget.index], type: "credits")),
+              Expanded(child: EditableTextField(initialText: modulesData.modules[widget.index].grade.toString(), module: modulesData.modules[widget.index], type: "grade")),
             ],
             );
           } 

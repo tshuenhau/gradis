@@ -39,6 +39,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
       return Container(
         width: 60,
         child: TextField(
+          textAlign: TextAlign.center,
           keyboardType: widget.type == "name"? TextInputType.text: TextInputType.number,
           onSubmitted: (newValue) {
             setState(() {
@@ -67,6 +68,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
         },
         child: Text(
           text,
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
             fontSize: 18.0,
