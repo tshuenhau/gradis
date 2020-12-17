@@ -7,7 +7,8 @@ class ModulesData extends ChangeNotifier {
   List<Module> modules;
   Future<List<Module>> dbModules;
   Calculator calculator = Calculator(goalCAP: 4);
-  double currentCAP;
+  double currentCAP = 3;
+  bool incCap;
   //access database and get a list of modules
 
   void getModulesFromDB() async {
@@ -36,8 +37,13 @@ class ModulesData extends ChangeNotifier {
   //   currentCAP = calculator.cap(this.modules);
   // } //TODO: Currently have error because Calculator class is using TestModule class
 
-  // bool incCAP() {
-  //  // checks if current CAP is less than goal CAP
-  //   return calculator.increaseCAP(currentCAP);
-  // }
+  bool incCAP() {
+    // checks if current CAP is less than goal CAP
+    return calculator.increaseCAP(currentCAP);
+  }
+
+  void updateIncCap() {
+    incCap = incCAP();
+    notifyListeners();
+  }
 }

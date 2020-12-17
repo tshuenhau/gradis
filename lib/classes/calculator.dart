@@ -30,7 +30,7 @@ class TestModule {
       @required this.name,
       @required this.grade,
       @required this.credits,
-      this.done});
+      @required this.done});
 
   int id = 0;
   final String name;
@@ -43,7 +43,8 @@ class TestModule {
       'id': this.id,
       'name': this.name,
       'grade': this.grade,
-      'credits': this.credits
+      'credits': this.credits,
+      'done': this.done,
     };
   }
 
@@ -54,9 +55,9 @@ class TestModule {
 }
 
 List<TestModule> modules = [
-  TestModule(name: 'CS1231', grade: 4, credits: 4),
-  TestModule(name: 'CS1101S', grade: 4, credits: 4),
-  TestModule(name: 'IS1103', grade: 3, credits: 4),
-  TestModule(name: 'MA1101R', grade: 4, credits: 4),
-  TestModule(name: 'ST1131', grade: 4, credits: 4)
+  TestModule(name: 'CS1231', grade: 4, credits: 4, done: true),
+  TestModule(name: 'CS1101S', grade: 4, credits: 4, done: true),
+  TestModule(name: 'IS1103', grade: 3, credits: 4, done: true),
+  TestModule(name: 'MA1101R', grade: 4, credits: 4, done: true),
+  TestModule(name: 'ST1131', grade: 4, credits: 4, done: true),
 ]; // create dummy data to test
