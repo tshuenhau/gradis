@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+class Calculator{
+  
+}
+
 class Module {
   Module(
       {this.id,
@@ -27,4 +31,6 @@ class Module {
   String toString() {
     return 'Module{id: $id, name: $name, grade: $grade, credits: $credits}';
   }
+
+  List<Module> modules; // create dummy data to test
 }
