@@ -79,7 +79,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
           });
         },
         child: Text(
-          text,
+          text != null ? text : "",
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,
