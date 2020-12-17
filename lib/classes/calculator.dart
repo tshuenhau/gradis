@@ -20,7 +20,7 @@ class Calculator {
   }
 
   bool increaseCAP(double cap) {
-    return goalCAP < cap;
+    return goalCAP > cap;
   }
 }
 

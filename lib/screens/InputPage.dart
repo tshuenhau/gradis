@@ -118,11 +118,15 @@ class _InputPageState extends State<InputPage> {
                   FloatingActionButton(onPressed: () {
                     Provider.of<ModulesData>(context, listen: false)
                         .currentCAP -= 1;
-                    print(Provider.of<ModulesData>(context, listen: false)
-                        .currentCAP);
+                    print("current CAP: " +
+                        Provider.of<ModulesData>(context, listen: false)
+                            .currentCAP
+                            .toString());
                     Provider.of<ModulesData>(context, listen: false).incCAP();
-                    print(Provider.of<ModulesData>(context, listen: false)
-                        .incCap);
+                    print("current CAP greater than goal CAP: " +
+                        Provider.of<ModulesData>(context, listen: false)
+                            .incCap
+                            .toString());
                   })
                 ],
               ),

@@ -6,9 +6,11 @@ import 'calculator.dart';
 class ModulesData extends ChangeNotifier {
   List<Module> modules;
   Future<List<Module>> dbModules;
-  Calculator calculator = Calculator(goalCAP: 4.0);
-  double currentCAP = 3;
-  bool incCap = true;
+  Calculator calculator = Calculator(
+      goalCAP:
+          4.0); //TODO: dummy values, need to find way to integrate it into UI
+  double currentCAP = 7; //TODO: dummy data
+  bool incCap = false; //TODO: dummy data
   //access database and get a list of modules
 
   void getModulesFromDB() async {
@@ -39,7 +41,7 @@ class ModulesData extends ChangeNotifier {
 
   void incCAP() {
     // checks if current CAP is less than goal CAP
-    print(calculator.goalCAP);
+    print("goal CAP: " + calculator.goalCAP.toString());
     incCap = this.calculator.increaseCAP(currentCAP);
     notifyListeners();
   }
