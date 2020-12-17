@@ -10,11 +10,14 @@ class GradesList extends StatefulWidget {
 }
 
 class _GradesListState extends State<GradesList> {
+
+  //ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
     return Consumer<ModulesData>(
       builder: (context, modulesData, child) {
         return ListView.builder(
+          //controller: scrollController,
           shrinkWrap: true,
           itemCount: modulesData.modules.length,
           itemBuilder: (context, index) {

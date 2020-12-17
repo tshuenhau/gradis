@@ -5,7 +5,7 @@ import 'package:gradis/database.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/constants.dart';
 
-class AddTaskScreen extends StatelessWidget {
+class AddModulesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String newModuleName;

@@ -6,15 +6,12 @@ class Calculator {
   Calculator({@required this.goalCAP});
 
   double cap(List<Module> mods) {
-    double totalGrade;
-    int completedModsCounter;
+    double totalGrade = 0;
+    int completedModsCounter= 0;
     for (Module mod in mods) {
-      if (mod.done) {
+      
         totalGrade += mod.grade;
         completedModsCounter += 1;
-      } else {
-        continue;
-      }
     }
     return totalGrade / completedModsCounter;
   }

@@ -28,15 +28,17 @@ class _InputPageState extends State<InputPage> {
             backgroundColor: LightSilver,
             child: Icon(Icons.add),
             onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) => SingleChildScrollView(
-                          child: Container(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: AddTaskScreen(),
-                      )));
+              final module =Module(id: 0, name: "newmodule", grade: 0, credits: 0);
+              Provider.of<ModulesData>(context, listen: false).addModule(module);
+              // showModalBottomSheet(
+              //     context: context,
+              //     isScrollControlled: true,
+              //     builder: (context) => SingleChildScrollView(
+              //             child: Container(
+              //           padding: EdgeInsets.only(
+              //               bottom: MediaQuery.of(context).viewInsets.bottom),
+              //           child: AddModulesScreen(),
+              //         )));
             }),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,22 +117,50 @@ class _InputPageState extends State<InputPage> {
                             child: Text("Loading"),
                           );
                       }),
-                  FloatingActionButton(onPressed: () {
-                    Provider.of<ModulesData>(context, listen: false)
-                        .currentCAP -= 1;
-                    print("current CAP: " +
-                        Provider.of<ModulesData>(context, listen: false)
-                            .currentCAP
-                            .toString());
-                    Provider.of<ModulesData>(context, listen: false).incCAP();
-                    print("current CAP greater than goal CAP: " +
-                        Provider.of<ModulesData>(context, listen: false)
-                            .incCap
-                            .toString());
-                  })
+                  // FloatingActionButton(onPressed: () {
+                  //   Provider.of<ModulesData>(context, listen: false)
+                  //       .currentCAP -= 1;
+                  //   print("current CAP: " +
+                  //       Provider.of<ModulesData>(context, listen: false)
+                  //           .currentCAP
+                  //           .toString());
+                  //   Provider.of<ModulesData>(context, listen: false).incCAP();
+                  //   print("current CAP greater than goal CAP: " +
+                  //       Provider.of<ModulesData>(context, listen: false)
+                  //           .incCap
+                  //           .toString());
+                  // })
                 ],
               ),
-            )
+            ),
+            FutureBuilder<List<Module>>(
+              future: Provider.of<ModulesData>(context).dbModules,
+                      builder: (context, snapshot){
+                        if (snapshot.hasData){
+                          return Consumer<ModulesData>(builder: (context, modulesData, child){
+                            Provider.of<ModulesData>(context, listen: false).calculateCurrentCAP();
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "current CAP: " + Provider.of<ModulesData>(context, listen: false).calculateCurrentCAP().toString(),
+                                  textAlign: TextAlign.center, 
+                                  ),
+                                  Text(
+                                  "goal CAP: " + Provider.of<ModulesData>(context, listen: false).goal.toString(),
+                                  textAlign: TextAlign.center, 
+                                  ),
+                              ],
+                            );
+                          }
+                                                      
+                          );
+                        }
+                        else{
+                          return Text("");
+                        }
+                      }
+            ),
           ],
         ));
   }

@@ -54,10 +54,10 @@ class _ModuleTileState extends State<ModuleTile> {
         );
       }),
       trailing: Icon(
-          Provider.of<ModulesData>(context, listen: false).incCap
+          Provider.of<ModulesData>(context, listen: false).incCAP()
               ? Icons.arrow_drop_up
               : Icons.arrow_drop_down,
-          color: Provider.of<ModulesData>(context, listen: false).incCap
+          color: Provider.of<ModulesData>(context, listen: false).incCAP()
               ? Colors.red
               : Colors.green),
       contentPadding: EdgeInsets.symmetric(horizontal: 20),

@@ -6,16 +6,20 @@ import 'calculator.dart';
 class ModulesData extends ChangeNotifier {
   List<Module> modules;
   Future<List<Module>> dbModules;
-  Calculator calculator = Calculator(
-      goalCAP:
-          4.0); //TODO: dummy values, need to find way to integrate it into UI
-  double currentCAP = 7; //TODO: dummy data
-  bool incCap = false; //TODO: dummy data
+  //double currentCAP = 7; //TODO: dummy data
+  //bool incCap = false; //TODO: dummy data
+  double goal = 4.0; // this needs to be stored in DB somewhere
+  
+  static Calculator calculator = Calculator(goalCAP:0);
+
   //access database and get a list of modules
 
   void getModulesFromDB() async {
     dbModules = DBProvider.db.getAllModules();
     modules = await dbModules;
+    dbModules.then((value) => 
+      calculator = Calculator(goalCAP:goal)
+    );    
   }
 
   void addModule(Module module) async {
@@ -25,25 +29,35 @@ class ModulesData extends ChangeNotifier {
   }
 
   void updateModule(Module newModule) async {
-    for (Module module in modules) {
-      if (module.id == newModule.id) {
+    for (int i = 0 ; i < modules.length; i++) {
+      if (modules[i].id == newModule.id) {
         // can use id for this maybe later
-        module = newModule;
+        modules[i] = newModule;
       }
     }
     await DBProvider.db.updateModule(newModule);
-    incCAP();
     notifyListeners();
   }
 
   // void calculateCAP() {
   //   currentCAP = calculator.cap(this.modules);
-  // } //TODO: Currently have error because Calculator class is using TestModule class
+  // } 
 
-  void incCAP() {
+  bool incCAP() {
     // checks if current CAP is less than goal CAP
-    print("goal CAP: " + calculator.goalCAP.toString());
-    incCap = this.calculator.increaseCAP(currentCAP);
-    notifyListeners();
+    //print("goal CAP: " + calculator.goalCAP.toString());
+    return calculator.increaseCAP(calculateCurrentCAP());
+  }
+
+  double calculateCurrentCAP() {
+    double totalGrade = 0;
+    int completedModsCounter = 0;
+    for (Module mod in modules) {
+        totalGrade += mod.grade;
+        completedModsCounter += 1;
+    }
+    //print("totalGrade: " + totalGrade.toString());
+
+    return totalGrade / completedModsCounter;
   }
 }
