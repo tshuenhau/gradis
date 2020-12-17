@@ -6,7 +6,6 @@ import 'package:gradis/classes/ModulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 
-
 class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
@@ -14,31 +13,29 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   @override
-  void initState(){
+  void initState() {
     Provider.of<ModulesData>(context, listen: false).getModulesFromDB();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: CharlestonGreen,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: LightSilver,
-          child: 
-            Icon(Icons.add),
+            backgroundColor: LightSilver,
+            child: Icon(Icons.add),
             onPressed: () {
               showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   builder: (context) => SingleChildScrollView(
-                      child:Container(
-                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: Container(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: AddTaskScreen(),
-                      )
-                  )
-              );
-            }
-        ),
+                      )));
+            }),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -98,8 +95,8 @@ class _InputPageState extends State<InputPage> {
                       ]),
                   FutureBuilder<List<Module>>(
                       future: Provider.of<ModulesData>(context).dbModules,
-                      builder: (context, snapshot){
-                        if(snapshot.hasData){
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
                           return Container(
                             height: 300,
                             decoration: BoxDecoration(
@@ -107,17 +104,15 @@ class _InputPageState extends State<InputPage> {
                             ),
                             child: GradesList(),
                           );
-                        }
-                        else 
-                        return Container(
+                        } else
+                          return Container(
                             height: 300,
                             decoration: BoxDecoration(
                               color: CharlestonGreen,
                             ),
                             child: Text("Loading"),
                           );
-                      }
-                  )
+                      })
                 ],
               ),
             )

@@ -5,8 +5,6 @@ import 'package:gradis/database.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/constants.dart';
 
-
-
 class AddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,7 +16,7 @@ class AddTaskScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: DarkCharcoal,
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
+            topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
           ),
         ),
@@ -49,8 +47,10 @@ class AddTaskScreen extends StatelessWidget {
               ),
               color: RaisinBlack,
               onPressed: () {
-                final module = Module(id: 0, name: newModuleName, grade: 4.5, credits: 4);
-                Provider.of<ModulesData>(context, listen: false).addModule(module);
+                final module =
+                    Module(id: 0, name: newModuleName, grade: 4.5, credits: 4);
+                Provider.of<ModulesData>(context, listen: false)
+                    .addModule(module);
                 //await DBProvider.db.deleteAll();
                 Navigator.pop(context);
               },
