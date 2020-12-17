@@ -22,11 +22,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
 
   @override
   void initState() {
-    if (text == null) {
-      text = "";
-    } else {
-      text = widget.initialText;
-    }
+    text = widget.initialText;
 
     super.initState();
     _editingController = TextEditingController(text: widget.initialText);
