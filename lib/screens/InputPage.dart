@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/widgets/GradesList.dart';
-import 'package:gradis/screens/addModules.dart';
+import 'package:gradis/screens/AddModules.dart';
 import 'package:gradis/classes/ModulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
+
+import '../database.dart';
 
 class InputPage extends StatefulWidget {
   @override

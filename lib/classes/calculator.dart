@@ -1,11 +1,31 @@
 import 'package:flutter/material.dart';
+import 'module.dart';
 
-class Calculator{
-  
+class Calculator {
+  double goalCAP;
+  Calculator({@required goalCAP});
+
+  double cap(List<TestModule> mods) {
+    double totalGrade;
+    int completedModsCounter;
+    for (TestModule mod in mods) {
+      if (mod.done) {
+        totalGrade += mod.grade;
+        completedModsCounter += 1;
+      } else {
+        continue;
+      }
+    }
+    return totalGrade / completedModsCounter;
+  }
+
+  bool increaseCAP(double cap) {
+    return goalCAP < cap;
+  }
 }
 
-class Module {
-  Module(
+class TestModule {
+  TestModule(
       {this.id,
       @required this.name,
       @required this.grade,
@@ -31,6 +51,12 @@ class Module {
   String toString() {
     return 'Module{id: $id, name: $name, grade: $grade, credits: $credits}';
   }
-
-  List<Module> modules; // create dummy data to test
 }
+
+List<TestModule> modules = [
+  TestModule(name: 'CS1231', grade: 4, credits: 4),
+  TestModule(name: 'CS1101S', grade: 4, credits: 4),
+  TestModule(name: 'IS1103', grade: 3, credits: 4),
+  TestModule(name: 'MA1101R', grade: 4, credits: 4),
+  TestModule(name: 'ST1131', grade: 4, credits: 4)
+]; // create dummy data to test

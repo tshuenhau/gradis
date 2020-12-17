@@ -4,20 +4,16 @@ import 'package:gradis/classes/ModulesData.dart';
 import 'package:gradis/widgets/ModuleTile.dart';
 import 'package:provider/provider.dart';
 
-
-
-
 class GradesList extends StatefulWidget {
   @override
   _GradesListState createState() => _GradesListState();
 }
 
 class _GradesListState extends State<GradesList> {
-  
   @override
   Widget build(BuildContext context) {
     return Consumer<ModulesData>(
-      builder: (context, modulesData,child){
+      builder: (context, modulesData, child) {
         return ListView.builder(
           shrinkWrap: true,
           itemCount: modulesData.modules.length,
@@ -28,38 +24,33 @@ class _GradesListState extends State<GradesList> {
       },
     );
   }
-  
 }
 
-
-
-
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return FutureBuilder<List<Module>>(
-  //       future: modules,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           List<Module> mods = snapshot.data;
-  //           return ListView.builder(
-  //             shrinkWrap: true,
-  //             itemCount: mods.length,
-  //             itemBuilder: (context, index) {
-  //               return ModuleTile(
-  //                 moduleName: mods[index].name,
-  //                 credits: mods[index].credits,
-  //                 grade: mods[index].grade,
-  //               );
-  //             },
-  //           );
-  //         } 
-  //         else {
-  //           return Container(
-  //             width: 10,
-  //             //TODO: TH you can design this container when there are no modules in DB if you want
-  //             child: Text('wat'),
-  //           );
-  //         }
-  //       });
-  // }
+// @override
+// Widget build(BuildContext context) {
+//   return FutureBuilder<List<Module>>(
+//       future: modules,
+//       builder: (context, snapshot) {
+//         if (snapshot.hasData) {
+//           List<Module> mods = snapshot.data;
+//           return ListView.builder(
+//             shrinkWrap: true,
+//             itemCount: mods.length,
+//             itemBuilder: (context, index) {
+//               return ModuleTile(
+//                 moduleName: mods[index].name,
+//                 credits: mods[index].credits,
+//                 grade: mods[index].grade,
+//               );
+//             },
+//           );
+//         }
+//         else {
+//           return Container(
+//             width: 10,
+//             //TODO: TH you can design this container when there are no modules in DB if you want
+//             child: Text('wat'),
+//           );
+//         }
+//       });
+// }
