@@ -48,7 +48,13 @@ class _ModuleTileState extends State<ModuleTile> {
                         modulesData.modules[widget.index].grade.toString(),
                     module: modulesData.modules[widget.index],
                     type: "grade"),
-                Icon(
+                
+              ],
+            ))
+          ],
+        );
+      }),
+      trailing: Icon(
                     Provider.of<ModulesData>(context, listen: false).incCap
                         ? Icons.arrow_drop_up
                         : Icons.arrow_drop_down,
@@ -56,14 +62,6 @@ class _ModuleTileState extends State<ModuleTile> {
                         Provider.of<ModulesData>(context, listen: false).incCap
                             ? Colors.red
                             : Colors.green),
-              ],
-            ))
-          ],
-        );
-      }),
-      // trailing: Text(
-      //   grade.toString(),
-      // ),
       contentPadding: EdgeInsets.symmetric(horizontal: 20),
 
       isThreeLine: false,

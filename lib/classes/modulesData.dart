@@ -32,6 +32,7 @@ class ModulesData extends ChangeNotifier {
       }
     }
     await DBProvider.db.updateModule(newModule);
+    incCAP();
     notifyListeners();
   }
 
