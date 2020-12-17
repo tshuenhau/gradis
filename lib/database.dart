@@ -27,7 +27,7 @@ class DBProvider {
       p.join(await getDatabasesPath(), 'modules_database.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL)",
+          "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done BOOL)",
         );
       },
       version: 1,
@@ -57,7 +57,8 @@ class DBProvider {
           id: maps[i]['id'],
           name: maps[i]['name'],
           grade: maps[i]['grade'],
-          credits: maps[i]['credits'].toInt());
+          credits: maps[i]['credits'].toInt(),
+          done: maps[i]['done']);
     });
   }
 
