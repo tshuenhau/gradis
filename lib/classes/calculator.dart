@@ -3,7 +3,7 @@ import 'module.dart';
 
 class Calculator {
   double goalCAP;
-  Calculator({@required goalCAP});
+  Calculator({@required this.goalCAP});
 
   double cap(List<TestModule> mods) {
     double totalGrade;

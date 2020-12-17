@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gradis/classes/ModulesData.dart';
+import 'package:gradis/classes/modulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 

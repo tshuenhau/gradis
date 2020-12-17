@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gradis/classes/calculator.dart';
 import 'package:gradis/widgets/EditableTextField.dart';
-import 'package:gradis/classes/ModulesData.dart';
+import 'package:gradis/classes/modulesData.dart';
 import 'package:provider/provider.dart';
+
+import '../classes/modulesData.dart';
+import '../classes/modulesData.dart';
+import '../classes/modulesData.dart';
+import '../classes/modulesData.dart';
 
 class ModuleTile extends StatefulWidget {
   final int index;
@@ -40,6 +45,13 @@ class _ModuleTileState extends State<ModuleTile> {
                         modulesData.modules[widget.index].grade.toString(),
                     module: modulesData.modules[widget.index],
                     type: "grade")),
+            Icon(
+                Provider.of<ModulesData>(context, listen: false).incCap
+                    ? Icons.arrow_drop_up
+                    : Icons.arrow_drop_down,
+                color: Provider.of<ModulesData>(context, listen: false).incCap
+                    ? Colors.red
+                    : Colors.green),
           ],
         );
       }),

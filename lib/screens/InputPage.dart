@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/widgets/GradesList.dart';
 import 'package:gradis/screens/AddModules.dart';
-import 'package:gradis/classes/ModulesData.dart';
+import 'package:gradis/classes/modulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 
@@ -114,7 +114,16 @@ class _InputPageState extends State<InputPage> {
                             ),
                             child: Text("Loading"),
                           );
-                      })
+                      }),
+                  FloatingActionButton(onPressed: () {
+                    Provider.of<ModulesData>(context, listen: false)
+                        .currentCAP -= 1;
+                    print(Provider.of<ModulesData>(context, listen: false)
+                        .currentCAP);
+                    Provider.of<ModulesData>(context, listen: false).incCAP();
+                    print(Provider.of<ModulesData>(context, listen: false)
+                        .incCap);
+                  })
                 ],
               ),
             )

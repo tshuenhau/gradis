@@ -6,9 +6,9 @@ import 'calculator.dart';
 class ModulesData extends ChangeNotifier {
   List<Module> modules;
   Future<List<Module>> dbModules;
-  Calculator calculator = Calculator(goalCAP: 4);
+  Calculator calculator = Calculator(goalCAP: 4.0);
   double currentCAP = 3;
-  bool incCap;
+  bool incCap = true;
   //access database and get a list of modules
 
   void getModulesFromDB() async {
@@ -37,13 +37,10 @@ class ModulesData extends ChangeNotifier {
   //   currentCAP = calculator.cap(this.modules);
   // } //TODO: Currently have error because Calculator class is using TestModule class
 
-  bool incCAP() {
+  void incCAP() {
     // checks if current CAP is less than goal CAP
-    return calculator.increaseCAP(currentCAP);
-  }
-
-  void updateIncCap() {
-    incCap = incCAP();
+    print(calculator.goalCAP);
+    incCap = this.calculator.increaseCAP(currentCAP);
     notifyListeners();
   }
 }
