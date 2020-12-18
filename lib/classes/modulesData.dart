@@ -53,8 +53,11 @@ class ModulesData extends ChangeNotifier {
     double totalGrade = 0;
     int completedModsCounter = 0;
     for (Module mod in modules) {
+      if(!mod.done){ // actually i dun think we even need to check if its done or not and we can just calculate for all past and future mods vs the goal
         totalGrade += mod.grade;
         completedModsCounter += 1;
+      }
+        
     }
     //print("totalGrade: " + totalGrade.toString());
 

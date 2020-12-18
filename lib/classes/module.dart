@@ -6,13 +6,15 @@ class Module {
       @required this.name,
       @required this.grade,
       @required this.credits,
-      this.done});
+      this.done}){
+        done = false;
+      }
 
   int id = 0;
   final String name;
   final double grade;
   final int credits;
-  bool done = false;
+  bool done;
 
   Map<String, dynamic> toMap() {
     return {
