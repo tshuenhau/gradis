@@ -102,7 +102,6 @@ class _InputPageState extends State<InputPage> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Container(
-                            height: 300,
                             decoration: BoxDecoration(
                               color: CharlestonGreen,
                             ),
@@ -142,21 +141,33 @@ class _InputPageState extends State<InputPage> {
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text(
-                                  "total CAP: " + Provider.of<ModulesData>(context, listen: false).calculateTotalCAP().toString(),
-                                  textAlign: TextAlign.center, 
+                                Expanded(
+                                                                  child: Text(
+                                    "total CAP: " + Provider.of<ModulesData>(context, listen: false).calculateTotalCAP().toStringAsFixed(2),
+                                    textAlign: TextAlign.center, 
+                                    overflow: TextOverflow.clip,
+                                    ),
+                                ),
+                                  Expanded(
+                                                                      child: Text(
+                                    "current CAP: " + Provider.of<ModulesData>(context, listen: false).calculateCurrentCAP().toStringAsFixed(2),
+                                    textAlign: TextAlign.center, 
+                                    overflow: TextOverflow.clip,
+                                    ),
                                   ),
-                                  Text(
-                                  "current CAP: " + Provider.of<ModulesData>(context, listen: false).calculateCurrentCAP().toString(),
-                                  textAlign: TextAlign.center, 
+                                  Expanded(
+                                                                      child: Text(
+                                    "future CAP: " + Provider.of<ModulesData>(context, listen: false).calculateFutureCAP().toStringAsFixed(2),
+                                    textAlign: TextAlign.center, 
+                                    overflow: TextOverflow.clip,
+                                    ),
                                   ),
-                                  Text(
-                                  "future CAP: " + Provider.of<ModulesData>(context, listen: false).calculateFutureCAP().toString(),
-                                  textAlign: TextAlign.center, 
-                                  ),
-                                  Text(
-                                  "goal CAP: " + Provider.of<ModulesData>(context, listen: false).goal.toString(),
-                                  textAlign: TextAlign.center, 
+                                  Expanded(
+                                                                      child: Text(
+                                    "goal CAP: " + Provider.of<ModulesData>(context, listen: false).goal.toStringAsFixed(2),
+                                    textAlign: TextAlign.center, 
+                                    overflow: TextOverflow.clip,
+                                    ),
                                   ),
                                   
                               ],
