@@ -6,9 +6,7 @@ class Module {
       @required this.name,
       @required this.grade,
       @required this.credits,
-      this.done}) {
-    done = 0;
-  }
+      this.done = 0});
 
   int id = 0;
   final String name;
@@ -28,6 +26,15 @@ class Module {
 
   bool isDone() {
     return this.done == 1;
+  }
+
+  Module toggleDone(){
+    if(this.done == 1){
+      return new Module(id: this.id, name:this.name, grade:this.grade, credits: this.credits, done: 0);
+    }
+    else{
+      return new Module(id: this.id, name:this.name, grade:this.grade, credits: this.credits, done: 1);
+    }
   }
 
   @override

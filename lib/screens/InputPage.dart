@@ -143,7 +143,7 @@ class _InputPageState extends State<InputPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text(
-                                  "current CAP: " + Provider.of<ModulesData>(context, listen: false).calculateCurrentCAP().toString(),
+                                  "total CAP: " + Provider.of<ModulesData>(context, listen: false).calculateTotalCAP().toString(),
                                   textAlign: TextAlign.center, 
                                   ),
                                   Text(

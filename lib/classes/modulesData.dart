@@ -44,12 +44,32 @@ class ModulesData extends ChangeNotifier {
   int incCAP() {
     // checks if current CAP is less than goal CAP
     //print("goal CAP: " + calculator.goalCAP.toString());
-    print(calculator.increaseCAP(calculator.totalCAP(modules)));
+    //print(calculator.increaseCAP(calculator.totalCAP(modules)));
     return calculator.increaseCAP(calculator.totalCAP(modules));
   }
 
   double calculateCurrentCAP() {
-    print("current CAP: " + calculator.currentCAP(modules).toString());
+    //print("current CAP: " + calculator.currentCAP(modules).toString());
     return calculator.currentCAP(modules);
+  }
+  double calculateTotalCAP() {
+    //print("current CAP: " + calculator.totalCAP(modules).toString());
+    return calculator.totalCAP(modules);
+  }
+
+  void toggleDone(int index)async{
+    Module newModule = modules[index].toggleDone();
+    print("oldModule: " + modules[index].toString());
+    print("newModule: " + newModule.toString());
+
+    for (int i = 0; i < modules.length; i++) {
+      if (modules[i].id == newModule.id) {
+        // can use id for this maybe later
+        modules[i] = newModule;
+      }
+    }
+    await DBProvider.db.updateModule(newModule);
+    notifyListeners();
+    print("isdone?" + modules[index].isDone().toString());
   }
 }

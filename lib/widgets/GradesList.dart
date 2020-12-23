@@ -21,7 +21,7 @@ class _GradesListState extends State<GradesList> {
           shrinkWrap: true,
           itemCount: modulesData.modules.length,
           itemBuilder: (context, index) {
-            print(modulesData.modules[index]);
+            //print(modulesData.modules[index]);
             return ModuleTile(index); // ModuleTile not yet created
           },
         );
