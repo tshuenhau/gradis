@@ -6,5 +6,4 @@
 - Grey line under textfield
 - Done/Not-done
 - S/U Helper (ZQ)
-- Calculate app take into account credits (ZQ)
-- CAP current, future, total (ZQ)
+- Fix functionality when goal CAP equals totalCAP (ZQ)
