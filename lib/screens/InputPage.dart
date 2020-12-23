@@ -102,6 +102,7 @@ class _InputPageState extends State<InputPage> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return Container(
+                            height: 450,
                             decoration: BoxDecoration(
                               color: CharlestonGreen,
                             ),
