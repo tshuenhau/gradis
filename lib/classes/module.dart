@@ -6,15 +6,15 @@ class Module {
       @required this.name,
       @required this.grade,
       @required this.credits,
-      this.done}){
-        done = false;
-      }
+      this.done}) {
+    done = 0;
+  }
 
   int id = 0;
   final String name;
   final double grade;
   final int credits;
-  bool done;
+  int done;
 
   Map<String, dynamic> toMap() {
     return {
@@ -26,8 +26,8 @@ class Module {
     };
   }
 
-  bool isDone(){
-    return this.done;
+  bool isDone() {
+    return this.done == 1;
   }
 
   @override

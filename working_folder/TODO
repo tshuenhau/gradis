@@ -7,3 +7,4 @@
 - Done/Not-done
 - S/U Helper (ZQ)
 - Fix functionality when goal CAP equals totalCAP (ZQ)
+- Create different DB table for Goal CAP?? (ZQ)

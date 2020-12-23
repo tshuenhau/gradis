@@ -54,12 +54,16 @@ class _ModuleTileState extends State<ModuleTile> {
         );
       }),
       trailing: Icon(
-          Provider.of<ModulesData>(context, listen: false).incCAP()
+          Provider.of<ModulesData>(context, listen: false).incCAP() == 1
               ? Icons.arrow_drop_up
-              : Icons.arrow_drop_down,
-          color: Provider.of<ModulesData>(context, listen: false).incCAP()
+              : Provider.of<ModulesData>(context, listen: false).incCAP() == -1
+                  ? Icons.arrow_drop_down
+                  : null, //TODO: you can add an icon if u want
+          color: Provider.of<ModulesData>(context, listen: false).incCAP() == 1
               ? Colors.red
-              : Colors.green),
+              : Provider.of<ModulesData>(context, listen: false).incCAP() == -1
+                  ? Colors.green
+                  : Colors.grey),
       contentPadding: EdgeInsets.symmetric(horizontal: 20),
 
       isThreeLine: false,

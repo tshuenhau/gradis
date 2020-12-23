@@ -9,17 +9,15 @@ class ModulesData extends ChangeNotifier {
   //double currentCAP = 7; //TODO: dummy data
   //bool incCap = false; //TODO: dummy data
   double goal = 4.0; // this needs to be stored in DB somewhere
-  
-  static Calculator calculator = Calculator(goalCAP:0);
+
+  static Calculator calculator = Calculator(goalCAP: 0);
 
   //access database and get a list of modules
 
   void getModulesFromDB() async {
     dbModules = DBProvider.db.getAllModules();
     modules = await dbModules;
-    dbModules.then((value) => 
-      calculator = Calculator(goalCAP:goal)
-    );    
+    dbModules.then((value) => calculator = Calculator(goalCAP: goal));
   }
 
   void addModule(Module module) async {
@@ -29,7 +27,7 @@ class ModulesData extends ChangeNotifier {
   }
 
   void updateModule(Module newModule) async {
-    for (int i = 0 ; i < modules.length; i++) {
+    for (int i = 0; i < modules.length; i++) {
       if (modules[i].id == newModule.id) {
         // can use id for this maybe later
         modules[i] = newModule;
@@ -41,26 +39,17 @@ class ModulesData extends ChangeNotifier {
 
   // void calculateCAP() {
   //   currentCAP = calculator.cap(this.modules);
-  // } 
+  // }
 
-  bool incCAP() {
+  int incCAP() {
     // checks if current CAP is less than goal CAP
     //print("goal CAP: " + calculator.goalCAP.toString());
-    return calculator.increaseCAP(calculateCurrentCAP());
+    print(calculator.increaseCAP(calculator.totalCAP(modules)));
+    return calculator.increaseCAP(calculator.totalCAP(modules));
   }
 
   double calculateCurrentCAP() {
-    double totalGrade = 0;
-    int completedModsCounter = 0;
-    for (Module mod in modules) {
-      if(!mod.done){ // actually i dun think we even need to check if its done or not and we can just calculate for all past and future mods vs the goal
-        totalGrade += mod.grade;
-        completedModsCounter += 1;
-      }
-        
-    }
-    //print("totalGrade: " + totalGrade.toString());
-
-    return totalGrade / completedModsCounter;
+    print("current CAP: " + calculator.currentCAP(modules).toString());
+    return calculator.currentCAP(modules);
   }
 }

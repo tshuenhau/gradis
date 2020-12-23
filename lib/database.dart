@@ -27,7 +27,7 @@ class DBProvider {
       p.join(await getDatabasesPath(), 'modules_database.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done BOOL)",
+          "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done INTEGER)",
         );
       },
       version: 1,
