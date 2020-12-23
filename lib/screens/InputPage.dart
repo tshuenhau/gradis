@@ -147,9 +147,18 @@ class _InputPageState extends State<InputPage> {
                                   textAlign: TextAlign.center, 
                                   ),
                                   Text(
+                                  "current CAP: " + Provider.of<ModulesData>(context, listen: false).calculateCurrentCAP().toString(),
+                                  textAlign: TextAlign.center, 
+                                  ),
+                                  Text(
+                                  "future CAP: " + Provider.of<ModulesData>(context, listen: false).calculateFutureCAP().toString(),
+                                  textAlign: TextAlign.center, 
+                                  ),
+                                  Text(
                                   "goal CAP: " + Provider.of<ModulesData>(context, listen: false).goal.toString(),
                                   textAlign: TextAlign.center, 
                                   ),
+                                  
                               ],
                             );
                           }

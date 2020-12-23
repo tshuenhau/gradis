@@ -56,6 +56,10 @@ class ModulesData extends ChangeNotifier {
     //print("current CAP: " + calculator.totalCAP(modules).toString());
     return calculator.totalCAP(modules);
   }
+   double calculateFutureCAP() {
+    //print("current CAP: " + calculator.totalCAP(modules).toString());
+    return calculator.futureCap(modules);
+  }
 
   void toggleDone(int index)async{
     Module newModule = modules[index].toggleDone();
