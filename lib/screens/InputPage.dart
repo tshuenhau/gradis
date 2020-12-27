@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gradis/classes/goalcap.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/widgets/GradesList.dart';
 import 'package:gradis/screens/AddModules.dart';
@@ -12,6 +13,7 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  TextEditingController _controller;
   @override
   void initState() {
     Provider.of<ModulesData>(context, listen: false).getModulesFromDB();
@@ -179,14 +181,16 @@ class _InputPageState extends State<InputPage> {
                             ),
                           ),
                           Expanded(
-                            child: Text(
-                              "goal CAP: " +
-                                  Provider.of<ModulesData>(context,
-                                          listen: false)
-                                      .goal
-                                      .toStringAsFixed(2),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.clip,
+                            child: Row(
+                              children: <Widget>[
+                                Text("goal CAP: "),
+                                Expanded(
+                                  child: GoalCAPTextField(
+                                    initialText:
+                                        modulesData.goal.toStringAsFixed(2),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ],
@@ -197,6 +201,72 @@ class _InputPageState extends State<InputPage> {
                   }
                 }),
           ],
+        ));
+  }
+}
+
+//TODO: EDITED HERE
+class GoalCAPTextField extends StatefulWidget {
+  final String initialText;
+  GoalCAPTextField({@required this.initialText});
+
+  @override
+  _GoalCAPTextFieldState createState() => _GoalCAPTextFieldState();
+}
+
+class _GoalCAPTextFieldState extends State<GoalCAPTextField> {
+  bool _isEditingText = false;
+  TextEditingController _editingController;
+  String text;
+
+  @override
+  void initState() {
+    text = widget.initialText;
+
+    super.initState();
+    _editingController = TextEditingController(text: widget.initialText);
+  }
+
+  @override
+  void dispose() {
+    _editingController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isEditingText) {
+      return Container(
+        width: 60,
+        child: TextField(
+          textAlign: TextAlign.center,
+          keyboardType:
+              TextInputType.numberWithOptions(signed: true, decimal: true),
+          onSubmitted: (newValue) {
+            setState(() {
+              text = double.parse(newValue).toStringAsFixed(2);
+              _isEditingText = false;
+            });
+            final newGoal = GoalCAP(goal: double.parse(text));
+            Provider.of<ModulesData>(context, listen: false)
+                .updateGoalCAP(newGoal);
+          },
+        ),
+      );
+    }
+    return InkWell(
+        onTap: () {
+          setState(() {
+            _isEditingText = true;
+          });
+        },
+        child: Text(
+          text != null ? text : "",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14.0,
+          ),
         ));
   }
 }

@@ -9,16 +9,11 @@ class ModulesData extends ChangeNotifier {
   Future<List<Module>> dbModules;
   //double currentCAP = 7; //TODO: dummy data
   //bool incCap = false; //TODO: dummy data
-  double goal = 4.0;
+  double goal = 0.0;
 
-  static Calculator calculator = Calculator(goalCAP: 0);
+  static Calculator calculator;
 
   //access database and get a list of modules
-
-  void getGoalCAPFromDB() async {
-    GoalCAP goalCAP = await DBProvider.db.getGoalCAP();
-    goal = goalCAP == null ? 0 : goalCAP.goal;
-  }
 
   void getModulesFromDB() async {
     dbModules = DBProvider.db.getAllModules();
@@ -78,6 +73,28 @@ class ModulesData extends ChangeNotifier {
     }
     await DBProvider.db.updateModule(newModule);
     notifyListeners();
-    print("isdone?" + modules[index].isDone().toString());
+    print("isdone? " + modules[index].isDone().toString());
+  }
+
+  //TODO: EDITED HERE
+  void getGoalCAPFromDB() async {
+    GoalCAP goalCAP = await DBProvider.db.getGoalCAP();
+    goal = goalCAP == null ? 0 : goalCAP.goal;
+    dbModules.then((value) => calculator = Calculator(goalCAP: goal));
+    notifyListeners();
+  }
+
+  void addGoalCAP(GoalCAP goalCAP) async {
+    goal = goalCAP.goal;
+    await DBProvider.db.insertGoalCAP(goalCAP);
+    dbModules.then((value) => calculator = Calculator(goalCAP: goal));
+    notifyListeners();
+  }
+
+  void updateGoalCAP(GoalCAP goalCAP) async {
+    goal = goalCAP.goal;
+    await DBProvider.db.updateGoalCAP(goalCAP);
+    dbModules.then((value) => calculator = Calculator(goalCAP: goal));
+    notifyListeners();
   }
 }

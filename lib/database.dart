@@ -105,6 +105,16 @@ class DBProvider {
     await db.rawDelete("Delete from modules");
   }
 
+  Future<void> insertGoalCAP(GoalCAP goalCAP) async {
+    //insets new module into DB
+    final Database db = await database;
+    await db.insert(
+      'goalcap',
+      goalCAP.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
   Future<void> deleteGoalCAP() async {
     // delete goal CAP by matching the id
     final db = await database;
