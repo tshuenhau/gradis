@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/database.dart';
 import 'calculator.dart';
+import 'goalcap.dart';
 
 class ModulesData extends ChangeNotifier {
   List<Module> modules;
@@ -13,6 +14,11 @@ class ModulesData extends ChangeNotifier {
   static Calculator calculator = Calculator(goalCAP: 0);
 
   //access database and get a list of modules
+
+  void getGoalCAPFromDB() async {
+    GoalCAP goalCAP = await DBProvider.db.getGoalCAP();
+    goal = goalCAP.goal;
+  }
 
   void getModulesFromDB() async {
     dbModules = DBProvider.db.getAllModules();
@@ -52,16 +58,18 @@ class ModulesData extends ChangeNotifier {
     //print("current CAP: " + calculator.currentCAP(modules).toString());
     return calculator.currentCAP(modules);
   }
+
   double calculateTotalCAP() {
     //print("current CAP: " + calculator.totalCAP(modules).toString());
     return calculator.totalCAP(modules);
   }
-   double calculateFutureCAP() {
+
+  double calculateFutureCAP() {
     //print("current CAP: " + calculator.totalCAP(modules).toString());
-    return calculator.futureCap(modules);
+    return calculator.futureCAP(modules);
   }
 
-  void toggleDone(int index)async{
+  void toggleDone(int index) async {
     Module newModule = modules[index].toggleDone();
     print("oldModule: " + modules[index].toString());
     print("newModule: " + newModule.toString());

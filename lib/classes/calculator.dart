@@ -5,7 +5,7 @@ class Calculator {
   double goalCAP;
   Calculator({@required this.goalCAP});
 
-  double futureCap(List<Module> mods) {
+  double futureCAP(List<Module> mods) {
     double totalFutureGrade = 0;
     double totalCredits = 0;
     for (Module mod in mods) {

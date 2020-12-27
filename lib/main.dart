@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/screens/InputPage.dart';
-import 'package:gradis/constants.dart';
 import 'package:gradis/classes/modulesData.dart';
 
 void main() => runApp(MyApp());

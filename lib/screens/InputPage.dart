@@ -6,8 +6,6 @@ import 'package:gradis/classes/modulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 
-import '../database.dart';
-
 class InputPage extends StatefulWidget {
   @override
   _InputPageState createState() => _InputPageState();
@@ -28,8 +26,10 @@ class _InputPageState extends State<InputPage> {
             backgroundColor: LightSilver,
             child: Icon(Icons.add),
             onPressed: () {
-              final module =Module(id: 0, name: "newmodule", grade: 0, credits: 0);
-              Provider.of<ModulesData>(context, listen: false).addModule(module);
+              final module =
+                  Module(id: 0, name: "newmodule", grade: 0, credits: 0);
+              Provider.of<ModulesData>(context, listen: false)
+                  .addModule(module);
               // showModalBottomSheet(
               //     context: context,
               //     isScrollControlled: true,
@@ -134,54 +134,67 @@ class _InputPageState extends State<InputPage> {
               ),
             ),
             FutureBuilder<List<Module>>(
-              future: Provider.of<ModulesData>(context).dbModules,
-                      builder: (context, snapshot){
-                        if (snapshot.hasData){
-                          return Consumer<ModulesData>(builder: (context, modulesData, child){
-                            Provider.of<ModulesData>(context, listen: false).calculateCurrentCAP();
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Expanded(
-                                                                  child: Text(
-                                    "total CAP: " + Provider.of<ModulesData>(context, listen: false).calculateTotalCAP().toStringAsFixed(2),
-                                    textAlign: TextAlign.center, 
-                                    overflow: TextOverflow.clip,
-                                    ),
-                                ),
-                                  Expanded(
-                                                                      child: Text(
-                                    "current CAP: " + Provider.of<ModulesData>(context, listen: false).calculateCurrentCAP().toStringAsFixed(2),
-                                    textAlign: TextAlign.center, 
-                                    overflow: TextOverflow.clip,
-                                    ),
-                                  ),
-                                  Expanded(
-                                                                      child: Text(
-                                    "future CAP: " + Provider.of<ModulesData>(context, listen: false).calculateFutureCAP().toStringAsFixed(2),
-                                    textAlign: TextAlign.center, 
-                                    overflow: TextOverflow.clip,
-                                    ),
-                                  ),
-                                  Expanded(
-                                                                      child: Text(
-                                    "goal CAP: " + Provider.of<ModulesData>(context, listen: false).goal.toStringAsFixed(2),
-                                    textAlign: TextAlign.center, 
-                                    overflow: TextOverflow.clip,
-                                    ),
-                                  ),
-                                  
-                              ],
-                            );
-                          }
-                                                      
-                          );
-                        }
-                        else{
-                          return Text("");
-                        }
-                      }
-            ),
+                future: Provider.of<ModulesData>(context).dbModules,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Consumer<ModulesData>(
+                        builder: (context, modulesData, child) {
+                      Provider.of<ModulesData>(context, listen: false)
+                          .calculateCurrentCAP();
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "total CAP: " +
+                                  Provider.of<ModulesData>(context,
+                                          listen: false)
+                                      .calculateTotalCAP()
+                                      .toStringAsFixed(2),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "current CAP: " +
+                                  Provider.of<ModulesData>(context,
+                                          listen: false)
+                                      .calculateCurrentCAP()
+                                      .toStringAsFixed(2),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "future CAP: " +
+                                  Provider.of<ModulesData>(context,
+                                          listen: false)
+                                      .calculateFutureCAP()
+                                      .toStringAsFixed(2),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "goal CAP: " +
+                                  Provider.of<ModulesData>(context,
+                                          listen: false)
+                                      .goal
+                                      .toStringAsFixed(2),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+                  } else {
+                    return Text("");
+                  }
+                }),
           ],
         ));
   }

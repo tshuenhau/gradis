@@ -3,6 +3,7 @@ import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
 import 'classes/module.dart';
+import 'classes/goalcap.dart';
 
 class DBProvider {
   DBProvider._();
@@ -15,7 +16,7 @@ class DBProvider {
     if (_database != null) {
       return _database;
     } else {
-      // if _database is null we instantiate it
+      // if _database is null we initiate it
       _database = await initDB();
       return _database;
     }
@@ -28,6 +29,8 @@ class DBProvider {
       onCreate: (db, version) {
         return db.execute(
           "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done INTEGER)",
+          //"CREATE TABLE goalcap (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, goal DOUBLE",
+          //TODO: Initialize the goalcap table
         );
       },
       version: 1,
@@ -91,5 +94,40 @@ class DBProvider {
   deleteAll() async {
     final db = await database;
     await db.rawDelete("Delete from modules");
+  }
+
+  Future<void> deleteGoalCAP(int id) async {
+    // deletes module by matching the id
+    final db = await database;
+
+    await db.delete(
+      'goalcap',
+      where: "id = ?",
+      // Pass the Module's id as a whereArg to prevent SQL injection.
+      whereArgs: [id],
+    );
+  }
+
+  // Future<void> updateGoalCAP(GoalCAP goalcap) async {
+  //   // takes a new module and replaces old module by matching their ids
+  //   final db = await database;
+  //
+  //   // Update the given Module.
+  //   await db.update(
+  //     'goalcap',
+  //     goalcap.toMap(),
+  //     where: "id = ?",
+  //     // Pass the Modules's id as a whereArg to prevent SQL injection.
+  //     whereArgs: [goalcap.id],
+  //   );
+  // }
+
+  Future<GoalCAP> getGoalCAP() async {
+    // used to get all Modules from SQLite DB
+    final Database db = await database;
+
+    final List<Map<String, dynamic>> goal = await db.query('goalcap');
+
+    return GoalCAP(goal: goal[0]["goal"]);
   }
 }
