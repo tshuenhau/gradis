@@ -13,7 +13,6 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  TextEditingController _controller;
   @override
   void initState() {
     Provider.of<ModulesData>(context, listen: false).getModulesFromDB();
@@ -186,8 +185,11 @@ class _InputPageState extends State<InputPage> {
                                 Text("goal CAP: "),
                                 Expanded(
                                   child: GoalCAPTextField(
-                                    initialText:
-                                        modulesData.goal.toStringAsFixed(2),
+                                    initialText: Provider.of<ModulesData>(
+                                            context,
+                                            listen: false)
+                                        .goal
+                                        .toStringAsFixed(2),
                                   ),
                                 )
                               ],
@@ -237,14 +239,16 @@ class _GoalCAPTextFieldState extends State<GoalCAPTextField> {
   Widget build(BuildContext context) {
     if (_isEditingText) {
       return Container(
-        width: 60,
+        width: 50,
         child: TextField(
           textAlign: TextAlign.center,
           keyboardType:
               TextInputType.numberWithOptions(signed: true, decimal: true),
           onSubmitted: (newValue) {
             setState(() {
-              text = double.parse(newValue).toStringAsFixed(2);
+              text = newValue == ''
+                  ? '0.00'
+                  : double.parse(newValue).toStringAsFixed(2);
               _isEditingText = false;
             });
             final newGoal = GoalCAP(goal: double.parse(text));
