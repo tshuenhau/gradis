@@ -22,19 +22,28 @@ class DBProvider {
     }
   }
 
+  void _createGoalCapTableV1toV2(Batch batch) {
+    batch.execute(
+        "CREATE TABLE goalcap (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, goal DOUBLE)");
+  }
+
   initDB() async {
     WidgetsFlutterBinding.ensureInitialized();
     return await openDatabase(
-      p.join(await getDatabasesPath(), 'modules_database.db'),
-      onCreate: (db, version) {
-        return db.execute(
-          "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done INTEGER)",
-          //"CREATE TABLE goalcap (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, goal DOUBLE",
-          //TODO: Initialize the goalcap table
-        );
-      },
-      version: 1,
-    );
+        p.join(await getDatabasesPath(), 'modules_database.db'),
+        onCreate: (db, version) {
+          return db.execute(
+            "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done INTEGER)",
+          );
+        },
+        version: 2,
+        onUpgrade: (db, oldVersion, newVersion) async {
+          var batch = db.batch();
+          if (oldVersion == 1) {
+            _createGoalCapTableV1toV2(batch);
+          }
+          await batch.commit();
+        });
   }
 
   Future<void> insertModule(Module module) async {
@@ -96,38 +105,36 @@ class DBProvider {
     await db.rawDelete("Delete from modules");
   }
 
-  Future<void> deleteGoalCAP(int id) async {
-    // deletes module by matching the id
+  Future<void> deleteGoalCAP() async {
+    // delete goal CAP by matching the id
     final db = await database;
 
     await db.delete(
       'goalcap',
       where: "id = ?",
       // Pass the Module's id as a whereArg to prevent SQL injection.
-      whereArgs: [id],
+      whereArgs: [0],
     );
   }
 
-  // Future<void> updateGoalCAP(GoalCAP goalcap) async {
-  //   // takes a new module and replaces old module by matching their ids
-  //   final db = await database;
-  //
-  //   // Update the given Module.
-  //   await db.update(
-  //     'goalcap',
-  //     goalcap.toMap(),
-  //     where: "id = ?",
-  //     // Pass the Modules's id as a whereArg to prevent SQL injection.
-  //     whereArgs: [goalcap.id],
-  //   );
-  // }
+  Future<void> updateGoalCAP(GoalCAP goalCAP) async {
+    // takes a new goal CAP and replaces old goal CAP by matching their ids
+    final db = await database;
+
+    // Update the given Module.
+    await db.update(
+      'goalcap',
+      goalCAP.toMap(),
+      where: "id = ?",
+      // Pass the Modules's id as a whereArg to prevent SQL injection.
+      whereArgs: [goalCAP.id],
+    );
+  }
 
   Future<GoalCAP> getGoalCAP() async {
-    // used to get all Modules from SQLite DB
+    // used to get goal CAP from SQLite DB
     final Database db = await database;
-
-    final List<Map<String, dynamic>> goal = await db.query('goalcap');
-
-    return GoalCAP(goal: goal[0]["goal"]);
+    final List<Map<String, dynamic>> map = await db.query('goalcap');
+    return map.isEmpty ? null : GoalCAP(goal: map[0]["goal"]);
   }
 }

@@ -15,6 +15,7 @@ class _InputPageState extends State<InputPage> {
   @override
   void initState() {
     Provider.of<ModulesData>(context, listen: false).getModulesFromDB();
+    Provider.of<ModulesData>(context, listen: false).getGoalCAPFromDB();
     super.initState();
   }
 

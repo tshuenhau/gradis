@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GoalCAP {
   double goal;
   int id = 0;
-  GoalCAP({this.id, @required this.goal});
+  GoalCAP({@required this.goal});
 
   Map<String, dynamic> toMap() {
     return {

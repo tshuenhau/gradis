@@ -9,7 +9,7 @@ class ModulesData extends ChangeNotifier {
   Future<List<Module>> dbModules;
   //double currentCAP = 7; //TODO: dummy data
   //bool incCap = false; //TODO: dummy data
-  double goal = 4.0; // this needs to be stored in DB somewhere
+  double goal = 4.0;
 
   static Calculator calculator = Calculator(goalCAP: 0);
 
@@ -17,7 +17,7 @@ class ModulesData extends ChangeNotifier {
 
   void getGoalCAPFromDB() async {
     GoalCAP goalCAP = await DBProvider.db.getGoalCAP();
-    goal = goalCAP.goal;
+    goal = goalCAP == null ? 0 : goalCAP.goal;
   }
 
   void getModulesFromDB() async {
@@ -42,10 +42,6 @@ class ModulesData extends ChangeNotifier {
     await DBProvider.db.updateModule(newModule);
     notifyListeners();
   }
-
-  // void calculateCAP() {
-  //   currentCAP = calculator.cap(this.modules);
-  // }
 
   int incCAP() {
     // checks if current CAP is less than goal CAP

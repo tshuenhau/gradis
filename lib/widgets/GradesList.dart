@@ -10,7 +10,6 @@ class GradesList extends StatefulWidget {
 }
 
 class _GradesListState extends State<GradesList> {
-
   //ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class _GradesListState extends State<GradesList> {
           itemCount: modulesData.modules.length,
           itemBuilder: (context, index) {
             //print(modulesData.modules[index]);
-            return ModuleTile(index); // ModuleTile not yet created
+            return ModuleTile(index);
           },
         );
       },
