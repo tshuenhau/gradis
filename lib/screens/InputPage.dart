@@ -22,7 +22,15 @@ class _InputPageState extends State<InputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CharlestonGreen,      
+      backgroundColor: CharlestonGreen,
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: LightSilver,
+          child: Icon(Icons.add),
+          onPressed: () {
+            final module =
+                Module(id: 0, name: "newmodule", grade: 0, credits: 0);
+            Provider.of<ModulesData>(context, listen: false).addModule(module);
+          }),
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
@@ -83,21 +91,9 @@ class _InputPageState extends State<InputPage> {
             );
           }),
           trailing: Icon(
-              Provider.of<ModulesData>(context, listen: false).incCAP() == 1
-                  ? Icons.arrow_drop_up
-                  : Provider.of<ModulesData>(context, listen: false).incCAP() ==
-                          -1
-                      ? Icons.arrow_drop_down
-                      : null, //TODO: you can add an icon if u want
-                      
-              color:
-                  Provider.of<ModulesData>(context, listen: false).incCAP() == 1
-                      ? Colors.red
-                      : Provider.of<ModulesData>(context, listen: false)
-                                  .incCAP() ==
-                              -1
-                          ? Colors.green
-                          : Colors.grey),
+              Icons.arrow_drop_up,
+              color:Colors.green
+          ),
           contentPadding: EdgeInsets.symmetric(horizontal: 20),
           isThreeLine: false,
         ),
@@ -192,14 +188,6 @@ class _InputPageState extends State<InputPage> {
               }
             }),
       ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: LightSilver,
-          child: Icon(Icons.add),
-          onPressed: () {
-            final module =
-                Module(id: 0, name: "newmodule", grade: 0, credits: 0);
-            Provider.of<ModulesData>(context, listen: false).addModule(module);
-          }),
     );
   }
 }

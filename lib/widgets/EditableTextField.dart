@@ -67,25 +67,25 @@ class _EditableTextFieldState extends State<EditableTextField> {
                 grade: grade);
             Provider.of<ModulesData>(context, listen: false)
                 .updateModule(newModule);
-            //TODO: bruh here is where i do the updateModule. p janky but it work.
           },
           autofocus: true,
           controller: _editingController,
         ),
       );
     return InkWell(
-        onTap: () {
-          setState(() {
-            _isEditingText = true;
-          });
-        },
-        child: Text(
-          text != null ? text : "",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.0,
-          ),
-        ));
+      onTap: () {
+        setState(() {
+          _isEditingText = true;
+        });
+      },
+      child: Text(
+        text != null ? text : "",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
+      ),
+    );
   }
 }
