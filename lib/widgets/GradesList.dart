@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gradis/classes/modulesData.dart';
 import 'package:gradis/widgets/ModuleTile.dart';
 import 'package:provider/provider.dart';
+import 'package:gradis/constants.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 class GradesList extends StatefulWidget {
   @override
@@ -28,32 +30,3 @@ class _GradesListState extends State<GradesList> {
     );
   }
 }
-
-// @override
-// Widget build(BuildContext context) {
-//   return FutureBuilder<List<Module>>(
-//       future: modules,
-//       builder: (context, snapshot) {
-//         if (snapshot.hasData) {
-//           List<Module> mods = snapshot.data;
-//           return ListView.builder(
-//             shrinkWrap: true,
-//             itemCount: mods.length,
-//             itemBuilder: (context, index) {
-//               return ModuleTile(
-//                 moduleName: mods[index].name,
-//                 credits: mods[index].credits,
-//                 grade: mods[index].grade,
-//               );
-//             },
-//           );
-//         }
-//         else {
-//           return Container(
-//             width: 10,
-//             //TODO: TH you can design this container when there are no modules in DB if you want
-//             child: Text('wat'),
-//           );
-//         }
-//       });
-// }

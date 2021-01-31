@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gradis/classes/goalcap.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/widgets/GradesList.dart';
-import 'package:gradis/screens/AddModules.dart';
 import 'package:gradis/classes/modulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
@@ -23,187 +22,185 @@ class _InputPageState extends State<InputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: CharlestonGreen,
-        floatingActionButton: FloatingActionButton(
-            backgroundColor: LightSilver,
-            child: Icon(Icons.add),
-            onPressed: () {
-              final module =
-                  Module(id: 0, name: "newmodule", grade: 0, credits: 0);
-              Provider.of<ModulesData>(context, listen: false)
-                  .addModule(module);
-              // showModalBottomSheet(
-              //     context: context,
-              //     isScrollControlled: true,
-              //     builder: (context) => SingleChildScrollView(
-              //             child: Container(
-              //           padding: EdgeInsets.only(
-              //               bottom: MediaQuery.of(context).viewInsets.bottom),
-              //           child: AddModulesScreen(),
-              //         )));
-            }),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              padding:
-                  EdgeInsets.only(top: 40.0, left: 0, right: 0, bottom: 30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Text(
-                    'Gradis',
+      backgroundColor: CharlestonGreen,      
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Gradis",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+      body: Column(children: <Widget>[
+        ListTile(
+          tileColor: RaisinBlack,
+          leading: Text(
+            'Done',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
+          title: Consumer<ModulesData>(builder: (context, modulesData, child) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Module',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 35.0,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
                     ),
                   ),
-                  SizedBox(
-                    height: 20.0,
+                ),
+                Expanded(
+                  child: Text(
+                    'Credits',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
                   ),
-                  Row(
+                ),
+                Expanded(
+                  child: Text(
+                    'Grade',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }),
+          trailing: Icon(
+              Provider.of<ModulesData>(context, listen: false).incCAP() == 1
+                  ? Icons.arrow_drop_up
+                  : Provider.of<ModulesData>(context, listen: false).incCAP() ==
+                          -1
+                      ? Icons.arrow_drop_down
+                      : null, //TODO: you can add an icon if u want
+                      
+              color:
+                  Provider.of<ModulesData>(context, listen: false).incCAP() == 1
+                      ? Colors.red
+                      : Provider.of<ModulesData>(context, listen: false)
+                                  .incCAP() ==
+                              -1
+                          ? Colors.green
+                          : Colors.grey),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20),
+          isThreeLine: false,
+        ),
+        Expanded(
+          child: FutureBuilder<List<Module>>(
+              future: Provider.of<ModulesData>(context).dbModules,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    constraints: BoxConstraints.expand(),
+                    decoration: BoxDecoration(
+                      color: CharlestonGreen,
+                    ),
+                    child: GradesList(),
+                  );
+                } else
+                  return Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                      color: CharlestonGreen,
+                    ),
+                    child: Text("Loading"),
+                  );
+              }),
+        ),
+      ]),
+      bottomNavigationBar: BottomAppBar(
+        child: FutureBuilder<List<Module>>(
+            future: Provider.of<ModulesData>(context).dbModules,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Consumer<ModulesData>(
+                    builder: (context, modulesData, child) {
+                  Provider.of<ModulesData>(context, listen: false)
+                      .calculateCurrentCAP();
+                  return Container(
+                    color: RaisinBlack,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.center,
-                          width: 100,
-                          height: 45,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            color: RaisinBlack,
-                          ),
+                      children: [
+                        Expanded(
                           child: Text(
-                            'Module',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                            ),
+                            "total CAP: " +
+                                Provider.of<ModulesData>(context, listen: false)
+                                    .calculateTotalCAP()
+                                    .toStringAsFixed(2),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
-                        Text(
-                          'Credits',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                        Expanded(
+                          child: Text(
+                            "current CAP: " +
+                                Provider.of<ModulesData>(context, listen: false)
+                                    .calculateCurrentCAP()
+                                    .toStringAsFixed(2),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
-                        Text(
-                          'Grade',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
+                        Expanded(
+                          child: Text(
+                            "future CAP: " +
+                                Provider.of<ModulesData>(context, listen: false)
+                                    .calculateFutureCAP()
+                                    .toStringAsFixed(2),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.clip,
                           ),
                         ),
-                      ]),
-                  FutureBuilder<List<Module>>(
-                      future: Provider.of<ModulesData>(context).dbModules,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Container(
-                            height: 450,
-                            decoration: BoxDecoration(
-                              color: CharlestonGreen,
-                            ),
-                            child: GradesList(),
-                          );
-                        } else
-                          return Container(
-                            height: 300,
-                            decoration: BoxDecoration(
-                              color: CharlestonGreen,
-                            ),
-                            child: Text("Loading"),
-                          );
-                      }),
-                  // FloatingActionButton(onPressed: () {
-                  //   Provider.of<ModulesData>(context, listen: false)
-                  //       .currentCAP -= 1;
-                  //   print("current CAP: " +
-                  //       Provider.of<ModulesData>(context, listen: false)
-                  //           .currentCAP
-                  //           .toString());
-                  //   Provider.of<ModulesData>(context, listen: false).incCAP();
-                  //   print("current CAP greater than goal CAP: " +
-                  //       Provider.of<ModulesData>(context, listen: false)
-                  //           .incCap
-                  //           .toString());
-                  // })
-                ],
-              ),
-            ),
-            FutureBuilder<List<Module>>(
-                future: Provider.of<ModulesData>(context).dbModules,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Consumer<ModulesData>(
-                        builder: (context, modulesData, child) {
-                      Provider.of<ModulesData>(context, listen: false)
-                          .calculateCurrentCAP();
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "total CAP: " +
-                                  Provider.of<ModulesData>(context,
+                        Expanded(
+                          child: Row(
+                            children: <Widget>[
+                              Text("goal CAP: "),
+                              Expanded(
+                                child: GoalCAPTextField(
+                                  initialText: Provider.of<ModulesData>(context,
                                           listen: false)
-                                      .calculateTotalCAP()
+                                      .goal
                                       .toStringAsFixed(2),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.clip,
-                            ),
+                                ),
+                              )
+                            ],
                           ),
-                          Expanded(
-                            child: Text(
-                              "current CAP: " +
-                                  Provider.of<ModulesData>(context,
-                                          listen: false)
-                                      .calculateCurrentCAP()
-                                      .toStringAsFixed(2),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.clip,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "future CAP: " +
-                                  Provider.of<ModulesData>(context,
-                                          listen: false)
-                                      .calculateFutureCAP()
-                                      .toStringAsFixed(2),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.clip,
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: <Widget>[
-                                Text("goal CAP: "),
-                                Expanded(
-                                  child: GoalCAPTextField(
-                                    initialText: Provider.of<ModulesData>(
-                                            context,
-                                            listen: false)
-                                        .goal
-                                        .toStringAsFixed(2),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    });
-                  } else {
-                    return Text("");
-                  }
-                }),
-          ],
-        ));
+                        ),
+                      ],
+                    ),
+                  );
+                });
+              } else {
+                return Text("");
+              }
+            }),
+      ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: LightSilver,
+          child: Icon(Icons.add),
+          onPressed: () {
+            final module =
+                Module(id: 0, name: "newmodule", grade: 0, credits: 0);
+            Provider.of<ModulesData>(context, listen: false).addModule(module);
+          }),
+    );
   }
 }
 
