@@ -39,45 +39,63 @@ class _EditableTextFieldState extends State<EditableTextField> {
     if (_isEditingText)
       return Container(
         width: 60,
-        child: TextField(
-          textAlign: TextAlign.center,
-          keyboardType: widget.type == "name"
-              ? TextInputType.text
-              : TextInputType.numberWithOptions(signed: true, decimal: true),
-          onSubmitted: (newValue) {
-            setState(() {
-              text = newValue;
-              _isEditingText = false;
-            });
-
-            //the widget.module.XXX is just the original module data
-            final String name =
-                widget.type == "name" ? text : widget.module.name;
-            final int credits = widget.type == "credits"
-                ? int.parse(text)
-                : widget.module.credits;
-            print(credits);
-            final double grade = widget.type == "grade"
-                ? double.parse(text)
-                : widget.module.grade;
-            final Module newModule = Module(
-                id: widget.module.id,
-                name: name,
-                credits: credits,
-                grade: grade);
-            Provider.of<ModulesData>(context, listen: false)
-                .updateModule(newModule);
+        child: FocusScope(
+          onFocusChange: (value) {
+            if (!value) {
+              setState(() {
+                text = _editingController.text;
+                _isEditingText = false;
+              });
+              update(context);
+            }
           },
-          autofocus: true,
-          controller: _editingController,
+          
+          child: TextField(
+            textAlign: TextAlign.center,
+            style: TextStyle(
+          color: Colors.white,
+          
+          fontSize: 18.0,
+        ),
+            decoration: InputDecoration(
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.transparent),
+              ),
+              //for use if want to change the look of the highligh
+              //   focusedBorder: UnderlineInputBorder(
+              //     borderSide: BorderSide(color: Theme.of(context).accentColor),
+              //   ),
+              //   border: UnderlineInputBorder(
+              //     borderSide: BorderSide(color: Theme.of(context).accentColor),
+              //   ),
+            ),
+            keyboardType: widget.type == "name"
+                ? TextInputType.text
+                : TextInputType.numberWithOptions(signed: true, decimal: true),
+            onSubmitted: (newValue) {
+              setState(() {
+                text = newValue;
+                _isEditingText = false;
+              });
+              //the widget.module.XXX is just the original module data
+              update(context);
+            },
+            autofocus: true,
+            controller: _editingController,
+          ),
         ),
       );
+
     return InkWell(
+      highlightColor: Colors.red,
+      canRequestFocus: true,
       onTap: () {
+        print("ink");
         setState(() {
           _isEditingText = true;
         });
       },
+      autofocus: true,
       child: Text(
         text != null ? text : "",
         textAlign: TextAlign.center,
@@ -87,5 +105,16 @@ class _EditableTextFieldState extends State<EditableTextField> {
         ),
       ),
     );
+  }
+
+  void update(BuildContext context) {
+    final String name = widget.type == "name" ? text : widget.module.name;
+    final int credits =
+        widget.type == "credits" ? int.parse(text) : widget.module.credits;
+    final double grade =
+        widget.type == "grade" ? double.parse(text) : widget.module.grade;
+    final Module newModule = Module(
+        id: widget.module.id, name: name, credits: credits, grade: grade);
+    Provider.of<ModulesData>(context, listen: false).updateModule(newModule);
   }
 }
