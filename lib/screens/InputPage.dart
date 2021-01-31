@@ -36,7 +36,7 @@ class _InputPageState extends State<InputPage> {
         title: const Text(
           "Gradis",
           style: TextStyle(
-            color: Colors.white,
+            color: LightSilver,
             fontSize: 30.0,
             fontWeight: FontWeight.w700,
           ),
