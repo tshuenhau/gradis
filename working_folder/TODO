@@ -8,3 +8,4 @@
 - S/U Helper (ZQ)
 - Fix functionality when goal CAP equals totalCAP (ZQ)
 - Create different DB table for Goal CAP?? (ZQ)
+- Add module from the top instead of bottom

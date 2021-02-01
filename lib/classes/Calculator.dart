@@ -30,20 +30,24 @@ class Calculator {
   }
 
   double totalCAP(List<Module> mods) {
+    //total CAP is calculated
+    // Fix this: Runs many times each edit
     double totalGrade = 0;
     int totalCredits = 0;
     for (Module mod in mods) {
       totalGrade += mod.grade * mod.credits;
       totalCredits += mod.credits;
     }
+    // print(totalCredits);
+    // print(totalGrade);
     return totalGrade / totalCredits;
   }
 
   int increaseCAP(double cap) {
     //1: increase CAP, -1: decrease CAP, 0: CAP same
-    return cap < goalCAP
+    return cap < this.goalCAP
         ? 1
-        : cap > goalCAP
+        : cap > this.goalCAP
             ? -1
             : 0;
   }

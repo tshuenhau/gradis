@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/material.dart';
 import 'classes/module.dart';
-import 'classes/goalcap.dart';
+import 'classes/GoalCAP.dart';
 
 class DBProvider {
   DBProvider._();
@@ -17,36 +18,28 @@ class DBProvider {
       return _database;
     } else {
       // if _database is null we initiate it
-      _database = await initDB();
+      _database = await createDatabase();
       return _database;
     }
   }
 
-  void _createGoalCapTableV1toV2(Batch batch) {
-    batch.execute(
+  createDatabase() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    String databasesPath = await getDatabasesPath();
+    String dbPath = p.join(databasesPath, 'my.db');
+
+    var database = await openDatabase(dbPath, version: 1, onCreate: populateDB);
+    return database;
+  }
+
+  void populateDB(Database database, int version) async {
+    await database.execute(
+        "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done INTEGER)");
+    await database.execute(
         "CREATE TABLE goalcap (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, goal DOUBLE)");
   }
 
-  initDB() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    return await openDatabase(
-        p.join(await getDatabasesPath(), 'modules_database.db'),
-        onCreate: (db, version) {
-          return db.execute(
-            "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done INTEGER)",
-          );
-        },
-        version: 2,
-        onUpgrade: (db, oldVersion, newVersion) async {
-          var batch = db.batch();
-          if (oldVersion == 1) {
-            _createGoalCapTableV1toV2(batch);
-          }
-          await batch.commit();
-        });
-  }
-
-  Future<void> insertModule(Module module) async {
+  Future<void> addModule(Module module) async {
     //insets new module into DB
     final Database db = await database;
     var table = await db.rawQuery("SELECT MAX(id) + 1 AS id FROM modules");
@@ -105,7 +98,7 @@ class DBProvider {
     await db.rawDelete("Delete from modules");
   }
 
-  Future<void> insertGoalCAP(GoalCAP goalCAP) async {
+  Future<void> addGoalCAP(GoalCAP goalCAP) async {
     //insets new module into DB
     final Database db = await database;
     await db.insert(
@@ -137,7 +130,7 @@ class DBProvider {
       goalCAP.toMap(),
       where: "id = ?",
       // Pass the Modules's id as a whereArg to prevent SQL injection.
-      whereArgs: [goalCAP.id],
+      whereArgs: [goalCAP.getGoalCapId()],
     );
   }
 
@@ -145,6 +138,34 @@ class DBProvider {
     // used to get goal CAP from SQLite DB
     final Database db = await database;
     final List<Map<String, dynamic>> map = await db.query('goalcap');
-    return map.isEmpty ? null : GoalCAP(goal: map[0]["goal"]);
+    if (map.isEmpty) {
+      addGoalCAP(GoalCAP(goal: 4.0));
+    }
+    return map.isEmpty ? GoalCAP(goal: 0.0) : GoalCAP(goal: map[0]["goal"]);
   }
 }
+
+//
+// void _createGoalCapTableV1toV2(Batch batch) {
+//   batch.execute(
+//       "CREATE TABLE goalcap (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, goal DOUBLE)");
+// }
+//
+// initDB() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   return await openDatabase(
+//       p.join(await getDatabasesPath(), 'modules_database.db'),
+//       onCreate: (db, version) {
+//         return db.execute(
+//           "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done INTEGER)",
+//         );
+//       },
+//       version: 1,
+//       onUpgrade: (db, oldVersion, newVersion) async {
+//         var batch = db.batch();
+//         if (oldVersion == 1) {
+//           _createGoalCapTableV1toV2(batch);
+//         }
+//         await batch.commit();
+//       });
+// }

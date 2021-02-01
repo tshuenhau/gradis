@@ -1,29 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/database.dart';
-import 'calculator.dart';
-import 'goalcap.dart';
+import 'Calculator.dart';
+import 'GoalCAP.dart';
 
 class ModulesData extends ChangeNotifier {
   List<Module> modules;
   Future<List<Module>> dbModules;
-  //double currentCAP = 7; //TODO: dummy data
-  //bool incCap = false; //TODO: dummy data
-  double goal = 0.0;
-
+  double goalCAP;
   static Calculator calculator;
 
   //access database and get a list of modules
 
-  void getModulesFromDB() async {
+  void getModules() async {
     dbModules = DBProvider.db.getAllModules();
     modules = await dbModules;
-    dbModules.then((value) => calculator = Calculator(goalCAP: goal));
+    dbModules.then((value) => calculator = Calculator(goalCAP: this.goalCAP));
   }
 
   void addModule(Module module) async {
     modules.add(module);
-    await DBProvider.db.insertModule(module);
+    await DBProvider.db.addModule(module);
     notifyListeners();
   }
 
@@ -40,8 +37,6 @@ class ModulesData extends ChangeNotifier {
 
   int incCAP() {
     // checks if current CAP is less than goal CAP
-    //print("goal CAP: " + calculator.goalCAP.toString());
-    //print(calculator.increaseCAP(calculator.totalCAP(modules)));
     return calculator.increaseCAP(calculator.totalCAP(modules));
   }
 
@@ -51,8 +46,9 @@ class ModulesData extends ChangeNotifier {
   }
 
   double calculateTotalCAP() {
-    //print("current CAP: " + calculator.totalCAP(modules).toString());
-    return calculator.totalCAP(modules);
+    //print("total CAP: " + calculator.totalCAP(modules).toString());
+    double totalCAP = calculator.totalCAP(modules);
+    return totalCAP == null ? 0.0 : totalCAP;
   }
 
   double calculateFutureCAP() {
@@ -62,8 +58,8 @@ class ModulesData extends ChangeNotifier {
 
   void toggleDone(int index) async {
     Module newModule = modules[index].toggleDone();
-    print("oldModule: " + modules[index].toString());
-    print("newModule: " + newModule.toString());
+    // print("oldModule: " + modules[index].toString());
+    // print("newModule: " + newModule.toString());
 
     for (int i = 0; i < modules.length; i++) {
       if (modules[i].id == newModule.id) {
@@ -73,28 +69,32 @@ class ModulesData extends ChangeNotifier {
     }
     await DBProvider.db.updateModule(newModule);
     notifyListeners();
-    print("isdone? " + modules[index].isDone().toString());
+    // print("isdone? " + modules[index].isDone().toString());
   }
 
   //TODO: EDITED HERE
-  void getGoalCAPFromDB() async {
+  void getGoalCAP() async {
     GoalCAP goalCAP = await DBProvider.db.getGoalCAP();
-    goal = goalCAP == null ? 0 : goalCAP.goal;
-    dbModules.then((value) => calculator = Calculator(goalCAP: goal));
+    print("goal cap " + goalCAP.getGoalCap().toString());
+    this.goalCAP = goalCAP.getGoalCap() == null ? 0.0 : goalCAP.getGoalCap();
+    dbModules.then((value) => calculator = Calculator(goalCAP: this.goalCAP));
     notifyListeners();
   }
 
   void addGoalCAP(GoalCAP goalCAP) async {
-    goal = goalCAP.goal;
-    await DBProvider.db.insertGoalCAP(goalCAP);
-    dbModules.then((value) => calculator = Calculator(goalCAP: goal));
+    print('add goal CAP');
+    await DBProvider.db.addGoalCAP(goalCAP);
+    dbModules.then((value) => calculator = Calculator(goalCAP: this.goalCAP));
     notifyListeners();
   }
 
   void updateGoalCAP(GoalCAP goalCAP) async {
-    goal = goalCAP.goal;
+    print('update goal CAP');
     await DBProvider.db.updateGoalCAP(goalCAP);
-    dbModules.then((value) => calculator = Calculator(goalCAP: goal));
+    this.goalCAP = goalCAP.getGoalCap();
+    print(this.goalCAP);
+    dbModules.then(
+        (value) => calculator = Calculator(goalCAP: goalCAP.getGoalCap()));
     notifyListeners();
   }
 }

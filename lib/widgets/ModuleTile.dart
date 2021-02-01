@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gradis/classes/calculator.dart';
+import 'package:gradis/classes/Calculator.dart';
 import 'package:gradis/widgets/EditableTextField.dart';
-import 'package:gradis/classes/modulesData.dart';
+import 'package:gradis/classes/ModulesData.dart';
 import 'package:provider/provider.dart';
 
-import '../classes/modulesData.dart';
+import '../classes/ModulesData.dart';
 
 class ModuleTile extends StatefulWidget {
   final int index;

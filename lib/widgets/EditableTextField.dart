@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gradis/classes/modulesData.dart';
+import 'package:gradis/classes/ModulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 
@@ -49,14 +49,12 @@ class _EditableTextFieldState extends State<EditableTextField> {
               update(context);
             }
           },
-          
           child: TextField(
             textAlign: TextAlign.center,
             style: TextStyle(
-          color: Colors.white,
-          
-          fontSize: 18.0,
-        ),
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.transparent),
