@@ -8,8 +8,8 @@ class GoalCAP {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': this._id,
-      'goal': this._goal,
+      'id': _id,
+      'goal': _goal,
     };
   }
 

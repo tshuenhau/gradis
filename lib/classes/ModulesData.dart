@@ -20,7 +20,7 @@ class ModulesData extends ChangeNotifier {
 
   void addModule(Module module) async {
     modules.add(module);
-    await DBProvider.db.addModule(module);
+    await DBProvider.db.insertModule(module);
     notifyListeners();
   }
 
@@ -83,18 +83,16 @@ class ModulesData extends ChangeNotifier {
 
   void addGoalCAP(GoalCAP goalCAP) async {
     print('add goal CAP');
-    await DBProvider.db.addGoalCAP(goalCAP);
+    await DBProvider.db.insertGoalCAP(goalCAP);
     dbModules.then((value) => calculator = Calculator(goalCAP: this.goalCAP));
     notifyListeners();
   }
 
   void updateGoalCAP(GoalCAP goalCAP) async {
-    print('update goal CAP');
+    print('update goal CAP' + goalCAP.getGoalCap().toString());
     await DBProvider.db.updateGoalCAP(goalCAP);
     this.goalCAP = goalCAP.getGoalCap();
-    print(this.goalCAP);
-    dbModules.then(
-        (value) => calculator = Calculator(goalCAP: goalCAP.getGoalCap()));
+    dbModules.then((value) => calculator = Calculator(goalCAP: this.goalCAP));
     notifyListeners();
   }
 }

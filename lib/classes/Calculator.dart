@@ -38,8 +38,6 @@ class Calculator {
       totalGrade += mod.grade * mod.credits;
       totalCredits += mod.credits;
     }
-    // print(totalCredits);
-    // print(totalGrade);
     return totalGrade / totalCredits;
   }
 

@@ -23,23 +23,23 @@ class DBProvider {
     }
   }
 
+  Future _create(Database database, int version) async {
+    await database.execute(
+        "CREATE TABLE modules (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, grade DOUBLE, credits REAL, done INTEGER)");
+    await database
+        .execute("CREATE TABLE goalcap (id INTEGER PRIMARY KEY, goal DOUBLE)");
+  }
+
   createDatabase() async {
     WidgetsFlutterBinding.ensureInitialized();
     String databasesPath = await getDatabasesPath();
     String dbPath = p.join(databasesPath, 'my.db');
 
-    var database = await openDatabase(dbPath, version: 1, onCreate: populateDB);
+    var database = await openDatabase(dbPath, version: 1, onCreate: _create);
     return database;
   }
 
-  void populateDB(Database database, int version) async {
-    await database.execute(
-        "CREATE TABLE modules(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, grade DOUBLE, credits REAL, done INTEGER)");
-    await database.execute(
-        "CREATE TABLE goalcap (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, goal DOUBLE)");
-  }
-
-  Future<void> addModule(Module module) async {
+  Future<void> insertModule(Module module) async {
     //insets new module into DB
     final Database db = await database;
     var table = await db.rawQuery("SELECT MAX(id) + 1 AS id FROM modules");
@@ -98,7 +98,7 @@ class DBProvider {
     await db.rawDelete("Delete from modules");
   }
 
-  Future<void> addGoalCAP(GoalCAP goalCAP) async {
+  Future<void> insertGoalCAP(GoalCAP goalCAP) async {
     //insets new module into DB
     final Database db = await database;
     await db.insert(
@@ -113,7 +113,7 @@ class DBProvider {
     final db = await database;
 
     await db.delete(
-      'goalcap',
+      "goalcap",
       where: "id = ?",
       // Pass the Module's id as a whereArg to prevent SQL injection.
       whereArgs: [0],
@@ -122,26 +122,28 @@ class DBProvider {
 
   Future<void> updateGoalCAP(GoalCAP goalCAP) async {
     // takes a new goal CAP and replaces old goal CAP by matching their ids
+    print("UPDATE DB GOAL CAP");
     final db = await database;
-
     // Update the given Module.
     await db.update(
-      'goalcap',
+      "goalcap",
       goalCAP.toMap(),
       where: "id = ?",
       // Pass the Modules's id as a whereArg to prevent SQL injection.
       whereArgs: [goalCAP.getGoalCapId()],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+    // GoalCAP gc = await getGoalCAP();
+    // print("WAT " + gc.getGoalCap().toString());
   }
 
   Future<GoalCAP> getGoalCAP() async {
-    // used to get goal CAP from SQLite DB
-    final Database db = await database;
-    final List<Map<String, dynamic>> map = await db.query('goalcap');
-    if (map.isEmpty) {
-      addGoalCAP(GoalCAP(goal: 4.0));
-    }
-    return map.isEmpty ? GoalCAP(goal: 0.0) : GoalCAP(goal: map[0]["goal"]);
+    // used to get goal CAP from SQLite DB;
+    final db = await database;
+    final List<Map<String, dynamic>> maps = await db.query('goalcap');
+    print("MAP: " + maps.toString());
+    return maps.isEmpty ? GoalCAP(goal: 0.0) : GoalCAP(goal: maps[0]["goal"]);
   }
 }
 
