@@ -4,7 +4,6 @@ import 'package:gradis/classes/ModulesData.dart';
 import 'package:gradis/widgets/ModuleTile.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/constants.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 class GradesList extends StatefulWidget {
   @override
