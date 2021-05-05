@@ -8,13 +8,13 @@ import 'package:gradis/widgets/EditGoalCAPTextField.dart';
 
 const TextStyle capTextStyle = TextStyle(
   color: LightSilver,
-  fontSize: 15.0,
-  fontWeight: FontWeight.w500,
+  fontSize: 18.0,
+  fontWeight: FontWeight.w600,
 );
 const TextStyle titleTextStyle = TextStyle(
   color: LightSilver,
   fontSize: 10.0,
-  fontWeight: FontWeight.w300,
+  fontWeight: FontWeight.w400,
 );
 
 class InputPage extends StatefulWidget {
@@ -44,118 +44,121 @@ class _InputPageState extends State<InputPage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(75.0),
         child: AppBar(
-          centerTitle: false,
+          centerTitle: true,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(15),
+              bottom: Radius.circular(20),
             ),
           ),
-          title: FutureBuilder<List<Module>>(
-              future: Provider.of<ModulesData>(context).dbModules,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Consumer<ModulesData>(
-                      builder: (context, modulesData, child) {
-                    Provider.of<ModulesData>(context, listen: false)
-                        .calculateCurrentCAP();
-                    return Container(
-                      color: RaisinBlack,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Total",
-                                    textAlign: TextAlign.left,
-                                    style: titleTextStyle,
-                                  ),
-                                  Text(
-                                    Provider.of<ModulesData>(context,
-                                            listen: false)
-                                        .calculateTotalCAP()
-                                        .toStringAsFixed(2),
-                                    textAlign: TextAlign.left,
-                                    style: capTextStyle,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Current",
-                                    textAlign: TextAlign.left,
-                                    style: titleTextStyle,
-                                  ),
-                                  Text(
-                                    Provider.of<ModulesData>(context,
-                                            listen: false)
-                                        .calculateCurrentCAP()
-                                        .toStringAsFixed(2),
-                                    textAlign: TextAlign.left,
-                                    style: capTextStyle,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 15.0),
-                              child: const Text(
-                                "Gradis",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  color: LightSilver,
-                                  fontSize: 35.0,
-                                  fontWeight: FontWeight.w700,
+          title: Padding(
+            padding: const EdgeInsets.only(top:12.0),
+            child: FutureBuilder<List<Module>>(
+                future: Provider.of<ModulesData>(context).dbModules,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Consumer<ModulesData>(
+                        builder: (context, modulesData, child) {
+                      Provider.of<ModulesData>(context, listen: false)
+                          .calculateCurrentCAP();
+                      return Container(
+                        color: RaisinBlack,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "Total",
+                                      textAlign: TextAlign.left,
+                                      style: titleTextStyle,
+                                    ),
+                                    Text(
+                                      Provider.of<ModulesData>(context,
+                                              listen: false)
+                                          .calculateTotalCAP()
+                                          .toStringAsFixed(2),
+                                      textAlign: TextAlign.left,
+                                      style: capTextStyle,
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Future",
-                                    textAlign: TextAlign.left,
-                                    style: titleTextStyle,
-                                  ),
-                                  Text(
-                                    Provider.of<ModulesData>(context,
-                                            listen: false)
-                                        .calculateFutureCAP()
-                                        .toStringAsFixed(2),
-                                    textAlign: TextAlign.left,
-                                    style: capTextStyle,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    "Goal",
-                                    textAlign: TextAlign.left,
-                                    style: titleTextStyle,
-                                  ),
-                                  GoalCAPTextField(
-                                      initialText: Provider.of<ModulesData>(
-                                              context,
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "Current",
+                                      textAlign: TextAlign.left,
+                                      style: titleTextStyle,
+                                    ),
+                                    Text(
+                                      Provider.of<ModulesData>(context,
                                               listen: false)
-                                          .goalCAP
-                                          .toStringAsFixed(2))
-                                ],
+                                          .calculateCurrentCAP()
+                                          .toStringAsFixed(2),
+                                      textAlign: TextAlign.left,
+                                      style: capTextStyle,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ]),
-                    );
-                  });
-                } else {
-                  return Text("");
-                }
-              }),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                                child: const Text(
+                                  "Gradis",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: LightSilver,
+                                    fontSize: 35.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "Future",
+                                      textAlign: TextAlign.left,
+                                      style: titleTextStyle,
+                                    ),
+                                    Text(
+                                      Provider.of<ModulesData>(context,
+                                              listen: false)
+                                          .calculateFutureCAP()
+                                          .toStringAsFixed(2),
+                                      textAlign: TextAlign.left,
+                                      style: capTextStyle,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "Goal",
+                                      textAlign: TextAlign.left,
+                                      style: titleTextStyle,
+                                    ),
+                                    GoalCAPTextField(
+                                        initialText: Provider.of<ModulesData>(
+                                                context,
+                                                listen: false)
+                                            .goalCAP
+                                            .toStringAsFixed(2))
+                                  ],
+                                ),
+                              ),
+                            ]),
+                      );
+                    });
+                  } else {
+                    return Text("");
+                  }
+                }),
+          ),
 
           // actions: [
           //   Container(
