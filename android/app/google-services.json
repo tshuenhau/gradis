@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "459504726937",
+    "project_id": "gradis-1fe64",
+    "storage_bucket": "gradis-1fe64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459504726937:android:dceb0ab35a415c0dea1908",
+        "android_client_info": {
+          "package_name": "com.example.gradis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459504726937-375v68ijsgkvfei8tcbs9l4jr9ndgkad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE4eZnVJ759Py0gjI0Kdy5imXsc-mF7uM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459504726937-375v68ijsgkvfei8tcbs9l4jr9ndgkad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:459504726937:android:41565599c3bdcf3aea1908",
+        "android_client_info": {
+          "package_name": "com.zqth.gradis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "459504726937-375v68ijsgkvfei8tcbs9l4jr9ndgkad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE4eZnVJ759Py0gjI0Kdy5imXsc-mF7uM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "459504726937-375v68ijsgkvfei8tcbs9l4jr9ndgkad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
