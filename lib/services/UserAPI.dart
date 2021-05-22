@@ -28,10 +28,12 @@ class UserAPI extends ChangeNotifier {
       'difficulty': mod.difficulty,
       'ays': mod.ays,
       'su': mod.su,
-      'user': _auth.currentUser,
+      'user': _auth.currentUser?.email,
       'done': mod.done
     });
     notifyListeners();
+
+    print('module create: ' + mod.toString());
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findAllModules() {
@@ -68,7 +70,7 @@ class UserAPI extends ChangeNotifier {
           'user': _auth.currentUser?.email,
           'done': mod.done
         })
-        .then((value) => print("Module updated"))
+        .then((value) => print("Module updated: $mod"))
         .catchError((error) => print("Failed to update module: $error"));
     notifyListeners();
     print('updated module');
@@ -88,10 +90,10 @@ class UserAPI extends ChangeNotifier {
     UserAPI.goalCAP = goalCAP;
   }
 
-  void createGoalCAP(GoalCAP goalCAP) async {
+  void createGoalCAP(double goalCAP) async {
     _firestore
         .collection('goalCAP')
-        .add({'CAP': goalCAP.getGoalCap(), 'user': _auth.currentUser?.email});
+        .add({'CAP': goalCAP, 'user': _auth.currentUser?.email});
     notifyListeners();
   }
 

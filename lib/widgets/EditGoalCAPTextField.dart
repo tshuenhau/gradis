@@ -41,9 +41,13 @@ class _GoalCAPTextFieldState extends State<GoalCAPTextField> {
               TextInputType.numberWithOptions(signed: true, decimal: true),
           onSubmitted: (newValue) {
             print("new value: " + newValue);
-
-            Provider.of<UserAPI>(context, listen: false)
-                .updateGoalCAP(double.parse(newValue), widget.id);
+            if (widget.id == 'first-creation') {
+              Provider.of<UserAPI>(context, listen: false)
+                  .createGoalCAP(double.parse(newValue));
+            } else {
+              Provider.of<UserAPI>(context, listen: false)
+                  .updateGoalCAP(double.parse(newValue), widget.id);
+            }
           },
         ),
       );

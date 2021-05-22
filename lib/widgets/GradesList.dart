@@ -16,7 +16,7 @@ class _GradesListState extends State<GradesList> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserAPI>(
-      builder: (context, modulesData, child) {
+      builder: (context, modules, child) {
         return ListView.builder(
           //controller: scrollController,
           shrinkWrap: true,
@@ -85,7 +85,7 @@ class _GradesListState extends State<GradesList> {
                 Divider(height: 10, thickness: 1),
               ]);
             }
-            //print(modulesData.modules[index]);
+            print(UserAPI.modules);
             return ModuleTile(index, UserAPI.modules[index]);
           },
         );

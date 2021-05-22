@@ -183,7 +183,10 @@ class _InputPageState extends State<InputPage> {
                                                   initialText: goalCAP
                                                       .toStringAsFixed(2));
                                             } else {
-                                              return Text('');
+                                              print('first time');
+                                              return GoalCAPTextField(
+                                                  id: 'first-creation',
+                                                  initialText: '');
                                             }
                                           })
                                     ],
@@ -221,6 +224,7 @@ class _InputPageState extends State<InputPage> {
                           credits: data['credits']);
                     }).toList();
                     UserAPI.setModules(modules);
+                    print(UserAPI.modules);
                     return Container(
                       constraints: BoxConstraints.expand(),
                       decoration: BoxDecoration(
@@ -246,17 +250,17 @@ class _InputPageState extends State<InputPage> {
               backgroundColor: LightSilver,
               child: Icon(Icons.add),
               onPressed: () {
-                final module = Module(
+                final newMod = Module(
                     name: "new",
                     grade: 0,
                     credits: 0,
                     workload: 0,
                     difficulty: 0,
                     ays: {'year': 2020, 'semester': 1},
-                    su: true,
+                    su: false,
                     done: false);
                 Provider.of<UserAPI>(context, listen: false)
-                    .createModule(module);
+                    .createModule(newMod);
               }),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

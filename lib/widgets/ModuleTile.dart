@@ -13,18 +13,14 @@ class ModuleTile extends StatefulWidget {
 }
 
 class _ModuleTileState extends State<ModuleTile> {
-  late bool checkedValue;
-
   @override
   Widget build(BuildContext context) {
     return Consumer<UserAPI>(builder: (context, modulesData, child) {
-      checkedValue = widget.module.done;
       return ListTile(
         leading: Checkbox(
-            value: checkedValue,
+            value: widget.module.done,
             onChanged: (newText) {
               setState(() {
-                // checkedValue = !checkedValue;
                 Module updatedMod = new Module(
                     id: widget.module.id,
                     ays: widget.module.ays,

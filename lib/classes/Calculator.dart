@@ -39,7 +39,6 @@ class Calculator {
 
   static int increaseCAP(double cap, double goalCAP) {
     //1: increase CAP, -1: decrease CAP, 0: CAP same
-    print(goalCAP);
     return cap < goalCAP
         ? 1
         : cap > goalCAP

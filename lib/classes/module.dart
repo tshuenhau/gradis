@@ -48,7 +48,7 @@ class Module {
 
   @override
   String toString() {
-    return 'Module{name: $name, grade: $grade, credits: $credits,'
+    return 'Module{id: $id, name: $name, grade: $grade, credits: $credits,'
         ' workload: $workload, difficulty: $difficulty, done: $done, su: $su}';
   }
 }
