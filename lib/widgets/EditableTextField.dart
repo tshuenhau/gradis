@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gradis/classes/ModulesData.dart';
+import 'package:gradis/services/UserAPI.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 
@@ -9,7 +9,8 @@ class EditableTextField extends StatefulWidget {
   final String initialText;
   final Module module;
   final String type;
-  EditableTextField({this.initialText, this.module, this.type});
+  EditableTextField(
+      {required this.initialText, required this.module, required this.type});
 
   @override
   _EditableTextFieldState createState() => _EditableTextFieldState();
@@ -17,8 +18,8 @@ class EditableTextField extends StatefulWidget {
 
 class _EditableTextFieldState extends State<EditableTextField> {
   bool _isEditingText = false;
-  TextEditingController _editingController;
-  String text;
+  late TextEditingController _editingController;
+  late String text;
 
   @override
   void initState() {
@@ -95,7 +96,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
       },
       autofocus: true,
       child: Text(
-        text != null ? text : "",
+        text,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
@@ -112,7 +113,15 @@ class _EditableTextFieldState extends State<EditableTextField> {
     final double grade =
         widget.type == "grade" ? double.parse(text) : widget.module.grade;
     final Module newModule = Module(
-        id: widget.module.id, name: name, credits: credits, grade: grade);
-    Provider.of<ModulesData>(context, listen: false).updateModule(newModule);
+        name: name,
+        credits: credits,
+        grade: grade,
+        workload: widget.module.workload,
+        difficulty: widget.module.difficulty,
+        ays: widget.module.ays,
+        done: widget.module.done,
+        su: widget.module.su);
+    Provider.of<UserAPI>(context, listen: false)
+        .updateModule(newModule, widget.module.id);
   }
 }

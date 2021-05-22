@@ -1,44 +1,54 @@
-import 'package:flutter/material.dart';
-
 class Module {
   Module(
       {this.id,
-      @required this.name,
-      @required this.grade,
-      @required this.credits,
-      this.done = 0});
+      required this.name,
+      required this.grade,
+      required this.credits,
+      required this.workload,
+      required this.difficulty,
+      required this.ays,
+      required this.su,
+      required this.done});
 
-  int id = 0;
+  final String? id;
   final String name;
   final double grade;
   final int credits;
-  int done;
+  final int workload;
+  final int difficulty;
+  final Map ays;
+  bool su;
+  bool done;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': this.id,
-      'name': this.name,
-      'grade': this.grade,
-      'credits': this.credits,
-      'done': this.done
-    };
-  }
+  // Module toggleDone() {
+  //   if (this.done) {
+  //     return new Module(
+  //         name: this.name,
+  //         grade: this.grade,
+  //         credits: this.credits,
+  //         workload: this.workload,
+  //         difficulty: this.difficulty,
+  //         ays: this.ays,
+  //         done: false);
+  //   } else {
+  //     return new Module(
+  //         name: this.name,
+  //         grade: this.grade,
+  //         credits: this.credits,
+  //         workload: this.workload,
+  //         difficulty: this.difficulty,
+  //         ays: this.ays,
+  //         done: true);
+  //   }
+  // }
 
   bool isDone() {
-    return this.done == 1;
-  }
-
-  Module toggleDone(){
-    if(this.done == 1){
-      return new Module(id: this.id, name:this.name, grade:this.grade, credits: this.credits, done: 0);
-    }
-    else{
-      return new Module(id: this.id, name:this.name, grade:this.grade, credits: this.credits, done: 1);
-    }
+    return this.done;
   }
 
   @override
   String toString() {
-    return 'Module{id: $id, name: $name, grade: $grade, credits: $credits, done: $done}';
+    return 'Module{name: $name, grade: $grade, credits: $credits,'
+        ' workload: $workload, difficulty: $difficulty, done: $done, su: $su}';
   }
 }

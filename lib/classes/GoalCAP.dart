@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class GoalCAP {
   double _goal;
-  int _id = 0;
+  int? _id;
 
   GoalCAP({@required goal}) : _goal = goal;
 
@@ -17,7 +17,7 @@ class GoalCAP {
     return this._goal;
   }
 
-  int getGoalCapId() {
+  int? getGoalCapId() {
     return this._id;
   }
 

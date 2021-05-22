@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:gradis/classes/module.dart';
-import 'package:gradis/classes/ModulesData.dart';
+import 'package:gradis/services/UserAPI.dart';
 import 'package:gradis/widgets/ModuleTile.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/constants.dart';
-import 'package:gradis/classes/module.dart';
-import 'package:gradis/widgets/EditGoalCAPTextField.dart';
 
 TextAlign alignment = TextAlign.center;
 
@@ -18,12 +15,12 @@ class _GradesListState extends State<GradesList> {
   //ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
-    return Consumer<ModulesData>(
+    return Consumer<UserAPI>(
       builder: (context, modulesData, child) {
         return ListView.builder(
           //controller: scrollController,
           shrinkWrap: true,
-          itemCount: modulesData.modules.length,
+          itemCount: UserAPI.modules.length,
           itemBuilder: (context, index) {
             if (index == 0) {
               return Column(children: <Widget>[
@@ -42,7 +39,7 @@ class _GradesListState extends State<GradesList> {
                         ),
                       ),
                     ),
-                    title: Consumer<ModulesData>(
+                    title: Consumer<UserAPI>(
                         builder: (context, modulesData, child) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +86,7 @@ class _GradesListState extends State<GradesList> {
               ]);
             }
             //print(modulesData.modules[index]);
-            return ModuleTile(index);
+            return ModuleTile(index, UserAPI.modules[index]);
           },
         );
       },

@@ -1,50 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:gradis/classes/Calculator.dart';
 import 'package:gradis/widgets/EditableTextField.dart';
-import 'package:gradis/classes/ModulesData.dart';
 import 'package:provider/provider.dart';
-
-import '../classes/ModulesData.dart';
+import 'package:gradis/services/UserAPI.dart';
+import 'package:gradis/classes/module.dart';
 
 class ModuleTile extends StatefulWidget {
   final int index;
-  ModuleTile(this.index);
+  final Module module;
+  ModuleTile(this.index, this.module);
   @override
   _ModuleTileState createState() => _ModuleTileState();
 }
 
 class _ModuleTileState extends State<ModuleTile> {
-  bool checkedValue = false;
+  late bool checkedValue;
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<ModulesData>(builder: (context, modulesData, child) {
-      checkedValue = modulesData.modules[widget.index].isDone();
+    return Consumer<UserAPI>(builder: (context, modulesData, child) {
+      checkedValue = widget.module.done;
       return ListTile(
         leading: Checkbox(
             value: checkedValue,
             onChanged: (newText) {
               setState(() {
-                checkedValue = !checkedValue;
-                modulesData.toggleDone(widget.index);
-                //       Provider.of<ModulesData>(context, listen: false)
-                // .updateModule(newModule);
+                // checkedValue = !checkedValue;
+                Module updatedMod = new Module(
+                    id: widget.module.id,
+                    ays: widget.module.ays,
+                    credits: widget.module.credits,
+                    difficulty: widget.module.difficulty,
+                    workload: widget.module.workload,
+                    grade: widget.module.grade,
+                    done: !widget.module.done,
+                    name: widget.module.name,
+                    su: widget.module.su);
+                Provider.of<UserAPI>(context, listen: false)
+                    .updateModule(updatedMod, widget.module.id);
               });
             }),
-        title: Consumer<ModulesData>(builder: (context, modulesData, child) {
+        title: Consumer<UserAPI>(builder: (context, modulesData, child) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               //TODO: these stuff be long maybe find a way to shorten it so it dont look so cancer
               Expanded(
                   child: EditableTextField(
-                      initialText: modulesData.modules[widget.index].name,
-                      module: modulesData.modules[widget.index],
+                      initialText: UserAPI.modules[widget.index].name,
+                      module: UserAPI.modules[widget.index],
                       type: "name")),
               Expanded(
                 child: EditableTextField(
                     initialText:
-                        modulesData.modules[widget.index].credits.toString(),
-                    module: modulesData.modules[widget.index],
+                        UserAPI.modules[widget.index].credits.toString(),
+                    module: UserAPI.modules[widget.index],
                     type: "credits"),
               ),
               Expanded(
@@ -53,8 +62,8 @@ class _ModuleTileState extends State<ModuleTile> {
                 children: <Widget>[
                   EditableTextField(
                       initialText:
-                          modulesData.modules[widget.index].grade.toString(),
-                      module: modulesData.modules[widget.index],
+                          UserAPI.modules[widget.index].grade.toString(),
+                      module: UserAPI.modules[widget.index],
                       type: "grade"),
                 ],
               ))
@@ -62,17 +71,14 @@ class _ModuleTileState extends State<ModuleTile> {
           );
         }),
         trailing: Icon(
-            Provider.of<ModulesData>(context, listen: false).incCAP() == 1
+            Provider.of<UserAPI>(context, listen: false).incCAP() == 1
                 ? Icons.arrow_drop_up
-                : Provider.of<ModulesData>(context, listen: false).incCAP() ==
-                        -1
+                : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
                     ? Icons.arrow_drop_down
                     : null, //TODO: you can add an icon if u want
-            color: Provider.of<ModulesData>(context, listen: false).incCAP() ==
-                    1
+            color: Provider.of<UserAPI>(context, listen: false).incCAP() == 1
                 ? Colors.red
-                : Provider.of<ModulesData>(context, listen: false).incCAP() ==
-                        -1
+                : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
                     ? Colors.green
                     : Colors.grey),
         contentPadding: EdgeInsets.symmetric(horizontal: 20),

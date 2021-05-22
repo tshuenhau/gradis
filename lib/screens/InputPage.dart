@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/widgets/GradesList.dart';
-import 'package:gradis/classes/ModulesData.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/widgets/EditGoalCAPTextField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gradis/services/UserAPI.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 const TextStyle capTextStyle = TextStyle(
   color: LightSilver,
@@ -18,16 +20,35 @@ const TextStyle titleTextStyle = TextStyle(
 );
 
 class InputPage extends StatefulWidget {
+  static const String id = 'input_screen';
   @override
   _InputPageState createState() => _InputPageState();
 }
 
 class _InputPageState extends State<InputPage> {
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
+  late final User loggedInUser;
+
+  void getCurrentUser() async {
+    // to delete
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print("LOGGED IN");
+        print(loggedInUser.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
-    Provider.of<ModulesData>(context, listen: false).getModules();
-    Provider.of<ModulesData>(context, listen: false).getGoalCAP();
     super.initState();
+    getCurrentUser();
   }
 
   @override
@@ -46,14 +67,15 @@ class _InputPageState extends State<InputPage> {
             ),
             title: Padding(
               padding: const EdgeInsets.only(top: 12.0),
-              child: FutureBuilder<List<Module>>(
-                  future: Provider.of<ModulesData>(context).dbModules,
+              child: StreamBuilder<QuerySnapshot>(
+                  stream: _firestore
+                      .collection('modules')
+                      .where('user', isEqualTo: loggedInUser.email)
+                      .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Consumer<ModulesData>(
+                      return Consumer<UserAPI>(
                           builder: (context, modulesData, child) {
-                        Provider.of<ModulesData>(context, listen: false)
-                            .calculateCurrentCAP();
                         return Container(
                           color: RaisinBlack,
                           child: Row(
@@ -68,7 +90,7 @@ class _InputPageState extends State<InputPage> {
                                         style: titleTextStyle,
                                       ),
                                       Text(
-                                        Provider.of<ModulesData>(context,
+                                        Provider.of<UserAPI>(context,
                                                 listen: false)
                                             .calculateTotalCAP()
                                             .toStringAsFixed(2),
@@ -87,7 +109,7 @@ class _InputPageState extends State<InputPage> {
                                         style: titleTextStyle,
                                       ),
                                       Text(
-                                        Provider.of<ModulesData>(context,
+                                        Provider.of<UserAPI>(context,
                                                 listen: false)
                                             .calculateCurrentCAP()
                                             .toStringAsFixed(2),
@@ -119,7 +141,7 @@ class _InputPageState extends State<InputPage> {
                                         style: titleTextStyle,
                                       ),
                                       Text(
-                                        Provider.of<ModulesData>(context,
+                                        Provider.of<UserAPI>(context,
                                                 listen: false)
                                             .calculateFutureCAP()
                                             .toStringAsFixed(2),
@@ -137,12 +159,33 @@ class _InputPageState extends State<InputPage> {
                                         textAlign: TextAlign.left,
                                         style: titleTextStyle,
                                       ),
-                                      GoalCAPTextField(
-                                          initialText: Provider.of<ModulesData>(
-                                                  context,
-                                                  listen: false)
-                                              .goalCAP
-                                              .toStringAsFixed(2))
+                                      StreamBuilder<
+                                              QuerySnapshot<
+                                                  Map<String, dynamic>>>(
+                                          stream: new UserAPI().findGoalCAP(),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.hasData &&
+                                                snapshot
+                                                    .data!.docs.isNotEmpty) {
+                                              final goalCAP = snapshot
+                                                  .data!.docs
+                                                  .map((DocumentSnapshot<
+                                                          Map<String, dynamic>>
+                                                      document) {
+                                                return document.data()!['CAP'];
+                                              }).toList()[0];
+                                              final id =
+                                                  snapshot.data!.docs[0].id;
+                                              UserAPI.setGoalCAP(goalCAP);
+
+                                              return GoalCAPTextField(
+                                                  id: id,
+                                                  initialText: goalCAP
+                                                      .toStringAsFixed(2));
+                                            } else {
+                                              return Text('');
+                                            }
+                                          })
                                     ],
                                   ),
                                 ),
@@ -150,7 +193,7 @@ class _InputPageState extends State<InputPage> {
                         );
                       });
                     } else {
-                      return Text("");
+                      return Text("", style: const TextStyle());
                     }
                   }),
             ),
@@ -158,10 +201,26 @@ class _InputPageState extends State<InputPage> {
         ),
         body: Column(children: <Widget>[
           Expanded(
-            child: FutureBuilder<List<Module>>(
-                future: Provider.of<ModulesData>(context).dbModules,
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: new UserAPI().findAllModules(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
+                  if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                    final modules = snapshot.data!.docs
+                        .map((DocumentSnapshot<Map<String, dynamic>> document) {
+                      final data = document.data()!;
+
+                      return new Module(
+                          id: document.id,
+                          ays: data['ays'],
+                          workload: data['workload'],
+                          difficulty: data['difficulty'],
+                          su: data['su'],
+                          name: data['name'],
+                          grade: data['grade'],
+                          done: data['done'],
+                          credits: data['credits']);
+                    }).toList();
+                    UserAPI.setModules(modules);
                     return Container(
                       constraints: BoxConstraints.expand(),
                       decoration: BoxDecoration(
@@ -187,9 +246,17 @@ class _InputPageState extends State<InputPage> {
               backgroundColor: LightSilver,
               child: Icon(Icons.add),
               onPressed: () {
-                final module = Module(id: 0, name: "new", grade: 0, credits: 0);
-                Provider.of<ModulesData>(context, listen: false)
-                    .addModule(module);
+                final module = Module(
+                    name: "new",
+                    grade: 0,
+                    credits: 0,
+                    workload: 0,
+                    difficulty: 0,
+                    ays: {'year': 2020, 'semester': 1},
+                    su: true,
+                    done: false);
+                Provider.of<UserAPI>(context, listen: false)
+                    .createModule(module);
               }),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -244,9 +311,10 @@ class _InputPageState extends State<InputPage> {
 }
 
 class CustomBottomAppBar extends StatelessWidget {
-  const CustomBottomAppBar({
-    Key key,
-  }) : super(key: key);
+  // const CustomBottomAppBar({Key? key}): super(key: key);
+
+  final _auth = FirebaseAuth.instance;
+
   static final List<FloatingActionButtonLocation> centerLocations =
       <FloatingActionButtonLocation>[
     FloatingActionButtonLocation.centerDocked,
@@ -274,7 +342,9 @@ class CustomBottomAppBar extends StatelessWidget {
               tooltip: 'Search',
               icon: const Icon(Icons.search),
               color: LightSilver,
-              onPressed: () {},
+              onPressed: () {
+                print(UserAPI.modules);
+              },
             ),
             if (centerLocations
                 .contains(FloatingActionButtonLocation.centerDocked))
@@ -283,7 +353,10 @@ class CustomBottomAppBar extends StatelessWidget {
               tooltip: 'Settings', // settings and goal
               icon: const Icon(Icons.settings),
               color: LightSilver,
-              onPressed: () {},
+              onPressed: () {
+                _auth.signOut();
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
