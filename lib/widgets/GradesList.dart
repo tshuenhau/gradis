@@ -7,18 +7,23 @@ import 'package:gradis/constants.dart';
 TextAlign alignment = TextAlign.center;
 
 class GradesList extends StatefulWidget {
+  final ScrollController scrollController;
+  GradesList({required this.scrollController});
   @override
   _GradesListState createState() => _GradesListState();
 }
 
 class _GradesListState extends State<GradesList> {
+  @override
+
   //ScrollController scrollController;
   @override
   Widget build(BuildContext context) {
     return Consumer<UserAPI>(
       builder: (context, modules, child) {
         return ListView.builder(
-          //controller: scrollController,
+          //  / reverse: true,
+          controller: widget.scrollController,
           shrinkWrap: true,
           itemCount: UserAPI.modules.length,
           itemBuilder: (context, index) {
@@ -77,7 +82,7 @@ class _GradesListState extends State<GradesList> {
                         ],
                       );
                     }),
-                    trailing: Icon(Icons.arrow_drop_up, color: Colors.green),
+//                    trailing: Icon(Icons.arrow_drop_up, color: Colors.green),
                     contentPadding: EdgeInsets.symmetric(horizontal: 20),
                     isThreeLine: false,
                   ),
@@ -86,7 +91,17 @@ class _GradesListState extends State<GradesList> {
               ]);
             }
             print(UserAPI.modules);
-            return ModuleTile(index, UserAPI.modules[index]);
+            return Column(
+              children: [
+                ModuleTile(index, UserAPI.modules[index]),
+                Divider(
+                  height: 1,
+                  indent: 30,
+                  endIndent: 30,
+                  thickness: 1,
+                ),
+              ],
+            );
           },
         );
       },

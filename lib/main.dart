@@ -7,6 +7,7 @@ import 'package:gradis/screens/authentication/LoginScreen.dart';
 import 'package:gradis/screens/authentication/RegistrationScreen.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gradis/constants.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,7 +34,11 @@ class MyApp extends StatelessWidget {
                 }
               },
               child: MaterialApp(
-                theme: ThemeData.dark(),
+                theme: ThemeData.dark().copyWith(
+                  primaryColor: Colors.black,
+                  accentColor: GreenHighlight,
+                  backgroundColor: Colors.greenAccent,
+                ),
                 home: InputPage(),
                 initialRoute: WelcomeScreen.id,
                 routes: {
@@ -47,7 +52,11 @@ class MyApp extends StatelessWidget {
           );
         }
         return MaterialApp(
-          theme: ThemeData.dark(),
+          theme: ThemeData.dark().copyWith(
+            primaryColor: Colors.greenAccent,
+            accentColor: GreenHighlight,
+            backgroundColor: Colors.greenAccent,
+          ),
           home: Scaffold(),
         );
       },
