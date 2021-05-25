@@ -9,7 +9,6 @@ class Module {
       required this.ays,
       required this.su,
       required this.done});
-
   final String? id;
   final String name;
   final double grade;
@@ -19,6 +18,18 @@ class Module {
   final Map ays;
   bool su;
   bool done;
+  static Module CreateEmptyModule() {
+    return Module(
+        id: "empty",
+        name: "empty",
+        grade: 0,
+        credits: 0,
+        workload: 0,
+        difficulty: 0,
+        ays: Map(),
+        su: false,
+        done: false);
+  }
 
   // Module toggleDone() {
   //   if (this.done) {

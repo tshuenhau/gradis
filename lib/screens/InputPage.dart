@@ -266,7 +266,7 @@ class _InputPageState extends State<InputPage> {
                 Provider.of<UserAPI>(context, listen: false)
                     .createModule(newMod);
                 scrollController.animateTo(
-                    scrollController.position.maxScrollExtent + 1,
+                    scrollController.position.maxScrollExtent,
                     duration: Duration(microseconds: 300),
                     curve: Curves.easeOut);
               }),

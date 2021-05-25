@@ -38,6 +38,10 @@ class MyApp extends StatelessWidget {
                   primaryColor: Colors.black,
                   accentColor: GreenHighlight,
                   backgroundColor: Colors.greenAccent,
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: GreenHighlight.withOpacity(.6),
+                    selectionHandleColor: GreenHighlight.withOpacity(1),
+                  ),
                 ),
                 home: InputPage(),
                 initialRoute: WelcomeScreen.id,

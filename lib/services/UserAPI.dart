@@ -17,6 +17,7 @@ class UserAPI extends ChangeNotifier {
 
   static void setModules(List<Module> modules) {
     UserAPI.modules = modules;
+    UserAPI.modules.insert(0, Module.CreateEmptyModule());
   }
 
   void createModule(Module mod) {

@@ -56,17 +56,15 @@ class _EditableTextFieldState extends State<EditableTextField> {
               color: Colors.white,
               fontSize: 18.0,
             ),
+            cursorColor: Colors.greenAccent,
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: BorderSide(color: Colors.greenAccent),
               ),
-              //for use if want to change the look of the highligh
-              //   focusedBorder: UnderlineInputBorder(
-              //     borderSide: BorderSide(color: Theme.of(context).accentColor),
-              //   ),
-              //   border: UnderlineInputBorder(
-              //     borderSide: BorderSide(color: Theme.of(context).accentColor),
-              //   ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.greenAccent),
+              ),
+              hintStyle: TextStyle(color: Colors.greenAccent),
             ),
             keyboardType: widget.type == "name"
                 ? TextInputType.text

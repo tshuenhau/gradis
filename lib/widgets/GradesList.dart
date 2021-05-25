@@ -25,7 +25,8 @@ class _GradesListState extends State<GradesList> {
           //  / reverse: true,
           controller: widget.scrollController,
           shrinkWrap: true,
-          itemCount: UserAPI.modules.length,
+          itemCount: UserAPI.modules
+              .length, // for the done , module, credits, grade header at index 0
           itemBuilder: (context, index) {
             if (index == 0) {
               return Column(children: <Widget>[
