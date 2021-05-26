@@ -55,11 +55,13 @@ class _InputPageState extends State<InputPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+
     ScrollController scrollController = new ScrollController();
     return Scaffold(
         backgroundColor: RaisinBlack,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(75.0),
+          preferredSize: Size.fromHeight(height / 10),
           child: AppBar(
             backgroundColor: Colors.black,
             automaticallyImplyLeading: false,
@@ -81,12 +83,14 @@ class _InputPageState extends State<InputPage> {
                       return Consumer<UserAPI>(
                           builder: (context, modulesData, child) {
                         return Container(
+                          padding: const EdgeInsets.only(top: 20),
                           color: Colors.black,
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Expanded(
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Text(
                                         "Total",
@@ -106,6 +110,7 @@ class _InputPageState extends State<InputPage> {
                                 ),
                                 Expanded(
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Text(
                                         "Current",
