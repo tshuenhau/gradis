@@ -84,7 +84,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
       );
 
     return InkWell(
-      highlightColor: Colors.red,
+      highlightColor: Highlight,
       canRequestFocus: true,
       onTap: () {
         print("ink");

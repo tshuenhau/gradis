@@ -335,40 +335,43 @@ class CustomBottomAppBar extends StatelessWidget {
       shape: const CircularNotchedRectangle(),
       child: Container(
         height: height / 15,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            IconButton(
-              tooltip:
-                  'Open navigation menu', // this opens up like the side appbar where u can select the semester
-              icon: const Icon(Icons.menu),
-              color: IconsColor,
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            ),
-            IconButton(
-              tooltip: 'Search',
-              icon: const Icon(Icons.search),
-              color: IconsColor,
-              onPressed: () {
-                print(UserAPI.modules);
-              },
-            ),
-            if (centerLocations
-                .contains(FloatingActionButtonLocation.centerDocked))
-              const Spacer(),
-            IconButton(
-              tooltip: 'Settings', // settings and goal
-              icon: const Icon(Icons.settings),
-              color: IconsColor,
-              onPressed: () {
-                _auth.signOut();
-                Navigator.pop(context);
-              },
-            ),
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 6),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                tooltip:
+                    'Open navigation menu', // this opens up like the side appbar where u can select the semester
+                icon: const Icon(Icons.menu),
+                color: IconsColor,
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+              IconButton(
+                tooltip: 'Search',
+                icon: const Icon(Icons.search),
+                color: IconsColor,
+                onPressed: () {
+                  print(UserAPI.modules);
+                },
+              ),
+              if (centerLocations
+                  .contains(FloatingActionButtonLocation.centerDocked))
+                const Spacer(),
+              IconButton(
+                tooltip: 'Settings', // settings and goal
+                icon: const Icon(Icons.settings),
+                color: IconsColor,
+                onPressed: () {
+                  _auth.signOut();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
