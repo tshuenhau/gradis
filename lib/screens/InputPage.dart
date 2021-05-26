@@ -20,8 +20,6 @@ const TextStyle titleTextStyle = TextStyle(
   fontWeight: FontWeight.w400,
 );
 
-const Color IconsColor = Colors.white;
-
 class InputPage extends StatefulWidget {
   static const String id = 'input_screen';
   @override
@@ -130,7 +128,7 @@ class _InputPageState extends State<InputPage> {
                                   "Gradis",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    color: Colors.white70,
+                                    color: Colors.white60,
                                     fontSize: 35.0,
                                     fontWeight: FontWeight.w800,
                                   ),

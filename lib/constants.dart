@@ -19,7 +19,7 @@ const Color GreenHighlight = Color(0xff42dca3);
 
 const Color Highlight = Color(0xff21e6c1);
 
-const Color Accent = Color(0xff278ea5);
+const Color Accent = Color(0xff3edbf0);
 
 const Color BackgroundColor = Color(0xff071e3d);
 
@@ -30,6 +30,9 @@ const Color PrimaryColor = Color(0xff121212);
 const Color ModuleTileColor = Color(0xff222222);
 
 const Color ScaffoldBackgroundColor = Color(0xff202020);
+
+const Color BorderColor = Color(0xffc0fefc);
+const Color IconsColor = Colors.white60;
 
 ThemeData GradisTheme = ThemeData.dark().copyWith(
   primaryColor: PrimaryColor,
