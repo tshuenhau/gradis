@@ -33,7 +33,6 @@ class _GradesListState extends State<GradesList> {
                 Container(
                   height: 35,
                   child: ListTile(
-                    tileColor: Onyx,
                     leading: Padding(
                       padding: EdgeInsets.only(top: 5.0, left: 7.0),
                       child: Text(

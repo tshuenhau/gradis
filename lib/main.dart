@@ -34,15 +34,7 @@ class MyApp extends StatelessWidget {
                 }
               },
               child: MaterialApp(
-                theme: ThemeData.dark().copyWith(
-                  primaryColor: Colors.black,
-                  accentColor: GreenHighlight,
-                  backgroundColor: Colors.greenAccent,
-                  textSelectionTheme: TextSelectionThemeData(
-                    cursorColor: GreenHighlight.withOpacity(.6),
-                    selectionHandleColor: GreenHighlight.withOpacity(1),
-                  ),
-                ),
+                theme: GradisTheme,
                 home: InputPage(),
                 initialRoute: WelcomeScreen.id,
                 routes: {
@@ -56,11 +48,7 @@ class MyApp extends StatelessWidget {
           );
         }
         return MaterialApp(
-          theme: ThemeData.dark().copyWith(
-            primaryColor: Colors.greenAccent,
-            accentColor: GreenHighlight,
-            backgroundColor: Colors.greenAccent,
-          ),
+          theme: GradisTheme,
           home: Scaffold(),
         );
       },

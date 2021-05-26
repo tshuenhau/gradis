@@ -19,8 +19,8 @@ class _ModuleTileState extends State<ModuleTile> {
     return Consumer<UserAPI>(builder: (context, modulesData, child) {
       return ListTile(
         leading: Checkbox(
-            checkColor: Colors.white, // color of tick Mark
-            activeColor: GreenHighlight,
+            checkColor: Colors.black, // color of tick Mark
+            activeColor: Accent,
             value: widget.module.done,
             onChanged: (newText) {
               setState(() {
