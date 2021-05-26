@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Module {
   Module(
       {this.id,
@@ -20,30 +22,18 @@ class Module {
   bool su;
   bool done;
 
-  // Module toggleDone() {
-  //   if (this.done) {
-  //     return new Module(
-  //         name: this.name,
-  //         grade: this.grade,
-  //         credits: this.credits,
-  //         workload: this.workload,
-  //         difficulty: this.difficulty,
-  //         ays: this.ays,
-  //         done: false);
-  //   } else {
-  //     return new Module(
-  //         name: this.name,
-  //         grade: this.grade,
-  //         credits: this.credits,
-  //         workload: this.workload,
-  //         difficulty: this.difficulty,
-  //         ays: this.ays,
-  //         done: true);
-  //   }
-  // }
-
-  bool isDone() {
-    return this.done;
+  factory Module.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    Map<String, dynamic> data = doc.data()!;
+    return Module(
+        id: doc.id,
+        name: data['name'],
+        grade: data['grade'],
+        credits: data['credits'],
+        workload: data['workload'],
+        difficulty: data['difficulty'],
+        ays: data['ays'],
+        su: data['su'],
+        done: data['done']);
   }
 
   @override

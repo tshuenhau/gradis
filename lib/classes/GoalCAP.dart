@@ -1,28 +1,35 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GoalCAP {
-  double _goal;
-  int? _id;
+  double goal;
+  String id;
 
-  GoalCAP({@required goal}) : _goal = goal;
+  GoalCAP({required goal, required id})
+      : goal = goal,
+        id = id;
 
   Map<String, dynamic> toMap() {
     return {
-      'id': _id,
-      'goal': _goal,
+      'id': id,
+      'goal': goal,
     };
   }
 
   double getGoalCap() {
-    return this._goal;
+    return this.goal;
   }
 
-  int? getGoalCapId() {
-    return this._id;
+  String getGoalCapId() {
+    return this.id;
+  }
+
+  factory GoalCAP.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    Map<String, dynamic> data = doc.data()!;
+    return GoalCAP(id: doc.id, goal: data['goal']);
   }
 
   @override
   String toString() {
-    return 'Module{id: $_id,  goal: $_goal}';
+    return 'Module{id: $id,  goal: $goal}';
   }
 }

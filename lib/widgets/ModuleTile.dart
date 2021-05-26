@@ -42,14 +42,20 @@ class _ModuleTileState extends State<ModuleTile> {
               //TODO: these stuff be long maybe find a way to shorten it so it dont look so cancer
               Expanded(
                   child: EditableTextField(
-                      initialText: UserAPI.modules[widget.index].name,
-                      module: UserAPI.modules[widget.index],
+                      initialText: Provider.of<UserAPI>(context, listen: false)
+                          .modules[widget.index]
+                          .name,
+                      module: Provider.of<UserAPI>(context, listen: false)
+                          .modules[widget.index],
                       type: "name")),
               Expanded(
                 child: EditableTextField(
-                    initialText:
-                        UserAPI.modules[widget.index].credits.toString(),
-                    module: UserAPI.modules[widget.index],
+                    initialText: Provider.of<UserAPI>(context, listen: false)
+                        .modules[widget.index]
+                        .credits
+                        .toString(),
+                    module: Provider.of<UserAPI>(context, listen: false)
+                        .modules[widget.index],
                     type: "credits"),
               ),
               Expanded(
@@ -57,9 +63,12 @@ class _ModuleTileState extends State<ModuleTile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   EditableTextField(
-                      initialText:
-                          UserAPI.modules[widget.index].grade.toString(),
-                      module: UserAPI.modules[widget.index],
+                      initialText: Provider.of<UserAPI>(context, listen: false)
+                          .modules[widget.index]
+                          .grade
+                          .toString(),
+                      module: Provider.of<UserAPI>(context, listen: false)
+                          .modules[widget.index],
                       type: "grade"),
                 ],
               ))

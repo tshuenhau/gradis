@@ -12,11 +12,15 @@ enum Change { increase, decrease, noChange }
 class UserAPI extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
-  static late List<Module> modules = [];
-  static double goalCAP = 0;
+  late List<Module> modules = [];
+  double goalCAP = 0;
 
-  static void setModules(List<Module> modules) {
-    UserAPI.modules = modules;
+  void setModules(List<Module> modules) {
+    this.modules = modules;
+  }
+
+  int numOfModules() {
+    return this.modules.length;
   }
 
   void createModule(Module mod) {
@@ -86,31 +90,31 @@ class UserAPI extends ChangeNotifier {
     notifyListeners();
   }
 
-  static void setGoalCAP(double goalCAP) {
-    UserAPI.goalCAP = goalCAP;
+  void setGoalCAP(double goalCAP) {
+    this.goalCAP = goalCAP;
   }
 
-  void createGoalCAP(double goalCAP) async {
-    _firestore
-        .collection('goalCAP')
-        .add({'CAP': goalCAP, 'user': _auth.currentUser?.email});
-    notifyListeners();
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> findGoalCAP() {
+  Stream<GoalCAP> findGoalCAP() {
     return _firestore
         .collection('goalCAP')
-        .where('user', isEqualTo: _auth.currentUser?.email)
-        .snapshots();
+        .doc(_auth.currentUser!.uid)
+        .snapshots()
+        .map((snap) => GoalCAP.fromFirestore(snap));
   }
 
   void updateGoalCAP(double goalCAP, String id) {
-    _firestore
-        .collection('goalCAP')
-        .doc(id)
-        .update({'CAP': goalCAP})
-        .then((value) => print("Goal CAP updated: " + goalCAP.toString()))
-        .catchError((error) => print("Failed to update goal CAP: $error"));
+    if (id == 'first-creation') {
+      _firestore
+          .collection('goalCAP')
+          .add({'CAP': goalCAP, 'user': _auth.currentUser});
+    } else {
+      _firestore
+          .collection('goalCAP')
+          .doc(id)
+          .update({'CAP': goalCAP})
+          .then((value) => print("Goal CAP updated: " + goalCAP.toString()))
+          .catchError((error) => print("Failed to update goal CAP: $error"));
+    }
     notifyListeners();
   }
 
@@ -133,13 +137,11 @@ class UserAPI extends ChangeNotifier {
   }
 
   double calculateTotalCAP() {
-    // //print("total CAP: " + calculator.totalCAP(modules).toString());
     double totalCAP = Calculator.totalCAP(modules);
     return totalCAP;
   }
 
   double calculateFutureCAP() {
-    // //print("current CAP: " + calculator.totalCAP(modules).toString());
     return Calculator.futureCAP(modules);
   }
 }

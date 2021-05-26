@@ -20,7 +20,8 @@ class _GradesListState extends State<GradesList> {
         return ListView.builder(
           //controller: scrollController,
           shrinkWrap: true,
-          itemCount: UserAPI.modules.length,
+          itemCount:
+              Provider.of<UserAPI>(context, listen: false).numOfModules(),
           itemBuilder: (context, index) {
             if (index == 0) {
               return Column(children: <Widget>[
@@ -85,8 +86,8 @@ class _GradesListState extends State<GradesList> {
                 Divider(height: 10, thickness: 1),
               ]);
             }
-            print(UserAPI.modules);
-            return ModuleTile(index, UserAPI.modules[index]);
+            return ModuleTile(index,
+                Provider.of<UserAPI>(context, listen: false).modules[index]);
           },
         );
       },

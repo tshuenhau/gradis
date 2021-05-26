@@ -7,6 +7,7 @@ import 'package:gradis/widgets/EditGoalCAPTextField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gradis/classes/GoalCAP.dart';
 
 const TextStyle capTextStyle = TextStyle(
   color: LightSilver,
@@ -159,28 +160,21 @@ class _InputPageState extends State<InputPage> {
                                         textAlign: TextAlign.left,
                                         style: titleTextStyle,
                                       ),
-                                      StreamBuilder<
-                                              QuerySnapshot<
-                                                  Map<String, dynamic>>>(
-                                          stream: new UserAPI().findGoalCAP(),
+                                      StreamBuilder<GoalCAP>(
+                                          stream: Provider.of<UserAPI>(context,
+                                                  listen: false)
+                                              .findGoalCAP(),
                                           builder: (context, snapshot) {
-                                            if (snapshot.hasData &&
-                                                snapshot
-                                                    .data!.docs.isNotEmpty) {
-                                              final goalCAP = snapshot
-                                                  .data!.docs
-                                                  .map((DocumentSnapshot<
-                                                          Map<String, dynamic>>
-                                                      document) {
-                                                return document.data()!['CAP'];
-                                              }).toList()[0];
-                                              final id =
-                                                  snapshot.data!.docs[0].id;
-                                              UserAPI.setGoalCAP(goalCAP);
+                                            if (snapshot.hasData) {
+                                              final goalCAP = snapshot.data;
+                                              final id = goalCAP!.id;
+                                              Provider.of<UserAPI>(context,
+                                                      listen: false)
+                                                  .setGoalCAP(goalCAP.goal);
 
                                               return GoalCAPTextField(
                                                   id: id,
-                                                  initialText: goalCAP
+                                                  initialText: goalCAP.goal
                                                       .toStringAsFixed(2));
                                             } else {
                                               print('first time');
@@ -205,26 +199,17 @@ class _InputPageState extends State<InputPage> {
         body: Column(children: <Widget>[
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: new UserAPI().findAllModules(),
+                stream: Provider.of<UserAPI>(context, listen: false)
+                    .findAllModules(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                     final modules = snapshot.data!.docs
                         .map((DocumentSnapshot<Map<String, dynamic>> document) {
-                      final data = document.data()!;
-
-                      return new Module(
-                          id: document.id,
-                          ays: data['ays'],
-                          workload: data['workload'],
-                          difficulty: data['difficulty'],
-                          su: data['su'],
-                          name: data['name'],
-                          grade: data['grade'],
-                          done: data['done'],
-                          credits: data['credits']);
+                      final data = document;
+                      return Module.fromFirestore(data);
                     }).toList();
-                    UserAPI.setModules(modules);
-                    print(UserAPI.modules);
+                    Provider.of<UserAPI>(context, listen: false)
+                        .setModules(modules);
                     return Container(
                       constraints: BoxConstraints.expand(),
                       decoration: BoxDecoration(
@@ -346,9 +331,7 @@ class CustomBottomAppBar extends StatelessWidget {
               tooltip: 'Search',
               icon: const Icon(Icons.search),
               color: LightSilver,
-              onPressed: () {
-                print(UserAPI.modules);
-              },
+              onPressed: () {},
             ),
             if (centerLocations
                 .contains(FloatingActionButtonLocation.centerDocked))
