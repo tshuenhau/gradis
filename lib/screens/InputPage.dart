@@ -10,12 +10,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gradis/constants.dart';
 
 const TextStyle capTextStyle = TextStyle(
-  color: Colors.white,
+  color: Colors.white70,
   fontSize: 18.0,
   fontWeight: FontWeight.w600,
 );
 const TextStyle titleTextStyle = TextStyle(
-  color: Highlight,
+  color: Colors.white70,
   fontSize: 10.0,
   fontWeight: FontWeight.w400,
 );
@@ -130,9 +130,9 @@ class _InputPageState extends State<InputPage> {
                                   "Gradis",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.white70,
                                     fontSize: 35.0,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
                               ),

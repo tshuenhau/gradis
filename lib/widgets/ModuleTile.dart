@@ -17,71 +17,76 @@ class _ModuleTileState extends State<ModuleTile> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserAPI>(builder: (context, modulesData, child) {
-      return ListTile(
-        leading: Checkbox(
-            checkColor: Colors.black, // color of tick Mark
-            activeColor: Accent,
-            value: widget.module.done,
-            onChanged: (newText) {
-              setState(() {
-                Module updatedMod = new Module(
-                    id: widget.module.id,
-                    ays: widget.module.ays,
-                    credits: widget.module.credits,
-                    difficulty: widget.module.difficulty,
-                    workload: widget.module.workload,
-                    grade: widget.module.grade,
-                    done: !widget.module.done,
-                    name: widget.module.name,
-                    su: widget.module.su);
-                Provider.of<UserAPI>(context, listen: false)
-                    .updateModule(updatedMod, widget.module.id);
-              });
-            }),
-        title: Consumer<UserAPI>(builder: (context, modulesData, child) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              //TODO: these stuff be long maybe find a way to shorten it so it dont look so cancer
-              Expanded(
+      return Card(
+        elevation: 5.0,
+        color: ModuleTileColor,
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+        child: ListTile(
+          leading: Checkbox(
+              checkColor: Colors.black, // color of tick Mark
+              activeColor: Highlight,
+              value: widget.module.done,
+              onChanged: (newText) {
+                setState(() {
+                  Module updatedMod = new Module(
+                      id: widget.module.id,
+                      ays: widget.module.ays,
+                      credits: widget.module.credits,
+                      difficulty: widget.module.difficulty,
+                      workload: widget.module.workload,
+                      grade: widget.module.grade,
+                      done: !widget.module.done,
+                      name: widget.module.name,
+                      su: widget.module.su);
+                  Provider.of<UserAPI>(context, listen: false)
+                      .updateModule(updatedMod, widget.module.id);
+                });
+              }),
+          title: Consumer<UserAPI>(builder: (context, modulesData, child) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                //TODO: these stuff be long maybe find a way to shorten it so it dont look so cancer
+                Expanded(
+                    child: EditableTextField(
+                        initialText: UserAPI.modules[widget.index].name,
+                        module: UserAPI.modules[widget.index],
+                        type: "name")),
+                Expanded(
                   child: EditableTextField(
-                      initialText: UserAPI.modules[widget.index].name,
-                      module: UserAPI.modules[widget.index],
-                      type: "name")),
-              Expanded(
-                child: EditableTextField(
-                    initialText:
-                        UserAPI.modules[widget.index].credits.toString(),
-                    module: UserAPI.modules[widget.index],
-                    type: "credits"),
-              ),
-              Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  EditableTextField(
                       initialText:
-                          UserAPI.modules[widget.index].grade.toString(),
+                          UserAPI.modules[widget.index].credits.toString(),
                       module: UserAPI.modules[widget.index],
-                      type: "grade"),
-                ],
-              ))
-            ],
-          );
-        }),
-        // trailing: Icon(
-        //     Provider.of<UserAPI>(context, listen: false).incCAP() == 1
-        //         ? Icons.arrow_drop_up
-        //         : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
-        //             ? Icons.arrow_drop_down
-        //             : null, //TODO: you can add an icon if u want
-        //     color: Provider.of<UserAPI>(context, listen: false).incCAP() == 1
-        //         ? Colors.red
-        //         : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
-        //             ? Colors.green
-        //             : Colors.grey),
-        contentPadding: EdgeInsets.symmetric(horizontal: 20),
-        isThreeLine: false,
+                      type: "credits"),
+                ),
+                Expanded(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    EditableTextField(
+                        initialText:
+                            UserAPI.modules[widget.index].grade.toString(),
+                        module: UserAPI.modules[widget.index],
+                        type: "grade"),
+                  ],
+                ))
+              ],
+            );
+          }),
+          // trailing: Icon(
+          //     Provider.of<UserAPI>(context, listen: false).incCAP() == 1
+          //         ? Icons.arrow_drop_up
+          //         : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
+          //             ? Icons.arrow_drop_down
+          //             : null, //TODO: you can add an icon if u want
+          //     color: Provider.of<UserAPI>(context, listen: false).incCAP() == 1
+          //         ? Colors.red
+          //         : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
+          //             ? Colors.green
+          //             : Colors.grey),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20),
+          isThreeLine: false,
+        ),
       );
     });
   }

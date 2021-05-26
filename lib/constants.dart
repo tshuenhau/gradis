@@ -25,7 +25,11 @@ const Color BackgroundColor = Color(0xff071e3d);
 
 const Color Blue = Color(0xff1f4287);
 
-const Color PrimaryColor = Color(0xff1f4287);
+const Color PrimaryColor = Color(0xff121212);
+
+const Color ModuleTileColor = Color(0xff222222);
+
+const Color ScaffoldBackgroundColor = Color(0xff202020);
 
 ThemeData GradisTheme = ThemeData.dark().copyWith(
   primaryColor: PrimaryColor,
@@ -34,7 +38,7 @@ ThemeData GradisTheme = ThemeData.dark().copyWith(
   ),
   accentColor: Accent,
   backgroundColor: BackgroundColor,
-  scaffoldBackgroundColor: BackgroundColor,
+  scaffoldBackgroundColor: ScaffoldBackgroundColor,
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: Highlight.withOpacity(.6),
     selectionHandleColor: Highlight.withOpacity(1),

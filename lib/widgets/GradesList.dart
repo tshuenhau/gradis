@@ -31,7 +31,9 @@ class _GradesListState extends State<GradesList> {
             if (index == 0) {
               return Column(children: <Widget>[
                 Container(
+                  color: ModuleTileColor,
                   height: 35,
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: ListTile(
                     leading: Padding(
                       padding: EdgeInsets.only(top: 5.0, left: 7.0),
@@ -39,7 +41,7 @@ class _GradesListState extends State<GradesList> {
                         'Done',
                         textAlign: alignment,
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: Colors.white70,
                           fontSize: 12,
                         ),
                       ),
@@ -54,7 +56,7 @@ class _GradesListState extends State<GradesList> {
                               'Module',
                               textAlign: alignment,
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.white70,
                                 fontSize: 12,
                               ),
                             ),
@@ -64,7 +66,7 @@ class _GradesListState extends State<GradesList> {
                               'Credits',
                               textAlign: alignment,
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.white70,
                                 fontSize: 12,
                               ),
                             ),
@@ -74,7 +76,7 @@ class _GradesListState extends State<GradesList> {
                               'Grade',
                               textAlign: alignment,
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.white70,
                                 fontSize: 12,
                               ),
                             ),
@@ -91,17 +93,7 @@ class _GradesListState extends State<GradesList> {
               ]);
             }
             print(UserAPI.modules);
-            return Column(
-              children: [
-                ModuleTile(index, UserAPI.modules[index]),
-                Divider(
-                  height: 1,
-                  indent: 30,
-                  endIndent: 30,
-                  thickness: 1,
-                ),
-              ],
-            );
+            return Container(child: ModuleTile(index, UserAPI.modules[index]));
           },
         );
       },

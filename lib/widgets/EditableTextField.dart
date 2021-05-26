@@ -60,8 +60,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
             cursorColor: Highlight,
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Highlight),
-              ),
+                  borderSide: BorderSide(color: Colors.transparent)),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Highlight),
               ),
