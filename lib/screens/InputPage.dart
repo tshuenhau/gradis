@@ -341,12 +341,15 @@ class CustomBottomAppBar extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      color: Colors.black,
-      child: Container(
-        height: 50.0,
+    double height = MediaQuery.of(context).size.height;
+
+    return PreferredSize(
+      preferredSize: Size.fromHeight(height / 10),
+      child: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        color: Colors.black,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             IconButton(
               tooltip:
