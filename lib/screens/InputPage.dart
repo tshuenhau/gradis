@@ -265,10 +265,12 @@ class _InputPageState extends State<InputPage> {
                     done: false);
                 Provider.of<UserAPI>(context, listen: false)
                     .createModule(newMod);
-                scrollController.animateTo(
-                    scrollController.position.maxScrollExtent,
-                    duration: Duration(microseconds: 300),
-                    curve: Curves.easeOut);
+                if (scrollController.hasClients) {
+                  scrollController.animateTo(
+                      scrollController.position.maxScrollExtent,
+                      duration: Duration(microseconds: 300),
+                      curve: Curves.easeOut);
+                }
               }),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
