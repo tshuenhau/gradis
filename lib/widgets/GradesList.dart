@@ -7,7 +7,7 @@ import 'package:gradis/constants.dart';
 TextAlign alignment = TextAlign.center;
 
 class GradesList extends StatefulWidget {
-  final ScrollController scrollController;
+  late final ScrollController scrollController;
   GradesList({required this.scrollController});
   @override
   _GradesListState createState() => _GradesListState();
