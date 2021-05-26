@@ -29,8 +29,16 @@ class _ModuleTileState extends State<ModuleTile> {
           child: buildListTile(context),
           actions: <Widget>[
             IconSlideAction(
+              caption: 'More',
+              color: Onyx,
+              icon: Icons.more_horiz,
+              foregroundColor: Accent,
+              onTap: () => ('More'), //TODO: ADD THE FEEDBACK PAGE/ MORE PAGE
+            ),
+            IconSlideAction(
                 caption: "Delete",
-                color: Accent,
+                color: DarkCharcoal,
+                foregroundColor: Colors.red,
                 icon: Icons.delete,
                 onTap: () {
                   Provider.of<UserAPI>(context, listen: false)
