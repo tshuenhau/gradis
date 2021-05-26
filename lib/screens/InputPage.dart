@@ -128,7 +128,7 @@ class _InputPageState extends State<InputPage> {
                                   "Gradis",
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    color: Colors.white60,
+                                    color: Colors.white70,
                                     fontSize: 35.0,
                                     fontWeight: FontWeight.w800,
                                   ),
