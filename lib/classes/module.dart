@@ -10,17 +10,32 @@ class Module {
       required this.difficulty,
       required this.ays,
       required this.su,
-      required this.done});
-
+      required this.done,
+      required this.timestamp});
   final String? id;
   final String name;
   final double grade;
   final int credits;
   final int workload;
   final int difficulty;
+  final DateTime timestamp;
   final Map ays;
   bool su;
   bool done;
+
+  static Module CreateEmptyModule() {
+    return Module(
+        id: "empty",
+        name: "empty",
+        grade: 0,
+        credits: 0,
+        workload: 0,
+        difficulty: 0,
+        ays: Map(),
+        su: false,
+        done: false,
+        timestamp: DateTime.now());
+  }
 
   factory Module.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     Map<String, dynamic> data = doc.data()!;
@@ -33,7 +48,8 @@ class Module {
         difficulty: data['difficulty'],
         ays: data['ays'],
         su: data['su'],
-        done: data['done']);
+        done: data['done'],
+        timestamp: data['timestamp']);
   }
 
   @override

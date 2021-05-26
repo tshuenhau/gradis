@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/screens/InputPage.dart';
+import 'package:gradis/screens/authentication/ForgotPasswordScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const id = 'login_screen';
@@ -50,36 +51,56 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24.0,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: Material(
-                  color: Colors.greenAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  elevation: 5.0,
-                  child: MaterialButton(
-                    onPressed: () async {
-                      //Implement registration functionality.
-                      try {
-                        UserCredential userCredential =
-                            await _auth.signInWithEmailAndPassword(
-                                email: this.email, password: this.password);
-                        Navigator.pushNamed(context, InputPage.id);
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
-                          print('No user found for that email.');
-                        } else if (e.code == 'wrong-password') {
-                          print('Wrong password provided for that user.');
-                        }
-                      }
-                    },
-                    minWidth: 200.0,
-                    height: 42.0,
-                    child: Text(
-                      'Login',
-                      style: TextStyle(color: Colors.white),
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Column(children: [
+                    Material(
+                      color: GreenHighlight,
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      elevation: 5.0,
+                      child: MaterialButton(
+                        onPressed: () async {
+                          //Implement registration functionality.
+                          try {
+                            UserCredential userCredential =
+                                await _auth.signInWithEmailAndPassword(
+                                    email: this.email, password: this.password);
+                            Navigator.pushNamed(context, InputPage.id);
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'user-not-found') {
+                              print('No user found for that email.');
+                            } else if (e.code == 'wrong-password') {
+                              print('Wrong password provided for that user.');
+                            }
+                          }
+                        },
+                        minWidth: 200.0,
+                        height: 42.0,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Material(
+                      color: GreenHighlight,
+                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      elevation: 5.0,
+                      child: MaterialButton(
+                        onPressed: () async {
+                          Navigator.pushNamed(context, ForgotPasswordScreen.id);
+                        },
+                        minWidth: 200.0,
+                        height: 42.0,
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ])),
             ],
           )),
     );

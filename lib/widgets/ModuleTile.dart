@@ -3,6 +3,7 @@ import 'package:gradis/widgets/EditableTextField.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:gradis/classes/module.dart';
+import 'package:gradis/constants.dart';
 
 class ModuleTile extends StatefulWidget {
   final int index;
@@ -18,6 +19,8 @@ class _ModuleTileState extends State<ModuleTile> {
     return Consumer<UserAPI>(builder: (context, modulesData, child) {
       return ListTile(
         leading: Checkbox(
+            checkColor: Colors.white, // color of tick Mark
+            activeColor: GreenHighlight,
             value: widget.module.done,
             onChanged: (newText) {
               setState(() {
@@ -30,7 +33,8 @@ class _ModuleTileState extends State<ModuleTile> {
                     grade: widget.module.grade,
                     done: !widget.module.done,
                     name: widget.module.name,
-                    su: widget.module.su);
+                    su: widget.module.su,
+                    timestamp: widget.module.timestamp);
                 Provider.of<UserAPI>(context, listen: false)
                     .updateModule(updatedMod, widget.module.id);
               });
@@ -75,17 +79,17 @@ class _ModuleTileState extends State<ModuleTile> {
             ],
           );
         }),
-        trailing: Icon(
-            Provider.of<UserAPI>(context, listen: false).incCAP() == 1
-                ? Icons.arrow_drop_up
-                : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
-                    ? Icons.arrow_drop_down
-                    : null, //TODO: you can add an icon if u want
-            color: Provider.of<UserAPI>(context, listen: false).incCAP() == 1
-                ? Colors.red
-                : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
-                    ? Colors.green
-                    : Colors.grey),
+        // trailing: Icon(
+        //     Provider.of<UserAPI>(context, listen: false).incCAP() == 1
+        //         ? Icons.arrow_drop_up
+        //         : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
+        //             ? Icons.arrow_drop_down
+        //             : null, //TODO: you can add an icon if u want
+        //     color: Provider.of<UserAPI>(context, listen: false).incCAP() == 1
+        //         ? Colors.red
+        //         : Provider.of<UserAPI>(context, listen: false).incCAP() == -1
+        //             ? Colors.green
+        //             : Colors.grey),
         contentPadding: EdgeInsets.symmetric(horizontal: 20),
         isThreeLine: false,
       );

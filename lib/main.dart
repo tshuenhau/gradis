@@ -7,6 +7,9 @@ import 'package:gradis/screens/authentication/LoginScreen.dart';
 import 'package:gradis/screens/authentication/RegistrationScreen.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gradis/constants.dart';
+import 'package:gradis/screens/authentication/ForgotPasswordScreen.dart';
+import 'package:gradis/screens/authentication/ConfirmEmailScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,13 +36,23 @@ class MyApp extends StatelessWidget {
                 }
               },
               child: MaterialApp(
-                theme: ThemeData.dark(),
+                theme: ThemeData.dark().copyWith(
+                  primaryColor: Colors.black,
+                  accentColor: GreenHighlight,
+                  backgroundColor: Colors.greenAccent,
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: GreenHighlight.withOpacity(.6),
+                    selectionHandleColor: GreenHighlight.withOpacity(1),
+                  ),
+                ),
                 home: InputPage(),
                 initialRoute: WelcomeScreen.id,
                 routes: {
                   WelcomeScreen.id: (context) => WelcomeScreen(),
                   LoginScreen.id: (context) => LoginScreen(),
+                  ForgotPasswordScreen.id: (context) => ForgotPasswordScreen(),
                   RegistrationScreen.id: (context) => RegistrationScreen(),
+                  ConfirmEmailScreen.id: (context) => ConfirmEmailScreen(),
                   InputPage.id: (context) => InputPage()
                 },
               ),
@@ -47,7 +60,11 @@ class MyApp extends StatelessWidget {
           );
         }
         return MaterialApp(
-          theme: ThemeData.dark(),
+          theme: ThemeData.dark().copyWith(
+            primaryColor: Colors.greenAccent,
+            accentColor: GreenHighlight,
+            backgroundColor: Colors.greenAccent,
+          ),
           home: Scaffold(),
         );
       },

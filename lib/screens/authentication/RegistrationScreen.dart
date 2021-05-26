@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gradis/screens/InputPage.dart';
+import 'package:gradis/screens/authentication/ConfirmEmailScreen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const id = 'registration_screen';
@@ -58,7 +58,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
-                color: Colors.blueAccent,
+                color: GreenAccent,
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 elevation: 5.0,
                 child: MaterialButton(
@@ -68,7 +68,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       final newUser =
                           await _auth.createUserWithEmailAndPassword(
                               email: email, password: password);
-                      Navigator.pushNamed(context, InputPage.id);
+
+                      await newUser.user!.sendEmailVerification();
+
+                      Navigator.pushNamed(context, ConfirmEmailScreen.id);
                     } catch (e) {
                       print(e);
                     }
@@ -77,7 +80,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   height: 42.0,
                   child: Text(
                     'Register',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ),

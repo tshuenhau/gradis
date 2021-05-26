@@ -10,15 +10,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gradis/classes/GoalCAP.dart';
 
 const TextStyle capTextStyle = TextStyle(
-  color: LightSilver,
+  color: Colors.white,
   fontSize: 18.0,
   fontWeight: FontWeight.w600,
 );
 const TextStyle titleTextStyle = TextStyle(
-  color: LightSilver,
+  color: Colors.white,
   fontSize: 10.0,
   fontWeight: FontWeight.w400,
 );
+
+const Color IconsColor = Colors.white;
 
 class InputPage extends StatefulWidget {
   static const String id = 'input_screen';
@@ -54,11 +56,13 @@ class _InputPageState extends State<InputPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController scrollController = new ScrollController();
     return Scaffold(
-        backgroundColor: Onyx,
+        backgroundColor: RaisinBlack,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(75.0),
           child: AppBar(
+            backgroundColor: Colors.black,
             automaticallyImplyLeading: false,
             centerTitle: true,
             shape: RoundedRectangleBorder(
@@ -78,7 +82,7 @@ class _InputPageState extends State<InputPage> {
                       return Consumer<UserAPI>(
                           builder: (context, modulesData, child) {
                         return Container(
-                          color: RaisinBlack,
+                          color: Colors.black,
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
@@ -127,7 +131,7 @@ class _InputPageState extends State<InputPage> {
                                     "Gradis",
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
-                                      color: LightSilver,
+                                      color: Colors.white,
                                       fontSize: 35.0,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -177,7 +181,6 @@ class _InputPageState extends State<InputPage> {
                                                   initialText: goalCAP.goal
                                                       .toStringAsFixed(2));
                                             } else {
-                                              print('first time');
                                               return GoalCAPTextField(
                                                   id: 'first-creation',
                                                   initialText: '');
@@ -213,15 +216,15 @@ class _InputPageState extends State<InputPage> {
                     return Container(
                       constraints: BoxConstraints.expand(),
                       decoration: BoxDecoration(
-                        color: Onyx,
+                        color: RaisinBlack,
                       ),
-                      child: GradesList(),
+                      child: GradesList(scrollController: scrollController),
                     );
                   } else
                     return Container(
                       height: 300,
                       decoration: BoxDecoration(
-                        color: Onyx,
+                        color: RaisinBlack,
                       ),
                       child: Text("Loading"),
                     );
@@ -232,7 +235,7 @@ class _InputPageState extends State<InputPage> {
         floatingActionButton: Visibility(
           visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
           child: FloatingActionButton(
-              backgroundColor: LightSilver,
+              backgroundColor: Colors.greenAccent,
               child: Icon(Icons.add),
               onPressed: () {
                 final newMod = Module(
@@ -243,9 +246,14 @@ class _InputPageState extends State<InputPage> {
                     difficulty: 0,
                     ays: {'year': 2020, 'semester': 1},
                     su: false,
-                    done: false);
+                    done: false,
+                    timestamp: DateTime.now());
                 Provider.of<UserAPI>(context, listen: false)
                     .createModule(newMod);
+                scrollController.animateTo(
+                    scrollController.position.maxScrollExtent,
+                    duration: Duration(microseconds: 300),
+                    curve: Curves.easeOut);
               }),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -313,7 +321,7 @@ class CustomBottomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
-      color: RaisinBlack,
+      color: Colors.black,
       child: Container(
         height: 50.0,
         child: Row(
@@ -322,7 +330,7 @@ class CustomBottomAppBar extends StatelessWidget {
               tooltip:
                   'Open navigation menu', // this opens up like the side appbar where u can select the semester
               icon: const Icon(Icons.menu),
-              color: LightSilver,
+              color: IconsColor,
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -330,8 +338,10 @@ class CustomBottomAppBar extends StatelessWidget {
             IconButton(
               tooltip: 'Search',
               icon: const Icon(Icons.search),
-              color: LightSilver,
-              onPressed: () {},
+              onPressed: () {
+                print(Provider.of<UserAPI>(context, listen: false).modules);
+              },
+              color: IconsColor,
             ),
             if (centerLocations
                 .contains(FloatingActionButtonLocation.centerDocked))
@@ -339,7 +349,7 @@ class CustomBottomAppBar extends StatelessWidget {
             IconButton(
               tooltip: 'Settings', // settings and goal
               icon: const Icon(Icons.settings),
-              color: LightSilver,
+              color: IconsColor,
               onPressed: () {
                 _auth.signOut();
                 Navigator.pop(context);

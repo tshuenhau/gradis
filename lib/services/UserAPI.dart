@@ -17,6 +17,7 @@ class UserAPI extends ChangeNotifier {
 
   void setModules(List<Module> modules) {
     this.modules = modules;
+    this.modules.insert(0, Module.CreateEmptyModule());
   }
 
   int numOfModules() {
@@ -44,6 +45,9 @@ class UserAPI extends ChangeNotifier {
     return _firestore
         .collection('modules')
         .where('user', isEqualTo: _auth.currentUser?.email)
+        .orderBy(
+          'timestamp',
+        )
         .snapshots();
   }
 
