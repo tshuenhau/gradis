@@ -119,7 +119,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
         ays: widget.module.ays,
         done: widget.module.done,
         su: widget.module.su,
-        timestamp: widget.module.timestamp);
+        createdAt: widget.module.createdAt);
     Provider.of<UserAPI>(context, listen: false)
         .updateModule(newModule, widget.module.id);
   }

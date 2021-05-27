@@ -34,7 +34,7 @@ class _ModuleTileState extends State<ModuleTile> {
                     done: !widget.module.done,
                     name: widget.module.name,
                     su: widget.module.su,
-                    timestamp: widget.module.timestamp);
+                    createdAt: widget.module.createdAt);
                 Provider.of<UserAPI>(context, listen: false)
                     .updateModule(updatedMod, widget.module.id);
               });

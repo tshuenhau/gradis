@@ -57,7 +57,7 @@ class AddModulesScreen extends StatelessWidget {
                     ays: {'year': 2020, 'semester': 1},
                     su: false,
                     done: false,
-                    timestamp: DateTime.now());
+                    createdAt: DateTime.now());
                 Provider.of<UserAPI>(context, listen: false)
                     .createModule(module);
                 // Navigator.pop(context);

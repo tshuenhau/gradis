@@ -10,8 +10,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/screens/authentication/ForgotPasswordScreen.dart';
 import 'package:gradis/screens/authentication/ConfirmEmailScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(MyApp());
+
+bool isLoggedIn = false;
 
 class MyApp extends StatelessWidget {
   @override
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
+          checkLoggedIn();
           return ChangeNotifierProvider<UserAPI>(
             create: (context) => UserAPI(),
             child: GestureDetector(
@@ -46,7 +50,7 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 home: InputPage(),
-                initialRoute: WelcomeScreen.id,
+                initialRoute: isLoggedIn ? InputPage.id : WelcomeScreen.id,
                 routes: {
                   WelcomeScreen.id: (context) => WelcomeScreen(),
                   LoginScreen.id: (context) => LoginScreen(),
@@ -70,4 +74,16 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+void checkLoggedIn() {
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+      isLoggedIn = false;
+    } else {
+      print('User is signed in!');
+      isLoggedIn = true;
+    }
+  });
 }

@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gradis/classes/GoalCAP.dart';
+import 'package:gradis/screens/WelcomeScreen.dart';
 
 const TextStyle capTextStyle = TextStyle(
   color: Colors.white,
@@ -211,6 +212,8 @@ class _InputPageState extends State<InputPage> {
                       final data = document;
                       return Module.fromFirestore(data);
                     }).toList();
+                    print('modules');
+                    print(modules);
                     Provider.of<UserAPI>(context, listen: false)
                         .setModules(modules);
                     return Container(
@@ -220,7 +223,9 @@ class _InputPageState extends State<InputPage> {
                       ),
                       child: GradesList(scrollController: scrollController),
                     );
-                  } else
+                  } else {
+                    print("WAT");
+                    print(snapshot.hasData);
                     return Container(
                       height: 300,
                       decoration: BoxDecoration(
@@ -228,6 +233,7 @@ class _InputPageState extends State<InputPage> {
                       ),
                       child: Text("Loading"),
                     );
+                  }
                 }),
           ),
         ]),
@@ -238,6 +244,7 @@ class _InputPageState extends State<InputPage> {
               backgroundColor: Colors.greenAccent,
               child: Icon(Icons.add),
               onPressed: () {
+                print(DateTime.now());
                 final newMod = Module(
                     name: "new",
                     grade: 0,
@@ -247,7 +254,7 @@ class _InputPageState extends State<InputPage> {
                     ays: {'year': 2020, 'semester': 1},
                     su: false,
                     done: false,
-                    timestamp: DateTime.now());
+                    createdAt: DateTime.now());
                 Provider.of<UserAPI>(context, listen: false)
                     .createModule(newMod);
                 if (scrollController.hasClients) {
@@ -354,7 +361,7 @@ class CustomBottomAppBar extends StatelessWidget {
               color: IconsColor,
               onPressed: () {
                 _auth.signOut();
-                Navigator.pop(context);
+                Navigator.pushNamed(context, WelcomeScreen.id);
               },
             ),
           ],

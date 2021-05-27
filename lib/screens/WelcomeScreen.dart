@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gradis/screens/authentication/LoginScreen.dart';
 import 'package:gradis/screens/authentication/RegistrationScreen.dart';
 import 'package:gradis/constants.dart';
+import 'package:gradis/screens/InputPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';

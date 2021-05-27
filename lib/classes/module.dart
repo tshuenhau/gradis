@@ -11,14 +11,14 @@ class Module {
       required this.ays,
       required this.su,
       required this.done,
-      required this.timestamp});
+      required this.createdAt});
   final String? id;
   final String name;
   final double grade;
   final int credits;
   final int workload;
   final int difficulty;
-  final DateTime timestamp;
+  final DateTime createdAt;
   final Map ays;
   bool su;
   bool done;
@@ -34,7 +34,7 @@ class Module {
         ays: Map(),
         su: false,
         done: false,
-        timestamp: DateTime.now());
+        createdAt: DateTime.now());
   }
 
   factory Module.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -49,12 +49,12 @@ class Module {
         ays: data['ays'],
         su: data['su'],
         done: data['done'],
-        timestamp: data['timestamp']);
+        createdAt: data['createdAt'].toDate());
   }
 
   @override
   String toString() {
     return 'Module{id: $id, name: $name, grade: $grade, credits: $credits,'
-        ' workload: $workload, difficulty: $difficulty, done: $done, su: $su}';
+        ' workload: $workload, difficulty: $difficulty, done: $done, su: $su, createdAt: $createdAt}';
   }
 }

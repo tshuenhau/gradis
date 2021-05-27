@@ -34,7 +34,8 @@ class UserAPI extends ChangeNotifier {
       'ays': mod.ays,
       'su': mod.su,
       'user': _auth.currentUser?.email,
-      'done': mod.done
+      'done': mod.done,
+      'createdAt': mod.createdAt
     });
     notifyListeners();
 
@@ -45,9 +46,7 @@ class UserAPI extends ChangeNotifier {
     return _firestore
         .collection('modules')
         .where('user', isEqualTo: _auth.currentUser?.email)
-        .orderBy(
-          'timestamp',
-        )
+        // .orderBy('createdAt', descending: true)
         .snapshots();
   }
 
@@ -76,7 +75,8 @@ class UserAPI extends ChangeNotifier {
           'ays': mod.ays,
           'su': mod.su,
           'user': _auth.currentUser?.email,
-          'done': mod.done
+          'done': mod.done,
+          'createdAt': mod.createdAt
         })
         .then((value) => print("Module updated: $mod"))
         .catchError((error) => print("Failed to update module: $error"));
