@@ -9,18 +9,18 @@ import 'package:gradis/constants.dart';
 class CustomTopAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomTopAppBar({
     Key? key,
-    required this.height,
+    required this.context,
     required FirebaseFirestore firestore,
     required this.loggedInUser,
   })  : _firestore = firestore,
         super(key: key);
 
-  final double height;
+  final BuildContext context;
   final FirebaseFirestore _firestore;
   final User loggedInUser;
 
   @override
-  get preferredSize => Size.fromHeight(height / 12);
+  get preferredSize => Size.fromHeight(MediaQuery.of(context).size.height / 12);
 
   @override
   Widget build(BuildContext context) {

@@ -41,13 +41,12 @@ class _InputPageState extends State<InputPage> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context)
-        .size
-        .height; //TODO: find a way to add this to the CustomTopAppBar widget instead of it being out here.
     ScrollController scrollController = new ScrollController();
     return Scaffold(
         appBar: CustomTopAppBar(
-            height: height, firestore: _firestore, loggedInUser: loggedInUser),
+            context: context,
+            firestore: _firestore,
+            loggedInUser: loggedInUser),
         body: GradesList(scrollController: scrollController),
         bottomNavigationBar: CustomBottomAppBar(),
         floatingActionButton: AddModuleFAB(scrollController: scrollController),
