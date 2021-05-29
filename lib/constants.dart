@@ -66,3 +66,14 @@ const kTextFieldDecoration = InputDecoration(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );
+
+const TextStyle capTextStyle = TextStyle(
+  color: Colors.white70,
+  fontSize: 18.0,
+  fontWeight: FontWeight.w600,
+);
+const TextStyle titleTextStyle = TextStyle(
+  color: Colors.white70,
+  fontSize: 10.0,
+  fontWeight: FontWeight.w400,
+);
