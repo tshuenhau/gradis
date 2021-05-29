@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
+import 'package:gradis/constants.dart';
 
 class EditableTextField extends StatefulWidget {
   // constructor takes in the text, the module, and its type: Module/Credits/Grade
@@ -56,15 +57,14 @@ class _EditableTextFieldState extends State<EditableTextField> {
               color: Colors.white,
               fontSize: 18.0,
             ),
-            cursorColor: Colors.greenAccent,
+            cursorColor: Highlight,
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.greenAccent),
-              ),
+                  borderSide: BorderSide(color: Colors.transparent)),
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.greenAccent),
+                borderSide: BorderSide(color: Highlight),
               ),
-              hintStyle: TextStyle(color: Colors.greenAccent),
+              hintStyle: TextStyle(color: Highlight),
             ),
             keyboardType: widget.type == "name"
                 ? TextInputType.text
@@ -84,7 +84,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
       );
 
     return InkWell(
-      highlightColor: Colors.red,
+      highlightColor: Highlight,
       canRequestFocus: true,
       onTap: () {
         print("ink");

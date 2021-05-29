@@ -52,6 +52,10 @@ class Module {
         createdAt: data['createdAt']);
   }
 
+  String? getID() {
+    return id;
+  }
+
   @override
   String toString() {
     return 'Module{id: $id, name: $name, grade: $grade, credits: $credits,'

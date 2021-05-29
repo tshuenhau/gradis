@@ -82,10 +82,10 @@ class UserAPI extends ChangeNotifier {
     print('updated module');
   }
 
-  void deleteModule(String id) async {
-    await _firestore
+  void deleteModule(Module module) {
+    _firestore
         .collection('modules')
-        .doc(id)
+        .doc(module.getID())
         .delete()
         .then((value) => print("Module Deleted"))
         .catchError((error) => print("Failed to delete module: $error"));
@@ -120,10 +120,10 @@ class UserAPI extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteGoalCAP(String id) {
+  void deleteGoalCAP(GoalCAP goalCAP) {
     _firestore
         .collection('goalCAP')
-        .doc(id)
+        .doc(goalCAP.id)
         .delete()
         .then((value) => print("Goal CAP Deleted"))
         .catchError((error) => print("Failed to delete goal CAP: $error"));

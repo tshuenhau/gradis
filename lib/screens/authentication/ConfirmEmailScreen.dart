@@ -20,7 +20,7 @@ class ConfirmEmailScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             Material(
-              color: GreenAccent,
+              color: GreenHighlight,
               borderRadius: BorderRadius.all(Radius.circular(30.0)),
               elevation: 5.0,
               child: MaterialButton(
