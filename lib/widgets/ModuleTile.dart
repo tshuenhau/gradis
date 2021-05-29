@@ -6,9 +6,10 @@ import 'package:gradis/classes/module.dart';
 import 'package:gradis/constants.dart';
 
 class ModuleTile extends StatefulWidget {
-  final int index;
-  final Module module;
-  ModuleTile(this.index, this.module);
+  late final int index;
+  late final Module module;
+  ModuleTile(this.index, this.module, {Key? key}) : super(key: key);
+
   @override
   _ModuleTileState createState() => _ModuleTileState();
 }

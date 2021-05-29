@@ -31,7 +31,6 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   final _auth = FirebaseAuth.instance;
-  final _firestore = FirebaseFirestore.instance;
 
   late final User loggedInUser;
 
@@ -73,11 +72,9 @@ class _InputPageState extends State<InputPage> {
             ),
             title: Padding(
               padding: const EdgeInsets.only(top: 12.0),
-              child: StreamBuilder<QuerySnapshot>(
-                  stream: _firestore
-                      .collection('modules')
-                      .where('user', isEqualTo: loggedInUser.email)
-                      .snapshots(),
+              child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  stream: Provider.of<UserAPI>(context, listen: false)
+                      .findAllModules(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return Consumer<UserAPI>(
@@ -224,14 +221,19 @@ class _InputPageState extends State<InputPage> {
                       child: GradesList(scrollController: scrollController),
                     );
                   } else {
-                    print("WAT");
-                    print(snapshot.hasData);
                     return Container(
                       height: 300,
                       decoration: BoxDecoration(
                         color: RaisinBlack,
                       ),
-                      child: Text("Loading"),
+                      child: IconButton(
+                        tooltip: 'Settings', // settings and goal
+                        icon: const Icon(Icons.settings),
+                        color: IconsColor,
+                        onPressed: () {
+                          print(snapshot.hasData);
+                        },
+                      ), //TODO: Implement a center loader
                     );
                   }
                 }),
@@ -246,15 +248,18 @@ class _InputPageState extends State<InputPage> {
               onPressed: () {
                 print(DateTime.now());
                 final newMod = Module(
-                    name: "new",
-                    grade: 0,
-                    credits: 0,
-                    workload: 0,
-                    difficulty: 0,
-                    ays: {'year': 2020, 'semester': 1},
-                    su: false,
-                    done: false,
-                    createdAt: DateTime.now());
+                  name: "new",
+                  grade: 0,
+                  credits: 0,
+                  workload: 0,
+                  difficulty: 0,
+                  ays: {
+                    'year': 2020,
+                    'semester': 1
+                  }, //TODO: Implement feature to detect semester
+                  su: false,
+                  done: false,
+                );
                 Provider.of<UserAPI>(context, listen: false)
                     .createModule(newMod);
                 if (scrollController.hasClients) {
@@ -317,8 +322,6 @@ class _InputPageState extends State<InputPage> {
 }
 
 class CustomBottomAppBar extends StatelessWidget {
-  // const CustomBottomAppBar({Key? key}): super(key: key);
-
   final _auth = FirebaseAuth.instance;
 
   static final List<FloatingActionButtonLocation> centerLocations =
@@ -349,6 +352,8 @@ class CustomBottomAppBar extends StatelessWidget {
               icon: const Icon(Icons.search),
               onPressed: () {
                 print(Provider.of<UserAPI>(context, listen: false).modules);
+                // print(Provider.of<UserAPI>(context, listen: false)
+                //     .findAllModules().hasData);
               },
               color: IconsColor,
             ),

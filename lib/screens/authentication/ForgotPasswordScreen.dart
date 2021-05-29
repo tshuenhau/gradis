@@ -44,8 +44,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       elevation: 5.0,
                       child: MaterialButton(
                         onPressed: () async {
-                          await _auth.sendPasswordResetEmail(email: email);
-                          Navigator.pop(context);
+                          try {
+                            await _auth.sendPasswordResetEmail(email: email);
+                            Navigator.pop(context);
+                          } catch (e) {
+                            print(e);
+                          }
                         },
                         minWidth: 200.0,
                         height: 42.0,

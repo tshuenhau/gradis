@@ -64,7 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             UserCredential userCredential =
                                 await _auth.signInWithEmailAndPassword(
                                     email: this.email, password: this.password);
-                            Navigator.pushNamed(context, InputPage.id);
+                            if (userCredential != null) {
+                              //TODO: Maybe this prevents page from loading multiple times
+                              Navigator.pushNamed(context, InputPage.id);
+                            }
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'user-not-found') {
                               print('No user found for that email.');

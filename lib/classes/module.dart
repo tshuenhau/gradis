@@ -11,30 +11,30 @@ class Module {
       required this.ays,
       required this.su,
       required this.done,
-      required this.createdAt});
+      this.createdAt});
   final String? id;
   final String name;
   final double grade;
   final int credits;
   final int workload;
   final int difficulty;
-  final DateTime createdAt;
+  final Timestamp? createdAt;
   final Map ays;
   bool su;
   bool done;
 
   static Module CreateEmptyModule() {
     return Module(
-        id: "empty",
-        name: "empty",
-        grade: 0,
-        credits: 0,
-        workload: 0,
-        difficulty: 0,
-        ays: Map(),
-        su: false,
-        done: false,
-        createdAt: DateTime.now());
+      id: "empty",
+      name: "empty",
+      grade: 0,
+      credits: 0,
+      workload: 0,
+      difficulty: 0,
+      ays: Map(),
+      su: false,
+      done: false,
+    );
   }
 
   factory Module.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -49,7 +49,7 @@ class Module {
         ays: data['ays'],
         su: data['su'],
         done: data['done'],
-        createdAt: data['createdAt'].toDate());
+        createdAt: data['createdAt']);
   }
 
   @override

@@ -7,8 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/classes/Calculator.dart';
 import 'package:gradis/classes/GoalCAP.dart';
 
-enum Change { increase, decrease, noChange }
-
 class UserAPI extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
@@ -33,28 +31,28 @@ class UserAPI extends ChangeNotifier {
       'difficulty': mod.difficulty,
       'ays': mod.ays,
       'su': mod.su,
-      'user': _auth.currentUser?.email,
+      'user': _auth.currentUser!.email,
       'done': mod.done,
-      'createdAt': mod.createdAt
+      'createdAt': FieldValue.serverTimestamp()
     });
     notifyListeners();
-
-    print('module create: ' + mod.toString());
+    print('module created: ' + mod.toString());
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findAllModules() {
     return _firestore
-        .collection('modules')
-        .where('user', isEqualTo: _auth.currentUser?.email)
-        // .orderBy('createdAt', descending: true)
+        .collection("modules")
+        .where('user', isEqualTo: _auth.currentUser!.email)
+        .orderBy("createdAt", descending: false)
         .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findModulesBySemester(int ays) {
     return _firestore
         .collection('modules')
+        .orderBy("createdAt", descending: false)
         .where('ays', isEqualTo: ays)
-        .where('user', isEqualTo: _auth.currentUser?.email)
+        .where('user', isEqualTo: _auth.currentUser!.email)
         .snapshots();
   }
 
@@ -74,7 +72,7 @@ class UserAPI extends ChangeNotifier {
           'difficulty': mod.difficulty,
           'ays': mod.ays,
           'su': mod.su,
-          'user': _auth.currentUser?.email,
+          'user': _auth.currentUser!.email,
           'done': mod.done,
           'createdAt': mod.createdAt
         })
@@ -130,10 +128,6 @@ class UserAPI extends ChangeNotifier {
         .then((value) => print("Goal CAP Deleted"))
         .catchError((error) => print("Failed to delete goal CAP: $error"));
     notifyListeners();
-  }
-
-  int incCAP() {
-    return Calculator.increaseCAP(Calculator.totalCAP(modules), goalCAP);
   }
 
   double calculateCurrentCAP() {

@@ -3,6 +3,7 @@ import 'package:gradis/services/UserAPI.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddModulesScreen extends StatelessWidget {
   @override
@@ -49,15 +50,15 @@ class AddModulesScreen extends StatelessWidget {
                       MaterialStateProperty.all<Color>(Colors.black26)),
               onPressed: () {
                 final module = Module(
-                    name: newModuleName,
-                    grade: 4.5,
-                    credits: 4,
-                    workload: 0,
-                    difficulty: 0,
-                    ays: {'year': 2020, 'semester': 1},
-                    su: false,
-                    done: false,
-                    createdAt: DateTime.now());
+                  name: newModuleName,
+                  grade: 4.5,
+                  credits: 4,
+                  workload: 0,
+                  difficulty: 0,
+                  ays: {'year': 2020, 'semester': 1},
+                  su: false,
+                  done: false,
+                );
                 Provider.of<UserAPI>(context, listen: false)
                     .createModule(module);
                 // Navigator.pop(context);

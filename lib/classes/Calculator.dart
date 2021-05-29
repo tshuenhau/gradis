@@ -37,16 +37,8 @@ class Calculator {
     return totalGrade / totalCredits;
   }
 
-  static int increaseCAP(double cap, double goalCAP) {
-    //1: increase CAP, -1: decrease CAP, 0: CAP same
-    return cap < goalCAP
-        ? 1
-        : cap > goalCAP
-            ? -1
-            : 0;
-  }
-
   double capDiffIfSU(int totalMCs, double grade, int credits, double goalCAP) {
+    //Not needed
     //positive means CAP increase if SU, negative means CAP decrease if SU
     double totalPoints = goalCAP * totalMCs;
     double pointsWithoutSU = (totalMCs - credits) * goalCAP + (credits * grade);

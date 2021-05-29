@@ -95,10 +95,9 @@ class _GradesListState extends State<GradesList> {
 
             return Column(
               children: [
-                ModuleTile(
-                    index,
-                    Provider.of<UserAPI>(context, listen: false)
-                        .modules[index]),
+                ModuleTile(index,
+                    Provider.of<UserAPI>(context, listen: false).modules[index],
+                    key: UniqueKey()),
                 Divider(
                   height: 1,
                   indent: 30,
