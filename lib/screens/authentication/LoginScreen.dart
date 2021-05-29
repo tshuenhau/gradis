@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late String email;
   late String password;
+  bool _firstPressed = false; // used to prevent login to happen multiple times
 
   final _auth = FirebaseAuth.instance;
 
@@ -64,9 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             UserCredential userCredential =
                                 await _auth.signInWithEmailAndPassword(
                                     email: this.email, password: this.password);
-                            if (userCredential != null) {
-                              //TODO: Maybe this prevents page from loading multiple times
+                            if (!_firstPressed) {
                               Navigator.pushNamed(context, InputPage.id);
+                              _firstPressed = true;
                             }
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'user-not-found') {

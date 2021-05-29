@@ -92,8 +92,8 @@ class UserAPI extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setGoalCAP(double goalCAP) {
-    this.goalCAP = goalCAP;
+  void setGoalCAP(GoalCAP goalCAP) {
+    this.goalCAP = goalCAP.goal;
   }
 
   Stream<GoalCAP> findGoalCAP() {

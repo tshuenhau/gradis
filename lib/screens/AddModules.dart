@@ -3,7 +3,6 @@ import 'package:gradis/services/UserAPI.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddModulesScreen extends StatelessWidget {
   @override
