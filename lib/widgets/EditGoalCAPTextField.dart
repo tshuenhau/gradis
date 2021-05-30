@@ -1,14 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gradis/classes/ModulesData.dart';
+import 'package:gradis/services/UserAPI.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gradis/classes/GoalCAP.dart';
 
-//TODO: EDITED HERE
 class GoalCAPTextField extends StatefulWidget {
   final String initialText;
-  GoalCAPTextField({@required this.initialText});
+  final String id;
+  GoalCAPTextField({required this.initialText, required this.id});
 
   @override
   _GoalCAPTextFieldState createState() => _GoalCAPTextFieldState();
@@ -16,8 +14,8 @@ class GoalCAPTextField extends StatefulWidget {
 
 class _GoalCAPTextFieldState extends State<GoalCAPTextField> {
   bool _isEditingText = false;
-  TextEditingController _editingController;
-  String text;
+  late TextEditingController _editingController;
+  late String text;
 
   @override
   void initState() {
@@ -43,15 +41,8 @@ class _GoalCAPTextFieldState extends State<GoalCAPTextField> {
               TextInputType.numberWithOptions(signed: true, decimal: true),
           onSubmitted: (newValue) {
             print("new value: " + newValue);
-            final newGoal = GoalCAP(goal: double.parse(newValue));
-            Provider.of<ModulesData>(context, listen: false)
-                .updateGoalCAP(newGoal);
-            setState(() {
-              text = Provider.of<ModulesData>(context, listen: false)
-                  .goalCAP
-                  .toStringAsFixed(2);
-              _isEditingText = false;
-            });
+            Provider.of<UserAPI>(context, listen: false)
+                .updateGoalCAP(double.parse(newValue), widget.id);
           },
         ),
       );
@@ -63,7 +54,7 @@ class _GoalCAPTextFieldState extends State<GoalCAPTextField> {
           });
         },
         child: Text(
-          text != null ? text : "",
+          text,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white,

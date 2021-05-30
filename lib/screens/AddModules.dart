@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gradis/classes/ModulesData.dart';
+import 'package:gradis/services/UserAPI.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/constants.dart';
@@ -7,7 +7,7 @@ import 'package:gradis/constants.dart';
 class AddModulesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    String newModuleName;
+    String newModuleName = "";
     return Container(
       color: Color(0x00000000),
       child: Container(
@@ -37,21 +37,30 @@ class AddModulesScreen extends StatelessWidget {
                 newModuleName = newText;
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 'Add',
                 style: TextStyle(
                   color: Colors.white,
                 ),
               ),
-              color: RaisinBlack,
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black26)),
               onPressed: () {
-                final module =
-                    Module(id: 0, name: newModuleName, grade: 4.5, credits: 4);
-                Provider.of<ModulesData>(context, listen: false)
-                    .addModule(module);
-                //await DBProvider.db.deleteAll();
-                Navigator.pop(context);
+                final module = Module(
+                  name: newModuleName,
+                  grade: 4.5,
+                  credits: 4,
+                  workload: 0,
+                  difficulty: 0,
+                  ays: {'year': 2020, 'semester': 1},
+                  su: false,
+                  done: false,
+                );
+                Provider.of<UserAPI>(context, listen: false)
+                    .createModule(module);
+                // Navigator.pop(context);
               },
             ),
           ],

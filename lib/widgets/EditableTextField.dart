@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gradis/classes/ModulesData.dart';
+import 'package:gradis/services/UserAPI.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
+import 'package:gradis/constants.dart';
 
 class EditableTextField extends StatefulWidget {
   // constructor takes in the text, the module, and its type: Module/Credits/Grade
   final String initialText;
   final Module module;
   final String type;
-  EditableTextField({this.initialText, this.module, this.type});
+  EditableTextField(
+      {required this.initialText, required this.module, required this.type});
 
   @override
   _EditableTextFieldState createState() => _EditableTextFieldState();
@@ -17,8 +19,8 @@ class EditableTextField extends StatefulWidget {
 
 class _EditableTextFieldState extends State<EditableTextField> {
   bool _isEditingText = false;
-  TextEditingController _editingController;
-  String text;
+  late TextEditingController _editingController;
+  late String text;
 
   @override
   void initState() {
@@ -55,17 +57,14 @@ class _EditableTextFieldState extends State<EditableTextField> {
               color: Colors.white,
               fontSize: 18.0,
             ),
+            cursorColor: Highlight,
             decoration: InputDecoration(
               enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                  borderSide: BorderSide(color: Colors.transparent)),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Highlight),
               ),
-              //for use if want to change the look of the highligh
-              //   focusedBorder: UnderlineInputBorder(
-              //     borderSide: BorderSide(color: Theme.of(context).accentColor),
-              //   ),
-              //   border: UnderlineInputBorder(
-              //     borderSide: BorderSide(color: Theme.of(context).accentColor),
-              //   ),
+              hintStyle: TextStyle(color: Highlight),
             ),
             keyboardType: widget.type == "name"
                 ? TextInputType.text
@@ -85,7 +84,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
       );
 
     return InkWell(
-      highlightColor: Colors.red,
+      highlightColor: Highlight,
       canRequestFocus: true,
       onTap: () {
         print("ink");
@@ -95,7 +94,7 @@ class _EditableTextFieldState extends State<EditableTextField> {
       },
       autofocus: true,
       child: Text(
-        text != null ? text : "",
+        text,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
@@ -112,7 +111,16 @@ class _EditableTextFieldState extends State<EditableTextField> {
     final double grade =
         widget.type == "grade" ? double.parse(text) : widget.module.grade;
     final Module newModule = Module(
-        id: widget.module.id, name: name, credits: credits, grade: grade);
-    Provider.of<ModulesData>(context, listen: false).updateModule(newModule);
+        name: name,
+        credits: credits,
+        grade: grade,
+        workload: widget.module.workload,
+        difficulty: widget.module.difficulty,
+        ays: widget.module.ays,
+        done: widget.module.done,
+        su: widget.module.su,
+        createdAt: widget.module.createdAt);
+    Provider.of<UserAPI>(context, listen: false)
+        .updateModule(newModule, widget.module.id);
   }
 }
