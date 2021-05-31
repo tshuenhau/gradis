@@ -23,26 +23,29 @@ class UserAPI extends ChangeNotifier {
   }
 
   void createModule(Module mod) {
-    _firestore.collection('modules').add({
-      'name': mod.name,
-      'credits': mod.credits,
-      'grade': mod.grade,
-      'workload': mod.workload,
-      'difficulty': mod.difficulty,
-      'ays': mod.ays,
-      'su': mod.su,
-      'user': _auth.currentUser!.email,
-      'done': mod.done,
-      'createdAt': FieldValue.serverTimestamp()
-    });
+    _firestore
+        .collection('modules')
+        .add({
+          'name': mod.name,
+          'credits': mod.credits,
+          'grade': mod.grade,
+          'workload': mod.workload,
+          'difficulty': mod.difficulty,
+          'ays': mod.ays,
+          'su': mod.su,
+          'user': _auth.currentUser!.uid,
+          'done': mod.done,
+          'createdAt': FieldValue.serverTimestamp()
+        })
+        .then((value) => print("Module created: $mod"))
+        .catchError((error) => print("Failed to add module: $error"));
     notifyListeners();
-    print('module created: ' + mod.toString());
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findAllModules() {
     return _firestore
         .collection("modules")
-        .where('user', isEqualTo: _auth.currentUser!.email)
+        .where('user', isEqualTo: _auth.currentUser!.uid)
         .orderBy("createdAt", descending: false)
         .snapshots();
   }
@@ -52,7 +55,7 @@ class UserAPI extends ChangeNotifier {
         .collection('modules')
         .orderBy("createdAt", descending: false)
         .where('ays', isEqualTo: ays)
-        .where('user', isEqualTo: _auth.currentUser!.email)
+        .where('user', isEqualTo: _auth.currentUser!.uid)
         .snapshots();
   }
 
@@ -72,14 +75,13 @@ class UserAPI extends ChangeNotifier {
           'difficulty': mod.difficulty,
           'ays': mod.ays,
           'su': mod.su,
-          'user': _auth.currentUser!.email,
+          'user': _auth.currentUser!.uid,
           'done': mod.done,
           'createdAt': mod.createdAt
         })
         .then((value) => print("Module updated: $mod"))
         .catchError((error) => print("Failed to update module: $error"));
     notifyListeners();
-    print('updated module');
   }
 
   void deleteModule(Module module) {
@@ -108,7 +110,7 @@ class UserAPI extends ChangeNotifier {
     if (id == 'first-creation') {
       _firestore
           .collection('goalCAP')
-          .add({'CAP': goalCAP, 'user': _auth.currentUser});
+          .add({'CAP': goalCAP, 'user': _auth.currentUser!.uid});
     } else {
       _firestore
           .collection('goalCAP')
@@ -135,8 +137,8 @@ class UserAPI extends ChangeNotifier {
   }
 
   double calculateTotalCAP() {
-    double totalCAP = Calculator.totalCAP(modules);
-    return totalCAP;
+    return Calculator.totalCAP(modules);
+    ;
   }
 
   double calculateFutureCAP() {

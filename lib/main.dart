@@ -11,6 +11,7 @@ import 'package:gradis/constants.dart';
 import 'package:gradis/screens/authentication/ForgotPasswordScreen.dart';
 import 'package:gradis/screens/authentication/ConfirmEmailScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gradis/services/SentimentAPI.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          checkLoggedIn();
+          checkLoggedIn(); // TODO: need to fix this
           return ChangeNotifierProvider<UserAPI>(
             create: (context) => UserAPI(),
             child: GestureDetector(
