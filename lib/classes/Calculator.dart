@@ -1,15 +1,11 @@
-import 'package:flutter/material.dart';
 import 'module.dart';
 
 class Calculator {
-  double goalCAP;
-  Calculator({@required this.goalCAP});
-
-  double futureCAP(List<Module> mods) {
+  static double futureCAP(List<Module> mods) {
     double totalFutureGrade = 0;
     double totalCredits = 0;
     for (Module mod in mods) {
-      if (mod.done == 0) {
+      if (!mod.done) {
         totalFutureGrade += mod.grade * mod.credits;
         totalCredits += mod.credits;
       }
@@ -17,11 +13,11 @@ class Calculator {
     return totalFutureGrade / totalCredits;
   }
 
-  double currentCAP(List<Module> mods) {
+  static double currentCAP(List<Module> mods) {
     double totalCurrentGrade = 0;
     double totalCredits = 0;
     for (Module mod in mods) {
-      if (mod.done == 1) {
+      if (mod.done) {
         totalCurrentGrade += mod.grade * mod.credits;
         totalCredits += mod.credits;
       }
@@ -29,7 +25,7 @@ class Calculator {
     return totalCurrentGrade / totalCredits;
   }
 
-  double totalCAP(List<Module> mods) {
+  static double totalCAP(List<Module> mods) {
     //total CAP is calculated
     // Fix this: Runs many times each edit
     double totalGrade = 0;
@@ -41,16 +37,8 @@ class Calculator {
     return totalGrade / totalCredits;
   }
 
-  int increaseCAP(double cap) {
-    //1: increase CAP, -1: decrease CAP, 0: CAP same
-    return cap < this.goalCAP
-        ? 1
-        : cap > this.goalCAP
-            ? -1
-            : 0;
-  }
-
   double capDiffIfSU(int totalMCs, double grade, int credits, double goalCAP) {
+    //Not needed
     //positive means CAP increase if SU, negative means CAP decrease if SU
     double totalPoints = goalCAP * totalMCs;
     double pointsWithoutSU = (totalMCs - credits) * goalCAP + (credits * grade);
