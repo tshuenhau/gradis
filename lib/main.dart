@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          checkLoggedIn();
+          checkLoggedIn(); // TODO: need to fix this
           return ChangeNotifierProvider<UserAPI>(
             create: (context) => UserAPI(),
             child: GestureDetector(
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                 }
               },
               child: MaterialApp(
-                theme: GradisTheme,
+                theme: gradisTheme,
                 home: InputPage(),
                 initialRoute: isLoggedIn ? InputPage.id : WelcomeScreen.id,
                 routes: {
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           );
         }
         return MaterialApp(
-          theme: GradisTheme,
+          theme: gradisTheme,
           home: Scaffold(),
         );
       },

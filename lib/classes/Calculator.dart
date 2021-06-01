@@ -1,4 +1,5 @@
 import 'module.dart';
+import 'ModuleSentiment.dart';
 
 class Calculator {
   static double futureCAP(List<Module> mods) {
@@ -43,5 +44,21 @@ class Calculator {
     double totalPoints = goalCAP * totalMCs;
     double pointsWithoutSU = (totalMCs - credits) * goalCAP + (credits * grade);
     return (totalPoints - pointsWithoutSU) / totalMCs;
+  }
+
+  static calculateWorkload(List<ModuleSentiment> mods) {
+    int workload = 0;
+    for (ModuleSentiment mod in mods) {
+      workload += mod.getWorkload();
+    }
+    return workload / mods.length;
+  }
+
+  static calculateDifficulty(List<ModuleSentiment> mods) {
+    int workload = 0;
+    for (ModuleSentiment mod in mods) {
+      workload += mod.getDifficulty();
+    }
+    return workload / mods.length;
   }
 }
