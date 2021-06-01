@@ -34,7 +34,7 @@ const Color ScaffoldBackgroundColor = Color(0xff202020);
 const Color BorderColor = Color(0xffc0fefc);
 const Color IconsColor = Colors.white60;
 
-ThemeData GradisTheme = ThemeData.dark().copyWith(
+ThemeData gradisTheme = ThemeData.dark().copyWith(
   primaryColor: PrimaryColor,
   appBarTheme: AppBarTheme(
     color: PrimaryColor,

@@ -23,7 +23,7 @@ class Module {
   bool su;
   bool done;
 
-  static Module CreateEmptyModule() {
+  static Module createEmptyModule() {
     return Module(
       id: "empty",
       name: "empty",

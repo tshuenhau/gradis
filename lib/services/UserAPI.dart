@@ -15,7 +15,7 @@ class UserAPI extends ChangeNotifier {
 
   void setModules(List<Module> modules) {
     this.modules = modules;
-    this.modules.insert(0, Module.CreateEmptyModule());
+    this.modules.insert(0, Module.createEmptyModule());
   }
 
   int numOfModules() {
@@ -138,7 +138,6 @@ class UserAPI extends ChangeNotifier {
 
   double calculateTotalCAP() {
     return Calculator.totalCAP(modules);
-    ;
   }
 
   double calculateFutureCAP() {

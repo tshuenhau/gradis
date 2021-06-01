@@ -11,7 +11,6 @@ import 'package:gradis/constants.dart';
 import 'package:gradis/screens/authentication/ForgotPasswordScreen.dart';
 import 'package:gradis/screens/authentication/ConfirmEmailScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gradis/services/SentimentAPI.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
                 }
               },
               child: MaterialApp(
-                theme: GradisTheme,
+                theme: gradisTheme,
                 home: InputPage(),
                 initialRoute: isLoggedIn ? InputPage.id : WelcomeScreen.id,
                 routes: {
@@ -57,7 +56,7 @@ class MyApp extends StatelessWidget {
           );
         }
         return MaterialApp(
-          theme: GradisTheme,
+          theme: gradisTheme,
           home: Scaffold(),
         );
       },

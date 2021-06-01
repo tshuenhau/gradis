@@ -61,9 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () async {
                           //Implement registration functionality.
                           try {
-                            UserCredential userCredential =
-                                await _auth.signInWithEmailAndPassword(
-                                    email: this.email, password: this.password);
+                            await _auth.signInWithEmailAndPassword(
+                                email: this.email, password: this.password);
                             if (!_firstPressed) {
                               Navigator.pushNamed(context, InputPage.id);
                               _firstPressed = true;
