@@ -10,7 +10,8 @@ const Color RaisinBlack = Color(0xff202124);
 const Color CharlestonGreen = Color(0xff282C2F);
 const Color Onyx = Color(0xff323639);
 const Color LightSilver = Color(0xffD6D6D7);
-// const Color BlueAccent = Color(0xff09A6F3);
+
+const Color BlueAccent = Color(0xff09A6F3);
 const Color BlueHighlight = Color(0xff07c8f9);
 const Color DeepBlueHighlight = Color(0xff0a85ed);
 // const Color Highlight = Color(0xff21b17b);
@@ -39,6 +40,7 @@ ThemeData gradisTheme = ThemeData.dark().copyWith(
   appBarTheme: AppBarTheme(
     color: PrimaryColor,
   ),
+  bottomSheetTheme: BottomSheetThemeData(backgroundColor: RaisinBlack),
   accentColor: Accent,
   backgroundColor: BackgroundColor,
   scaffoldBackgroundColor: ScaffoldBackgroundColor,
