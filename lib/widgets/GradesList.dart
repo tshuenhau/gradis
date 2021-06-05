@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gradis/widgets/GPATrend.dart';
 
 TextAlign alignment = TextAlign.center;
 
@@ -47,15 +48,18 @@ class GradesList extends StatelessWidget {
                             .length, // for the done , module, credits, grade header at index 0
                         itemBuilder: (context, index) {
                           if (index == 0) {
+                            //TODO: Might need to fix some things because adding another index.
+                            return GPATrend();
+                          }
+                          if (index == 1) {
                             return Column(children: <Widget>[
                               Container(
                                 color: ModuleTileColor,
-                                height: 35,
+                                height: 30,
                                 padding: EdgeInsets.symmetric(horizontal: 20),
                                 child: ListTile(
                                   leading: Padding(
-                                    padding:
-                                        EdgeInsets.only(top: 5.0, left: 7.0),
+                                    padding: EdgeInsets.only(top: 3, left: 7.0),
                                     child: Text(
                                       'Done',
                                       textAlign: alignment,
@@ -67,41 +71,44 @@ class GradesList extends StatelessWidget {
                                   ),
                                   title: Consumer<UserAPI>(
                                       builder: (context, modulesData, child) {
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            'Module',
-                                            textAlign: alignment,
-                                            style: TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 12,
+                                    return Padding(
+                                      padding: const EdgeInsets.only(bottom: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Module',
+                                              textAlign: alignment,
+                                              style: TextStyle(
+                                                color: Colors.white70,
+                                                fontSize: 12,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            'Credits',
-                                            textAlign: alignment,
-                                            style: TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 12,
+                                          Expanded(
+                                            child: Text(
+                                              'Credits',
+                                              textAlign: alignment,
+                                              style: TextStyle(
+                                                color: Colors.white70,
+                                                fontSize: 12,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            'Grade',
-                                            textAlign: alignment,
-                                            style: TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 12,
+                                          Expanded(
+                                            child: Text(
+                                              'Grade',
+                                              textAlign: alignment,
+                                              style: TextStyle(
+                                                color: Colors.white70,
+                                                fontSize: 12,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     );
                                   }),
                                   contentPadding:

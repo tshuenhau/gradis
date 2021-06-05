@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gradis/widgets/ModuleTile.dart';
-import 'package:gradis/widgets/SimpleBarChart.dart';
+import 'package:gradis/widgets/DifficultyChart.dart';
+import 'package:gradis/widgets/WorkloadChart.dart';
+
 import 'package:gradis/constants.dart';
 
 double workLoad = 0;
@@ -51,8 +53,8 @@ class _ModuleSentimentState extends State<ModuleSentiment> {
               fontWeight: FontWeight.bold,
             ),
           )),
-          SimpleBarChart(),
-          SimpleBarChart(),
+          WorkloadChart(),
+          DifficultyChart(),
           Text("Word Cloud"),
           Card(
               elevation: 7.0,
