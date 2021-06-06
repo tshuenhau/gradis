@@ -6,6 +6,7 @@ import 'package:gradis/constants.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gradis/widgets/GPATrend.dart';
+import 'package:gradis/widgets/FilterChips.dart';
 
 TextAlign alignment = TextAlign.center;
 
@@ -49,9 +50,17 @@ class GradesList extends StatelessWidget {
                         itemBuilder: (context, index) {
                           if (index == 0) {
                             //TODO: Might need to fix some things because adding another index.
+                            //return Container();
                             return GPATrend();
                           }
                           if (index == 1) {
+                            //TODO: Might need to fix some things because adding another index.
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: FilterChips(),
+                            );
+                          }
+                          if (index == 2) {
                             return Column(children: <Widget>[
                               Container(
                                 color: ModuleTileColor,
@@ -76,6 +85,8 @@ class GradesList extends StatelessWidget {
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Expanded(
                                             child: Text(

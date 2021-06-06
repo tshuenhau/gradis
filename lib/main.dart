@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         }
         return MaterialApp(
           theme: gradisTheme,
-          home: Scaffold(),
+          home: Scaffold(resizeToAvoidBottomInset: true),
         );
       },
     );

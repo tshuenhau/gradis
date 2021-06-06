@@ -16,6 +16,8 @@ class UserAPI extends ChangeNotifier {
   void setModules(List<Module> modules) {
     this.modules = modules;
     this.modules.insert(0, Module.createEmptyModule());
+    this.modules.insert(1, Module.createEmptyModule());
+    this.modules.insert(2, Module.createEmptyModule());
   }
 
   int numOfModules() {

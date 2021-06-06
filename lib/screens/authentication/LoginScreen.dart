@@ -32,8 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {
                   email = value;
                 },
-                decoration:
-                    kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
+                decoration: greenTextFieldDecoration.copyWith(
+                    hintText: 'Enter your email'),
               ),
               SizedBox(
                 height: 8.0,
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 obscureText: true,
                 textAlign: TextAlign.center,
-                decoration: kTextFieldDecoration.copyWith(
+                decoration: greenTextFieldDecoration.copyWith(
                     hintText: 'Enter your password'),
               ),
               SizedBox(
@@ -52,57 +52,62 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Column(children: [
-                    Material(
-                      color: GreenHighlight,
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      elevation: 5.0,
-                      child: MaterialButton(
-                        onPressed: () async {
-                          //Implement registration functionality.
-                          try {
-                            await _auth.signInWithEmailAndPassword(
-                                email: this.email, password: this.password);
-                            if (!_firstPressed) {
-                              Navigator.pushNamed(context, InputPage.id);
-                              _firstPressed = true;
-                            }
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'user-not-found') {
-                              print('No user found for that email.');
-                            } else if (e.code == 'wrong-password') {
-                              print('Wrong password provided for that user.');
-                            }
-                          }
-                        },
-                        minWidth: 200.0,
-                        height: 42.0,
-                        child: Text(
-                          'Login',
-                          style: TextStyle(color: Colors.black),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Material(
+                          color: Highlight,
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                          elevation: 5.0,
+                          child: MaterialButton(
+                            onPressed: () async {
+                              //Implement registration functionality.
+                              try {
+                                await _auth.signInWithEmailAndPassword(
+                                    email: this.email, password: this.password);
+                                if (!_firstPressed) {
+                                  Navigator.pushNamed(context, InputPage.id);
+                                  _firstPressed = true;
+                                }
+                              } on FirebaseAuthException catch (e) {
+                                if (e.code == 'user-not-found') {
+                                  print('No user found for that email.');
+                                } else if (e.code == 'wrong-password') {
+                                  print(
+                                      'Wrong password provided for that user.');
+                                }
+                              }
+                            },
+                            minWidth:
+                                200.0, //!!! Why this size smaller when all other buttons also 200.0
+                            height: 42.0,
+                            child: Text(
+                              'Login',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Material(
-                      color: GreenHighlight,
-                      borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      elevation: 5.0,
-                      child: MaterialButton(
-                        onPressed: () async {
-                          Navigator.pushNamed(context, ForgotPasswordScreen.id);
-                        },
-                        minWidth: 200.0,
-                        height: 42.0,
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.black),
+                        SizedBox(
+                          height: 8.0,
                         ),
-                      ),
-                    ),
-                  ])),
+                        Material(
+                          color: BlueHighlight,
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                          elevation: 5.0,
+                          child: MaterialButton(
+                            onPressed: () async {
+                              Navigator.pushNamed(
+                                  context, ForgotPasswordScreen.id);
+                            },
+                            minWidth: 200.0,
+                            height: 42.0,
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ])),
             ],
           )),
     );

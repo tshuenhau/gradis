@@ -40,7 +40,7 @@ class _ModuleTileState extends State<ModuleTile> {
               color: Onyx,
               icon: Icons.more_horiz,
               foregroundColor: Accent,
-              onTap: () => (buildShowModalBottomSheet(
+              onTap: () => (buildModuleSentimentBottomSheet(
                   context, widget)), //TODO: ADD THE FEEDBACK PAGE/ MORE PAGE
             ),
             IconSlideAction(

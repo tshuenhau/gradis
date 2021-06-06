@@ -8,7 +8,7 @@ import 'package:gradis/constants.dart';
 double workLoad = 0;
 double difficulty = 0;
 
-Future<dynamic> buildShowModalBottomSheet(
+Future<dynamic> buildModuleSentimentBottomSheet(
     BuildContext context, ModuleTile widget) {
   return showModalBottomSheet(
       context: context,
@@ -41,8 +41,14 @@ class _ModuleSentimentState extends State<ModuleSentiment> {
 
     return Container(
       height: MediaQuery.of(context).size.height * (10.35 / 12),
-      decoration: BoxDecoration(),
       padding: EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        color: ModuleTileColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+      ),
       child: ListView(
         children: <Widget>[
           Center(

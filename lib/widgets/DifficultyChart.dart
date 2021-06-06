@@ -2,12 +2,52 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 
+const Map<int, double> difficultyData = {
+  1: 0, //? 1hr : 0 votes
+  2: 6, //? 2hr : 6 votes
+  3: 7,
+  4: 5,
+  5: 6,
+  6: 6,
+  7: 10,
+  8: 11,
+  9: 12,
+  10: 12,
+};
+
 class DifficultyChart extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => DifficultyChartState();
 }
 
 class DifficultyChartState extends State<DifficultyChart> {
+  late List<BarChartGroupData> barGroups;
+  late double maxY = 0;
+
+  void processData(Map data) {
+    List<BarChartGroupData> dataList = [];
+    data.forEach((key, value) {
+      dataList.add(BarChartGroupData(
+        x: key,
+        barRods: [
+          BarChartRodData(
+              y: value.toDouble(),
+              colors: [Colors.lightBlueAccent, Colors.greenAccent])
+        ],
+      ));
+      if (value > maxY - 3) {
+        maxY = value + 3;
+      }
+    });
+    barGroups = [for (var items in dataList) items];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    processData(difficultyData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -17,14 +57,15 @@ class DifficultyChartState extends State<DifficultyChart> {
         color: ModuleTileColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(
+              left: 8.0, right: 8.0, top: 8.0, bottom: 14.0),
           child: Column(
             children: [
               Expanded(
                 child: BarChart(
                   BarChartData(
                     alignment: BarChartAlignment.spaceAround,
-                    maxY: 20,
+                    maxY: maxY,
                     barTouchData: BarTouchData(
                       enabled: false,
                       touchTooltipData: BarTouchTooltipData(
@@ -90,107 +131,7 @@ class DifficultyChartState extends State<DifficultyChart> {
                     borderData: FlBorderData(
                       show: false,
                     ),
-                    barGroups: [
-                      BarChartGroupData(
-                        x: 0,
-                        barRods: [
-                          BarChartRodData(y: 7, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 1,
-                        barRods: [
-                          BarChartRodData(y: 10, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 2,
-                        barRods: [
-                          BarChartRodData(y: 11, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 3,
-                        barRods: [
-                          BarChartRodData(y: 14, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 4,
-                        barRods: [
-                          BarChartRodData(y: 16, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 5,
-                        barRods: [
-                          BarChartRodData(y: 17, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 6,
-                        barRods: [
-                          BarChartRodData(y: 16, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 7,
-                        barRods: [
-                          BarChartRodData(y: 14, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 8,
-                        barRods: [
-                          BarChartRodData(y: 11, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 9,
-                        barRods: [
-                          BarChartRodData(y: 8, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                      BarChartGroupData(
-                        x: 10,
-                        barRods: [
-                          BarChartRodData(y: 6, colors: [
-                            Colors.lightBlueAccent,
-                            Colors.greenAccent
-                          ])
-                        ],
-                      ),
-                    ],
+                    barGroups: barGroups,
                   ),
                 ),
               ),

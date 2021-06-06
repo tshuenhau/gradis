@@ -69,6 +69,23 @@ const kTextFieldDecoration = InputDecoration(
   ),
 );
 
+const greenTextFieldDecoration = InputDecoration(
+  hintText: 'Enter your email',
+  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  fillColor: Highlight,
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Highlight, width: 1.0),
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Highlight, width: 2.0),
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
+);
+
 const TextStyle capTextStyle = TextStyle(
   color: Colors.white70,
   fontSize: 18.0,
