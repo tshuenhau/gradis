@@ -40,12 +40,13 @@ class _InputPageState extends State<InputPage> {
   Widget build(BuildContext context) {
     ScrollController scrollController = new ScrollController();
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: CustomTopAppBar(context: context, loggedInUser: loggedInUser),
-        body: GradesList(scrollController: scrollController),
-        bottomNavigationBar: CustomBottomAppBar(),
-        floatingActionButton: AddModuleFAB(scrollController: scrollController),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        drawer: CustomSiderNavBar());
+      resizeToAvoidBottomInset: true,
+      appBar: CustomTopAppBar(context: context, loggedInUser: loggedInUser),
+      body: GradesList(scrollController: scrollController),
+      bottomNavigationBar: CustomBottomAppBar(),
+      floatingActionButton: AddModuleFAB(scrollController: scrollController),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      //drawer: CustomSiderNavBar()
+    );
   }
 }
