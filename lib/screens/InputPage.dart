@@ -40,7 +40,6 @@ class _InputPageState extends State<InputPage> {
   Widget build(BuildContext context) {
     ScrollController scrollController = new ScrollController();
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       appBar: CustomTopAppBar(context: context, loggedInUser: loggedInUser),
       body: GradesList(scrollController: scrollController),
       bottomNavigationBar: CustomBottomAppBar(),

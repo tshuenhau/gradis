@@ -5,6 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:gradis/constants.dart';
 
+//TODO: need to havge validation on input in this classes
+//! Maybe use:
+//!             inputFormatters: <TextInputFormatter>[
+//!               FilteringTextInputFormatter.digitsOnly
+//!             ],
 class EditableTextField extends StatefulWidget {
   // constructor takes in the text, the module, and its type: Module/Credits/Grade
   final String initialText;

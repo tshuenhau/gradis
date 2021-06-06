@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gradis/widgets/ModuleTile.dart';
 import 'package:gradis/widgets/DifficultyChart.dart';
 import 'package:gradis/widgets/WorkloadChart.dart';
@@ -18,7 +19,9 @@ Future<dynamic> buildAddModuleBottomSheet(BuildContext context) {
         borderRadius: BorderRadius.circular(10.0),
       ),
       builder: (BuildContext context) {
-        return Padding(
+        return AnimatedPadding(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.decelerate,
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
@@ -128,9 +131,12 @@ class _AddModuleState extends State<AddModule> {
                   kTextFieldDecoration.copyWith(hintText: 'Enter Module Name'),
             ),
             SizedBox(height: 15),
-            TextField(
+            TextFormField(
               keyboardType: TextInputType.number,
               autofocus: false,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
               onChanged: (value) {
                 _newModuleCredits = int.parse(value);
                 print(_newModuleCredits);
@@ -145,6 +151,9 @@ class _AddModuleState extends State<AddModule> {
             TextField(
               keyboardType: TextInputType.number,
               autofocus: false,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
               onChanged: (value) {
                 _newModuleGrade = double.parse(value);
               },
