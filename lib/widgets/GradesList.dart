@@ -148,12 +148,11 @@ class GradesList extends StatelessWidget {
                   ),
                 );
               } else
-                return Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                    color: Accent,
+                return Center(
+                  child: Container(
+                    height: 300,
+                    child: Center(child: Text("Loading...")),
                   ),
-                  child: Text("Loading"),
                 );
             }),
       ),

@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gradis/widgets/ModuleTile.dart';
 import 'package:gradis/widgets/DifficultyChart.dart';
 import 'package:gradis/widgets/WorkloadChart.dart';
-
+import 'package:flutter/material.dart';
+import 'package:gradis/services/UserAPI.dart';
+import 'package:gradis/constants.dart';
+import 'package:gradis/classes/module.dart';
+import 'package:provider/provider.dart';
+import 'package:gradis/screens/AddModuleBottomSheet.dart';
 import 'package:gradis/constants.dart';
 
 Future<dynamic> buildAddModuleBottomSheet(BuildContext context) {
@@ -33,10 +38,12 @@ class AddModule extends StatefulWidget {
 
 class _AddModuleState extends State<AddModule> {
   String? _chosenSemester;
-
+  String _newModuleName = "";
+  int _newModuleCredits = 4;
+  double _newModuleGrade = 5;
+  String? _newModuleSemester = "";
   @override
   Widget build(BuildContext context) {
-    String newModuleName;
     List<String> semesters = [
       '2020 S1',
       '2020 S2',
@@ -102,6 +109,7 @@ class _AddModuleState extends State<AddModule> {
                   onChanged: (value) {
                     setState(() {
                       _chosenSemester = value;
+                      _newModuleSemester = value;
                       print(value);
                     });
                   },
@@ -112,7 +120,8 @@ class _AddModuleState extends State<AddModule> {
             TextField(
               autofocus: false,
               onChanged: (newText) {
-                newModuleName = newText;
+                _newModuleName = newText;
+                print(_newModuleName);
               },
               textAlign: TextAlign.center,
               decoration:
@@ -122,8 +131,11 @@ class _AddModuleState extends State<AddModule> {
             TextField(
               keyboardType: TextInputType.number,
               autofocus: false,
-              onChanged: (newText) {
-                newModuleName = newText;
+              onChanged: (value) {
+                _newModuleCredits = int.parse(value);
+                print(_newModuleCredits);
+
+                print(_newModuleName);
               },
               textAlign: TextAlign.center,
               decoration: kTextFieldDecoration.copyWith(
@@ -133,8 +145,8 @@ class _AddModuleState extends State<AddModule> {
             TextField(
               keyboardType: TextInputType.number,
               autofocus: false,
-              onChanged: (newText) {
-                newModuleName = newText;
+              onChanged: (value) {
+                _newModuleGrade = double.parse(value);
               },
               textAlign: TextAlign.center,
               decoration:
@@ -146,7 +158,29 @@ class _AddModuleState extends State<AddModule> {
               borderRadius: BorderRadius.all(Radius.circular(30.0)),
               elevation: 5.0,
               child: MaterialButton(
-                onPressed: () async {},
+                onPressed: () {
+                  final newMod = Module(
+                      name: _newModuleName,
+                      grade: _newModuleGrade,
+                      credits: _newModuleCredits,
+                      workload: 0,
+                      difficulty: 0,
+                      ays: {
+                        'year': 2020,
+                        'semester': 1
+                      }, //TODO DId not integrate this part yet
+                      su: false,
+                      done: false);
+                  Provider.of<UserAPI>(context, listen: false)
+                      .createModule(newMod);
+                  // if (scrollController.hasClients) {
+                  //   scrollController.animateTo(
+                  //       scrollController.position.maxScrollExtent,
+                  //       duration: Duration(microseconds: 300),
+                  //       curve: Curves.easeOut);
+                  // }
+                  Navigator.pop(context);
+                },
                 minWidth: 200.0,
                 height: 42.0,
                 child: Text(
