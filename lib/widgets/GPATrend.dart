@@ -112,6 +112,7 @@ class _GPATrendState extends State<GPATrend> {
               fontSize: 16),
           getTitles: (value) {
             switch (value.toInt()) {
+              //! TODO:must change this to dynamic
               case 0:
                 return '20 S1';
               case 1:
@@ -134,6 +135,7 @@ class _GPATrendState extends State<GPATrend> {
           ),
           getTitles: (value) {
             switch (value.toInt()) {
+              //! TODO:must change this to dynamic
               case 1:
                 return '1';
               case 2:
@@ -153,11 +155,12 @@ class _GPATrendState extends State<GPATrend> {
           show: false,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      maxX: 3,
+      maxX: 3, //! TODO:must change this to dynamic
       minY: 0,
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
+          //! TODO:must change this to dynamic
           spots: [
             FlSpot(0, 3),
             FlSpot(1, 2),
@@ -215,12 +218,15 @@ class _GPATrendState extends State<GPATrend> {
               fontSize: 16),
           getTitles: (value) {
             switch (value.toInt()) {
+              //! TODO: must change this to dynamic
+              case 1:
+                return '20 S1';
               case 2:
-                return '2020 S1';
-              case 5:
-                return '2020 S2';
-              case 8:
-                return '2021 S1';
+                return '20 S2';
+              case 3:
+                return '21 S1';
+              case 4:
+                return '21 S2';
             }
             return '';
           },
@@ -251,22 +257,23 @@ class _GPATrendState extends State<GPATrend> {
         ),
       ),
       borderData: FlBorderData(
+          //! TODO:must change this to dynamic
           show: false,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 0,
-      maxX: 11,
+      minX: 1,
+      maxX: 4,
       minY: 0,
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 3.44),
-            FlSpot(2.6, 3.44),
-            FlSpot(4.9, 3.44),
-            FlSpot(6.8, 3.44),
-            FlSpot(8, 3.44),
-            FlSpot(9.5, 3.44),
-            FlSpot(11, 3.44),
+            FlSpot(1, 3.44),
+            FlSpot(2, 3.44),
+            FlSpot(3, 3.44),
+            FlSpot(4, 3.44),
+            // FlSpot(8, 3.44),
+            // FlSpot(9.5, 3.44),
+            // FlSpot(11, 3.44),
           ],
           isCurved: true,
           colors: [

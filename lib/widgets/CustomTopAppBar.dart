@@ -107,25 +107,25 @@ class CustomTopAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ],
                         ),
                       ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            const Text(
-                              "Goal",
-                              textAlign: TextAlign.left,
-                              style: titleTextStyle,
-                            ),
-                            Text(
-                              Provider.of<UserAPI>(context, listen: false)
-                                  .findGoalCAP().
-                                  .toStringAsFixed(
-                                      2), //TODO: findGoalCAP should return the same type as the other CAPs for standardization
-                              textAlign: TextAlign.left,
-                              style: capTextStyle,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: Column(
+                      //     children: [
+                      //       const Text(
+                      //         "Goal",
+                      //         textAlign: TextAlign.left,
+                      //         style: titleTextStyle,
+                      //       ),
+                      //       Text(
+                      //         Provider.of<UserAPI>(context, listen: false)
+                      //             .findGoalCAP().
+                      //             .toStringAsFixed(
+                      //                 2), //TODO: findGoalCAP should return the same type as the other CAPs for standardization
+                      //         textAlign: TextAlign.left,
+                      //         style: capTextStyle,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
 
                       // Expanded(
                       //   child: Column(
