@@ -219,13 +219,13 @@ class _GPATrendState extends State<GPATrend> {
           getTitles: (value) {
             switch (value.toInt()) {
               //! TODO: must change this to dynamic
-              case 1:
+              case 0:
                 return '20 S1';
-              case 2:
+              case 1:
                 return '20 S2';
-              case 3:
+              case 2:
                 return '21 S1';
-              case 4:
+              case 3:
                 return '21 S2';
             }
             return '';
@@ -260,17 +260,18 @@ class _GPATrendState extends State<GPATrend> {
           //! TODO:must change this to dynamic
           show: false,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 1,
-      maxX: 4,
+      minX: 0,
+      maxX: 3, //! TODO:must change this to dynamic
+
       minY: 0,
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
           spots: [
+            FlSpot(0, 3.44),
             FlSpot(1, 3.44),
             FlSpot(2, 3.44),
             FlSpot(3, 3.44),
-            FlSpot(4, 3.44),
             // FlSpot(8, 3.44),
             // FlSpot(9.5, 3.44),
             // FlSpot(11, 3.44),

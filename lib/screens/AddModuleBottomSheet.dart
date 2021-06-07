@@ -132,10 +132,10 @@ class _AddModuleState extends State<AddModule> {
             ),
             SizedBox(height: 15),
             TextFormField(
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               autofocus: false,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))
               ],
               onChanged: (value) {
                 _newModuleCredits = int.parse(value);
@@ -149,10 +149,10 @@ class _AddModuleState extends State<AddModule> {
             ),
             SizedBox(height: 15),
             TextField(
-              keyboardType: TextInputType.number,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
               autofocus: false,
               inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))
               ],
               onChanged: (value) {
                 _newModuleGrade = double.parse(value);
