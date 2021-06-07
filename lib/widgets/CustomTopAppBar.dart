@@ -127,7 +127,7 @@ class CustomTopAppBar extends StatelessWidget implements PreferredSizeWidget {
                       //   ),
                       // ),
 
-                      // Expanded(
+                      // Expanded( //? this is the backup (old version of goalcap)
                       //   child: Column(
                       //     children: [
                       //       const Text(
