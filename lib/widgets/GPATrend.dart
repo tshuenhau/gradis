@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 
 class GPATrend extends StatefulWidget {
+  //TODO: Make the data here reactive to API call.
   @override
   _GPATrendState createState() => _GPATrendState();
 }
@@ -14,6 +15,7 @@ class _GPATrendState extends State<GPATrend> {
   ];
 
   bool showAvg = false;
+  String type = "Discrete";
 
   @override
   Widget build(BuildContext context) {
@@ -44,22 +46,31 @@ class _GPATrendState extends State<GPATrend> {
                 ),
               ),
             ),
-            SizedBox(
-              width: 60,
-              height: 50,
-              child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    showAvg = !showAvg;
-                  });
-                },
-                child: Text(
-                  'avg',
-                  style: TextStyle(
-                      fontSize: 12,
-                      color: showAvg
-                          ? Colors.white.withOpacity(0.5)
-                          : Colors.white),
+            Padding(
+              padding: const EdgeInsets.only(left: 140.0, top: 120),
+              child: SizedBox(
+                width: 100,
+                height: 50,
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      showAvg = !showAvg;
+                      if (type == "Discrete") {
+                        type = "Cummulative";
+                        print(type);
+                      } else {
+                        type = "Discrete";
+                      }
+                    });
+                  },
+                  child: Text(
+                    type,
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: showAvg
+                            ? Colors.white.withOpacity(0.5)
+                            : Colors.white.withOpacity(0.5)),
+                  ),
                 ),
               ),
             ),
@@ -95,6 +106,109 @@ class _GPATrendState extends State<GPATrend> {
         topTitles: SideTitles(
           showTitles: true,
           reservedSize: 15,
+          getTextStyles: (value) => const TextStyle(
+              color: Color(0xff68737d),
+              fontWeight: FontWeight.bold,
+              fontSize: 16),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 0:
+                return '20 S1';
+              case 1:
+                return '20 S2';
+              case 2:
+                return '21 S1';
+              case 3:
+                return '21 S2';
+            }
+            return '';
+          },
+          margin: 8,
+        ),
+        leftTitles: SideTitles(
+          showTitles: true,
+          getTextStyles: (value) => const TextStyle(
+            color: Color(0xff67727d),
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+          getTitles: (value) {
+            switch (value.toInt()) {
+              case 1:
+                return '1';
+              case 2:
+                return '2';
+              case 3:
+                return '3';
+              case 4:
+                return '4';
+            }
+            return '';
+          },
+          reservedSize: 28,
+          margin: 12,
+        ),
+      ),
+      borderData: FlBorderData(
+          show: false,
+          border: Border.all(color: const Color(0xff37434d), width: 1)),
+      minX: 0,
+      maxX: 3,
+      minY: 0,
+      maxY: 6,
+      lineBarsData: [
+        LineChartBarData(
+          spots: [
+            FlSpot(0, 3),
+            FlSpot(1, 2),
+            FlSpot(2, 5),
+            FlSpot(3, 3.1),
+            // FlSpot(4, 4),
+            // FlSpot(5, 3),
+            // FlSpot(6, 4),
+          ],
+          isCurved: true,
+          colors: gradientColors,
+          barWidth: 5,
+          isStrokeCapRound: true,
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            colors:
+                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  LineChartData avgData() {
+    return LineChartData(
+      lineTouchData: LineTouchData(enabled: false),
+      gridData: FlGridData(
+        show: false,
+        drawHorizontalLine: true,
+        getDrawingVerticalLine: (value) {
+          return FlLine(
+            color: const Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+        getDrawingHorizontalLine: (value) {
+          return FlLine(
+            color: const Color(0xff37434d),
+            strokeWidth: 1,
+          );
+        },
+      ),
+      titlesData: FlTitlesData(
+        show: true,
+        bottomTitles: SideTitles(showTitles: false),
+        topTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 22,
           getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
@@ -138,104 +252,6 @@ class _GPATrendState extends State<GPATrend> {
       ),
       borderData: FlBorderData(
           show: false,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 0,
-      maxX: 11,
-      minY: 0,
-      maxY: 6,
-      lineBarsData: [
-        LineChartBarData(
-          spots: [
-            FlSpot(0, 3),
-            FlSpot(2.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
-          ],
-          isCurved: true,
-          colors: gradientColors,
-          barWidth: 5,
-          isStrokeCapRound: true,
-          dotData: FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(
-            show: true,
-            colors:
-                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-          ),
-        ),
-      ],
-    );
-  }
-
-  LineChartData avgData() {
-    return LineChartData(
-      lineTouchData: LineTouchData(enabled: false),
-      gridData: FlGridData(
-        show: true,
-        drawHorizontalLine: true,
-        getDrawingVerticalLine: (value) {
-          return FlLine(
-            color: const Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-        getDrawingHorizontalLine: (value) {
-          return FlLine(
-            color: const Color(0xff37434d),
-            strokeWidth: 1,
-          );
-        },
-      ),
-      titlesData: FlTitlesData(
-        show: true,
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          getTextStyles: (value) => const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 2:
-                return 'MAR';
-              case 5:
-                return 'JUN';
-              case 8:
-                return 'SEP';
-            }
-            return '';
-          },
-          margin: 8,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          getTextStyles: (value) => const TextStyle(
-            color: Color(0xff67727d),
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-          ),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '10k';
-              case 3:
-                return '30k';
-              case 5:
-                return '50k';
-            }
-            return '';
-          },
-          reservedSize: 28,
-          margin: 12,
-        ),
-      ),
-      borderData: FlBorderData(
-          show: true,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
       maxX: 11,

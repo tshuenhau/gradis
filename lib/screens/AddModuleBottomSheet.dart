@@ -175,9 +175,10 @@ class _AddModuleState extends State<AddModule> {
                       workload: 0,
                       difficulty: 0,
                       ays: {
+                        //TODO DId not integrate this part yet
                         'year': 2020,
                         'semester': 1
-                      }, //TODO DId not integrate this part yet
+                      },
                       su: false,
                       done: false);
                   Provider.of<UserAPI>(context, listen: false)
