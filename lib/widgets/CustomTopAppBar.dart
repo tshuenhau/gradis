@@ -115,30 +115,50 @@ class CustomTopAppBar extends StatelessWidget implements PreferredSizeWidget {
                               textAlign: TextAlign.left,
                               style: titleTextStyle,
                             ),
-                            StreamBuilder<GoalCAP>(
-                              stream:
-                                  Provider.of<UserAPI>(context, listen: false)
-                                      .findGoalCAP(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  final goalCAP = snapshot.data;
-                                  final id = goalCAP!.id;
-                                  Provider.of<UserAPI>(context, listen: false)
-                                      .setGoalCAP(goalCAP);
-
-                                  return GoalCAPTextField(
-                                      id: id,
-                                      initialText:
-                                          goalCAP.goal.toStringAsFixed(2));
-                                } else {
-                                  return GoalCAPTextField(
-                                      id: 'first-creation', initialText: '');
-                                }
-                              },
-                            )
+                            Text(
+                              Provider.of<UserAPI>(context, listen: false)
+                                  .findGoalCAP().
+                                  .toStringAsFixed(
+                                      2), //TODO: findGoalCAP should return the same type as the other CAPs for standardization
+                              textAlign: TextAlign.left,
+                              style: capTextStyle,
+                            ),
                           ],
                         ),
                       ),
+
+                      // Expanded(
+                      //   child: Column(
+                      //     children: [
+                      //       const Text(
+                      //         "Goal",
+                      //         textAlign: TextAlign.left,
+                      //         style: titleTextStyle,
+                      //       ),
+                      //       StreamBuilder<GoalCAP>(
+                      //         stream:
+                      //             Provider.of<UserAPI>(context, listen: false)
+                      //                 .findGoalCAP(),
+                      //         builder: (context, snapshot) {
+                      //           if (snapshot.hasData) {
+                      //             final goalCAP = snapshot.data;
+                      //             final id = goalCAP!.id;
+                      //             Provider.of<UserAPI>(context, listen: false)
+                      //                 .setGoalCAP(goalCAP);
+
+                      //             return GoalCAPTextField(
+                      //                 id: id,
+                      //                 initialText:
+                      //                     goalCAP.goal.toStringAsFixed(2));
+                      //           } else {
+                      //             return GoalCAPTextField(
+                      //                 id: 'first-creation', initialText: '');
+                      //           }
+                      //         },
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
                     ]),
               );
             } else {

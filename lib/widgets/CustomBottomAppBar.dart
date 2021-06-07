@@ -4,6 +4,8 @@ import 'package:gradis/services/UserAPI.dart';
 import 'package:gradis/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/screens/WelcomeScreen.dart';
+import 'package:gradis/widgets/EditGoalCAPTextField.dart';
+
 import 'package:provider/provider.dart';
 
 class CustomBottomAppBar extends StatelessWidget {
@@ -56,8 +58,15 @@ class CustomBottomAppBar extends StatelessWidget {
                 icon: const Icon(Icons.settings),
                 color: IconsColor,
                 onPressed: () {
-                  _auth.signOut();
-                  Navigator.pushNamed(context, WelcomeScreen.id);
+                  //_auth.signOut();
+                  //Navigator.pushNamed(context, WelcomeScreen.id);
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                            height: 800,
+                            child: GoalCAPTextField(initialText: "", id: "0"));
+                      });
                 },
               ),
             ],

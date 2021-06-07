@@ -32,34 +32,25 @@ class _GoalCAPTextFieldState extends State<GoalCAPTextField> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isEditingText) {
-      return Container(
-        width: 50,
-        child: TextField(
-          textAlign: TextAlign.center,
-          keyboardType:
-              TextInputType.numberWithOptions(signed: true, decimal: true),
-          onSubmitted: (newValue) {
-            print("new value: " + newValue);
-            Provider.of<UserAPI>(context, listen: false)
-                .updateGoalCAP(double.parse(newValue), widget.id);
-          },
+    return Container(
+      width: 50,
+      decoration: new BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: new Border.all(
+          color: Colors.white,
+          width: 1.0,
         ),
-      );
-    }
-    return InkWell(
-        onTap: () {
-          setState(() {
-            _isEditingText = true;
-          });
+      ),
+      child: TextField(
+        textAlign: TextAlign.center,
+        keyboardType:
+            TextInputType.numberWithOptions(signed: true, decimal: true),
+        onSubmitted: (newValue) {
+          print("new value: " + newValue);
+          Provider.of<UserAPI>(context, listen: false)
+              .updateGoalCAP(double.parse(newValue), widget.id);
         },
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 14.0,
-          ),
-        ));
+      ),
+    );
   }
 }
