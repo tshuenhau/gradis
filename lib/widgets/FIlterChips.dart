@@ -19,20 +19,24 @@ class _FilterChipsState extends State<FilterChips> {
 
   List<Widget> chips = [];
   List<String> _options = [
+    '2020 S1',
+    '2020 S2',
     '2021 S1',
     '2021 S2',
     '2022 S1',
     '2022 S2',
     '2023 S1',
-    '2024 S2'
+    '2023 S2'
   ];
   Map<int, String> _hMap = {
-    0: '2021 S1',
+    0: '2020 S1',
     1: '2020 S2',
     2: '2021 S1',
     3: '2021 S2',
     4: '2022 S1',
-    5: '2022 S2'
+    5: '2022 S2',
+    6: '2023 S1',
+    7: '2023 S2'
   };
 
   Widget _buildChips() {
@@ -56,7 +60,6 @@ class _FilterChipsState extends State<FilterChips> {
             if (selected) {
               _selectedIndex = i;
               _selectedSemester = _hMap[i];
-              print(_selectedSemester);
               widget.callback(_selectedSemester!);
             }
           });

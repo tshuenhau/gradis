@@ -12,7 +12,7 @@ class UserAPI extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   late List<Module> modules = [];
   double goalCAP = 0;
-  String ays = "2021 S1";
+  late String ays = "2021 S1";
 
   void setModules(List<Module> modules) {
     this.modules = modules;

@@ -32,20 +32,22 @@ class _GradesListState extends State<GradesList> {
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
           stream: Provider.of<UserAPI>(context, listen: false)
               .findModulesBySemester(
-                  Provider.of<UserAPI>(context, listen: false)
-                      .ays), //TODO: PUT MAP OF YEAR AND SEM FROM FILTER CHIPS
+                  Provider.of<UserAPI>(context, listen: true).ays),
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
               hasData = true;
+              final modules = snapshot.data!.docs
+                  .map((DocumentSnapshot<Map<String, dynamic>> document) {
+                final data = document;
+                return Module.fromFirestore(data);
+              }).toList();
+              print('modules');
+              print(modules);
+              Provider.of<UserAPI>(context, listen: false).setModules(modules);
+            } else {
+              hasData = false;
+              Provider.of<UserAPI>(context, listen: false).setModules([]);
             }
-            final modules = snapshot.data!.docs
-                .map((DocumentSnapshot<Map<String, dynamic>> document) {
-              final data = document;
-              return Module.fromFirestore(data);
-            }).toList();
-            print('modules');
-            print(modules);
-            Provider.of<UserAPI>(context, listen: false).setModules(modules);
 
             return Container(
               constraints: BoxConstraints.expand(),

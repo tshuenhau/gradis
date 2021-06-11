@@ -5,7 +5,6 @@ import 'package:gradis/services/UserAPI.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:provider/provider.dart';
-import 'package:gradis/constants.dart';
 
 Future<dynamic> buildAddModuleBottomSheet(BuildContext context) {
   return showModalBottomSheet(
