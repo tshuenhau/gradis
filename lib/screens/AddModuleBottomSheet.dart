@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gradis/widgets/ModuleTile.dart';
-import 'package:gradis/widgets/DifficultyChart.dart';
-import 'package:gradis/widgets/WorkloadChart.dart';
 import 'package:flutter/material.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/classes/module.dart';
 import 'package:provider/provider.dart';
-import 'package:gradis/screens/AddModuleBottomSheet.dart';
 import 'package:gradis/constants.dart';
 
 Future<dynamic> buildAddModuleBottomSheet(BuildContext context) {
@@ -44,7 +40,6 @@ class _AddModuleState extends State<AddModule> {
   String _newModuleName = "";
   int _newModuleCredits = 4;
   double _newModuleGrade = 5;
-  String? _newModuleSemester = "";
   @override
   Widget build(BuildContext context) {
     List<String> semesters = [
@@ -112,8 +107,6 @@ class _AddModuleState extends State<AddModule> {
                   onChanged: (value) {
                     setState(() {
                       _chosenSemester = value;
-                      _newModuleSemester = value;
-                      print(value);
                     });
                   },
                 ),
@@ -174,11 +167,7 @@ class _AddModuleState extends State<AddModule> {
                       credits: _newModuleCredits,
                       workload: 0,
                       difficulty: 0,
-                      ays: {
-                        //TODO DId not integrate this part yet
-                        'year': 2020,
-                        'semester': 1
-                      },
+                      ays: _chosenSemester!,
                       su: false,
                       done: false);
                   Provider.of<UserAPI>(context, listen: false)

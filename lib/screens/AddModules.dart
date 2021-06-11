@@ -54,7 +54,7 @@ class AddModulesScreen extends StatelessWidget {
                   credits: 4,
                   workload: 0,
                   difficulty: 0,
-                  ays: {'year': 2020, 'semester': 1},
+                  ays: "2021 S1",
                   su: false,
                   done: false,
                 );

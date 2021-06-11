@@ -5,12 +5,14 @@ import 'package:gradis/screens/InputPage.dart';
 import 'package:gradis/screens/WelcomeScreen.dart';
 import 'package:gradis/screens/authentication/LoginScreen.dart';
 import 'package:gradis/screens/authentication/RegistrationScreen.dart';
-import 'package:gradis/services/UserAPI.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/screens/authentication/ForgotPasswordScreen.dart';
 import 'package:gradis/screens/authentication/ConfirmEmailScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gradis/services/UserAPI.dart';
+import 'package:gradis/services/SentimentAPI.dart';
+import 'package:gradis/services/GlobalSentimentAPI.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,31 +31,41 @@ class MyApp extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           checkLoggedIn(); // TODO: need to fix this
-          return ChangeNotifierProvider<UserAPI>(
-            create: (context) => UserAPI(),
-            child: GestureDetector(
-              onTap: () {
-                FocusScopeNode currentFocus = FocusScope.of(context);
-                if (!currentFocus.hasPrimaryFocus &&
-                    currentFocus.focusedChild != null) {
-                  FocusManager.instance.primaryFocus!.unfocus();
-                }
-              },
-              child: MaterialApp(
-                theme: gradisTheme,
-                home: InputPage(),
-                initialRoute: isLoggedIn ? InputPage.id : WelcomeScreen.id,
-                routes: {
-                  WelcomeScreen.id: (context) => WelcomeScreen(),
-                  LoginScreen.id: (context) => LoginScreen(),
-                  ForgotPasswordScreen.id: (context) => ForgotPasswordScreen(),
-                  RegistrationScreen.id: (context) => RegistrationScreen(),
-                  ConfirmEmailScreen.id: (context) => ConfirmEmailScreen(),
-                  InputPage.id: (context) => InputPage()
+          return MultiProvider(
+              providers: [
+                ChangeNotifierProvider<UserAPI>(create: (context) => UserAPI()),
+                ChangeNotifierProvider<SentimentAPI>(
+                    create: (context) => SentimentAPI()),
+                ChangeNotifierProvider<GlobalSentimentAPI>(
+                    create: (context) => GlobalSentimentAPI())
+              ],
+              child: GestureDetector(
+                onTap: () {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus &&
+                      currentFocus.focusedChild != null) {
+                    FocusManager.instance.primaryFocus!.unfocus();
+                  }
                 },
-              ),
-            ),
-          );
+                child: MaterialApp(
+                  theme: gradisTheme,
+                  home: InputPage(),
+                  initialRoute: isLoggedIn ? InputPage.id : WelcomeScreen.id,
+                  routes: {
+                    WelcomeScreen.id: (context) => WelcomeScreen(),
+                    LoginScreen.id: (context) => LoginScreen(),
+                    ForgotPasswordScreen.id: (context) =>
+                        ForgotPasswordScreen(),
+                    RegistrationScreen.id: (context) => RegistrationScreen(),
+                    ConfirmEmailScreen.id: (context) => ConfirmEmailScreen(),
+                    InputPage.id: (context) => InputPage()
+                  },
+                ),
+              ));
+          // return ChangeNotifierProvider<UserAPI>(
+          //   create: (context) => UserAPI(),
+          //   child:
+          // );
         }
         return MaterialApp(
           theme: gradisTheme,

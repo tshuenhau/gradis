@@ -12,6 +12,7 @@ class UserAPI extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   late List<Module> modules = [];
   double goalCAP = 0;
+  String ays = "2021 S1";
 
   void setModules(List<Module> modules) {
     this.modules = modules;
@@ -52,7 +53,8 @@ class UserAPI extends ChangeNotifier {
         .snapshots();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> findModulesBySemester(int ays) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> findModulesBySemester(
+      String ays) {
     return _firestore
         .collection('modules')
         .orderBy("createdAt", descending: false)
@@ -144,5 +146,10 @@ class UserAPI extends ChangeNotifier {
 
   double calculateFutureCAP() {
     return Calculator.futureCAP(modules);
+  }
+
+  void changeAys(String value) {
+    this.ays = value;
+    notifyListeners();
   }
 }

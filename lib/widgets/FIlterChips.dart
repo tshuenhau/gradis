@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 
-class FilterChips extends StatefulWidget {
-  const FilterChips({Key? key}) : super(key: key);
+typedef StringValue = void Function(String);
 
+class FilterChips extends StatefulWidget {
   @override
   _FilterChipsState createState() => _FilterChipsState();
+  late final StringValue callback;
+  FilterChips(StringValue callback) {
+    this.callback = callback;
+  }
 }
 
 class _FilterChipsState extends State<FilterChips> {
@@ -53,6 +57,7 @@ class _FilterChipsState extends State<FilterChips> {
               _selectedIndex = i;
               _selectedSemester = _hMap[i];
               print(_selectedSemester);
+              widget.callback(_selectedSemester!);
             }
           });
         },

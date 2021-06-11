@@ -19,7 +19,7 @@ class Module {
   final int workload;
   final int difficulty;
   final Timestamp? createdAt;
-  final Map ays;
+  final String ays;
   bool su;
   bool done;
 
@@ -31,7 +31,7 @@ class Module {
       credits: 0,
       workload: 0,
       difficulty: 0,
-      ays: Map(),
+      ays: "",
       su: false,
       done: false,
     );
@@ -40,16 +40,16 @@ class Module {
   factory Module.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     Map<String, dynamic> data = doc.data()!;
     return Module(
-        id: doc.id,
-        name: data['name'],
-        grade: data['grade'],
-        credits: data['credits'],
-        workload: data['workload'],
-        difficulty: data['difficulty'],
-        ays: data['ays'],
-        su: data['su'],
-        done: data['done'],
-        createdAt: data['createdAt']);
+      id: doc.id,
+      name: data['name'],
+      grade: data['grade'],
+      credits: data['credits'],
+      workload: data['workload'],
+      difficulty: data['difficulty'],
+      ays: data['ays'],
+      su: data['su'],
+      done: data['done'],
+    );
   }
 
   String? getID() {

@@ -58,15 +58,15 @@ class CustomBottomAppBar extends StatelessWidget {
                 icon: const Icon(Icons.settings),
                 color: IconsColor,
                 onPressed: () {
-                  //_auth.signOut();
-                  //Navigator.pushNamed(context, WelcomeScreen.id);
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                            height: 800,
-                            child: GoalCAPTextField(initialText: "", id: "0"));
-                      });
+                  _auth.signOut();
+                  Navigator.pushNamed(context, WelcomeScreen.id);
+                  // showModalBottomSheet(
+                  //     context: context,
+                  //     builder: (BuildContext context) {
+                  //       return Container(
+                  //           height: 800,
+                  //           child: GoalCAPTextField(initialText: "", id: "0"));
+                  //     });
                 },
               ),
             ],

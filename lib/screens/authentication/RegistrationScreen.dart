@@ -71,6 +71,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       await newUser.user!.sendEmailVerification();
 
                       Navigator.pushNamed(context, ConfirmEmailScreen.id);
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'weak-password') {
+                        print('Your password is weak');
+                      } else if (e.code == 'email-already-in-use') {
+                        print('The account already exists for that email.');
+                      }
                     } catch (e) {
                       print(e);
                     }

@@ -6,7 +6,7 @@ import 'package:gradis/classes/module.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gradis/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:gradis/screens/ModuleSentiment.dart';
+import 'package:gradis/screens/Feedback.dart';
 
 class ModuleTile extends StatefulWidget {
   final int index;
@@ -40,7 +40,7 @@ class _ModuleTileState extends State<ModuleTile> {
               color: Onyx,
               icon: Icons.more_horiz,
               foregroundColor: Accent,
-              onTap: () => (buildModuleSentimentBottomSheet(
+              onTap: () => (buildFeedbackBottomSheet(
                   context, widget)), //TODO: ADD THE FEEDBACK PAGE/ MORE PAGE
             ),
             IconSlideAction(

@@ -5,7 +5,7 @@ class ModuleSentiment {
   String name;
   int workload;
   int difficulty;
-  Map ays;
+  String ays;
   bool su;
   bool done;
 
