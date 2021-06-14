@@ -13,6 +13,7 @@ class UserAPI extends ChangeNotifier {
   late List<Module> modules = [];
   double goalCAP = 0;
   late String ays = "";
+  // late List<String> allAys = [];
 
   void setModules(List<Module> modules) {
     this.modules = modules;
@@ -152,4 +153,8 @@ class UserAPI extends ChangeNotifier {
     this.ays = value;
     notifyListeners();
   }
+
+  // Stream<String> getAllAys() {
+  //   return _firestore.collection('AYS').doc(_auth.currentUser!.uid).snapshots().map((snap) => snap.ays);
+  // }
 }
