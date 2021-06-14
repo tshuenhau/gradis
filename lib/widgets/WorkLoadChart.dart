@@ -27,6 +27,8 @@ import 'package:provider/provider.dart';
 // };
 
 class WorkloadChart extends StatefulWidget {
+  WorkloadChart(this.workloadMap);
+  late Map<int, double> workloadMap;
   @override
   State<StatefulWidget> createState() => WorkloadChartState();
 }
@@ -55,13 +57,13 @@ class WorkloadChartState extends State<WorkloadChart> {
 
   @override
   void initState() {
+    print('workload: ' + widget.workloadMap.toString());
     super.initState();
-    processData(Provider.of<GlobalSentimentAPI>(context, listen: false)
-        .getWorkloadMap());
   }
 
   @override
   Widget build(BuildContext context) {
+    processData(widget.workloadMap);
     return AspectRatio(
       aspectRatio: 1.7,
       child: Card(

@@ -12,6 +12,8 @@ class GlobalSentimentAPI extends ChangeNotifier {
   int maxDiff = 10;
   int maxWorkload = 25;
   List<ModuleSentiment> sentList = [];
+  Map<int, double> difficultyMap = {};
+  Map<int, double> workloadMap = {};
 
   Stream<QuerySnapshot<Map<String, dynamic>>> getModuleSentiment(
       String module) {
@@ -22,17 +24,18 @@ class GlobalSentimentAPI extends ChangeNotifier {
   }
 
   Map<int, double> getDifficultyMap() {
-    List<int> list = [for (var i = 0; i < maxDiff; i += 1) i];
-
+    List<int> list = [for (var i = 0; i <= maxDiff; i += 1) i];
     Map<int, double> diffMap = Map<int, double>.fromIterable(list,
         key: (item) => item, value: (item) => 0);
-    sentList.forEach(
-        (sent) => {diffMap.update(sent.workload, (value) => value + 1)});
+    sentList.forEach((sent) {
+      diffMap.update(sent.difficulty, (value) => value + 1);
+    });
     return diffMap;
   }
 
   Map<int, double> getWorkloadMap() {
-    List<int> list = [for (var i = 0; i < maxWorkload; i += 1) i];
+    //TODO: What happens when you delete a module?
+    List<int> list = [for (var i = 0; i <= maxWorkload; i += 1) i];
 
     Map<int, double> workloadMap = Map<int, double>.fromIterable(list,
         key: (item) => item, value: (item) => 0);
@@ -42,9 +45,7 @@ class GlobalSentimentAPI extends ChangeNotifier {
   }
 
   void setSentiment(List<ModuleSentiment> sentList) {
-    print(sentList);
-    sentList = sentList;
-    // notifyListeners();
+    this.sentList = sentList;
   }
 
   int calculateWorkLoad(List<ModuleSentiment> mods) {

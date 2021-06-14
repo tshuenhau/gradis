@@ -18,6 +18,8 @@ import 'package:gradis/services/GlobalSentimentAPI.dart';
 // };
 
 class DifficultyChart extends StatefulWidget {
+  DifficultyChart(this.difficultyMap);
+  late Map<int, double> difficultyMap;
   @override
   State<StatefulWidget> createState() => DifficultyChartState();
 }
@@ -47,12 +49,11 @@ class DifficultyChartState extends State<DifficultyChart> {
   @override
   void initState() {
     super.initState();
-    processData(Provider.of<GlobalSentimentAPI>(context, listen: false)
-        .getDifficultyMap());
   }
 
   @override
   Widget build(BuildContext context) {
+    processData(widget.difficultyMap);
     return AspectRatio(
       aspectRatio: 1.7,
       child: Card(

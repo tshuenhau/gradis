@@ -78,4 +78,12 @@ class SentimentAPI extends ChangeNotifier {
         .snapshots()
         .map((snap) => ModuleSentiment.fromFirestore(snap));
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getModuleSentiment(
+      String module) {
+    return _firestore
+        .collection('sentiment')
+        .where('name', isEqualTo: module)
+        .snapshots();
+  }
 }

@@ -26,15 +26,16 @@ class ModuleSentiment {
       DocumentSnapshot<Map<String, dynamic>> doc) {
     Map<String, dynamic> data = doc.data()!;
     return ModuleSentiment(
-        id: doc.id,
-        modId: data['modId'],
-        name: data['name'],
-        workload: data['workload'],
-        difficulty: data['difficulty'],
-        ays: data['ays'],
-        su: data['su'],
-        done: data['done'],
-        user: data['user']);
+      id: doc.id,
+      modId: data['modId'],
+      name: data['name'],
+      workload: data['workload'],
+      difficulty: data['difficulty'],
+      ays: data['ays'],
+      su: data['su'],
+      done: data['done'],
+      user: data['user'],
+    );
   }
   String? getID() {
     return id;

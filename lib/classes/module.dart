@@ -49,6 +49,7 @@ class Module {
       ays: data['ays'],
       su: data['su'],
       done: data['done'],
+      createdAt: data['createdAt'],
     );
   }
 

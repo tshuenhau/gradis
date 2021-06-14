@@ -43,6 +43,12 @@ class _FeedbackState extends State<Feedback> {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<GlobalSentimentAPI>(context, listen: false).setSentiment([]);
+  }
+
+  @override
   Widget build(BuildContext context) {
     //return SimpleBarChart();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -77,11 +83,27 @@ class _FeedbackState extends State<Feedback> {
                   final data = document;
                   return ModuleSentiment.fromFirestore(data);
                 }).toList();
+
                 Provider.of<GlobalSentimentAPI>(context, listen: false)
                     .setSentiment(moduleSentiments);
+
+                print('module sentiments: ' +
+                    Provider.of<GlobalSentimentAPI>(context, listen: false)
+                        .sentList
+                        .toString());
               }
+              Map<int, double> difficultyMap =
+                  Provider.of<GlobalSentimentAPI>(context, listen: false)
+                      .getDifficultyMap();
+              Map<int, double> workloadMap =
+                  Provider.of<GlobalSentimentAPI>(context, listen: false)
+                      .getWorkloadMap();
               return Column(
-                  children: <Widget>[WorkloadChart(), DifficultyChart()]);
+                children: <Widget>[
+                  WorkloadChart(workloadMap),
+                  DifficultyChart(difficultyMap)
+                ],
+              );
             },
           ),
           Text("Word Cloud"),
@@ -94,7 +116,6 @@ class _FeedbackState extends State<Feedback> {
                 stream: Provider.of<SentimentAPI>(context, listen: false)
                     .findOneModuleSentiment(widget.widget.module.id!),
                 builder: (context, snapshot) {
-                  print(snapshot.hasData);
                   if (snapshot.hasData && !isEdit) {
                     difficulty = snapshot.data!.difficulty.toDouble();
                     workLoad = snapshot.data!.workload.toDouble();
@@ -151,7 +172,6 @@ class _FeedbackState extends State<Feedback> {
                                 // Validate will return true if the form is valid, or false if
                                 // the form is invalid.
                                 Module module = widget.widget.module;
-                                print(module.id);
                                 ModuleSentiment sentiment = new ModuleSentiment(
                                     id: snapshot.hasData
                                         ? snapshot.data!.id
