@@ -41,8 +41,6 @@ class _GradesListState extends State<GradesList> {
                 final data = document;
                 return Module.fromFirestore(data);
               }).toList();
-              print('modules');
-              print(modules);
               Provider.of<UserAPI>(context, listen: false).setModules(modules);
             } else {
               hasData = false;
@@ -161,7 +159,9 @@ class _GradesListState extends State<GradesList> {
                         return Center(
                           child: Container(
                             height: 300,
-                            child: Center(child: Text("Loading...")),
+                            child: Center(
+                                child: Text(
+                                    "Loading...")), //TODO: make this look better
                           ),
                         );
                       }

@@ -1,19 +1,21 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
+import 'package:provider/provider.dart';
+import 'package:gradis/services/GlobalSentimentAPI.dart';
 
-const Map<int, double> difficultyData = {
-  1: 0, //? 1hr : 0 votes
-  2: 6, //? 2hr : 6 votes
-  3: 7,
-  4: 5,
-  5: 6,
-  6: 6,
-  7: 10,
-  8: 11,
-  9: 12,
-  10: 12,
-};
+// const Map<int, double> difficultyData = {
+//   1: 0, //? 1hr : 0 votes
+//   2: 6, //? 2hr : 6 votes
+//   3: 7,
+//   4: 5,
+//   5: 6,
+//   6: 6,
+//   7: 10,
+//   8: 11,
+//   9: 12,
+//   10: 12,
+// };
 
 class DifficultyChart extends StatefulWidget {
   @override
@@ -45,7 +47,8 @@ class DifficultyChartState extends State<DifficultyChart> {
   @override
   void initState() {
     super.initState();
-    processData(difficultyData);
+    processData(Provider.of<GlobalSentimentAPI>(context, listen: false)
+        .getDifficultyMap());
   }
 
   @override

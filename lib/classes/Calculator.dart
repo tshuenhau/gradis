@@ -55,10 +55,10 @@ class Calculator {
   }
 
   static calculateDifficulty(List<ModuleSentiment> mods) {
-    int workload = 0;
+    int diff = 0;
     for (ModuleSentiment mod in mods) {
-      workload += mod.getDifficulty();
+      diff += mod.getDifficulty();
     }
-    return workload / mods.length;
+    return diff / mods.length;
   }
 }

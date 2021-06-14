@@ -4,7 +4,6 @@ import 'package:gradis/classes/ModuleSentiment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:gradis/classes/Calculator.dart';
 
 class SentimentAPI extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
@@ -15,6 +14,7 @@ class SentimentAPI extends ChangeNotifier {
         .collection('sentiment')
         .add({
           'name': mod.name,
+          'modId': mod.modId,
           'workload': mod.workload,
           'difficulty': mod.difficulty,
           'ays': mod.ays,
@@ -62,11 +62,11 @@ class SentimentAPI extends ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<ModuleSentiment> findOneModuleSentiment(String moduleName) {
+  Stream<ModuleSentiment> findOneModuleSentiment(String moduleId) {
     return _firestore
         .collection('sentiment')
         .where('user', isEqualTo: _auth.currentUser!.uid)
-        .where('name', isEqualTo: moduleName)
+        .where('modId', isEqualTo: moduleId)
         .snapshots()
         .map((snap) => ModuleSentiment.fromFirestore(snap.docs[0]));
   }
@@ -77,13 +77,5 @@ class SentimentAPI extends ChangeNotifier {
         .doc(_auth.currentUser!.uid)
         .snapshots()
         .map((snap) => ModuleSentiment.fromFirestore(snap));
-  }
-
-  int calculateWorkLoad(List<ModuleSentiment> mods) {
-    return Calculator.calculateWorkload(mods);
-  }
-
-  int calculateDifficulty(List<ModuleSentiment> mods) {
-    return Calculator.calculateDifficulty(mods);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/material.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/classes/module.dart';

@@ -1,29 +1,30 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
-
-const Map<int, double> workLoadData = {
-  1: 0, //? 1hr : 0 votes
-  2: 6, //? 2hr : 6 votes
-  3: 7,
-  4: 5,
-  5: 6,
-  6: 6,
-  7: 10,
-  8: 11,
-  9: 12,
-  10: 12,
-  11: 14,
-  12: 12,
-  13: 11,
-  14: 11,
-  15: 10,
-  16: 9,
-  17: 7,
-  18: 5,
-  19: 2,
-  20: 0
-};
+import 'package:gradis/services/GlobalSentimentAPI.dart';
+import 'package:provider/provider.dart';
+// const Map<int, double> workLoadData = {
+//   1: 0, //? 1hr : 0 votes
+//   2: 6, //? 2hr : 6 votes
+//   3: 7,
+//   4: 5,
+//   5: 6,
+//   6: 6,
+//   7: 10,
+//   8: 11,
+//   9: 12,
+//   10: 12,
+//   11: 14,
+//   12: 12,
+//   13: 11,
+//   14: 11,
+//   15: 10,
+//   16: 9,
+//   17: 7,
+//   18: 5,
+//   19: 2,
+//   20: 0
+// };
 
 class WorkloadChart extends StatefulWidget {
   @override
@@ -55,7 +56,8 @@ class WorkloadChartState extends State<WorkloadChart> {
   @override
   void initState() {
     super.initState();
-    processData(workLoadData);
+    processData(Provider.of<GlobalSentimentAPI>(context, listen: false)
+        .getWorkloadMap());
   }
 
   @override

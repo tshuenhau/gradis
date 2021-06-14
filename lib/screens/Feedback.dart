@@ -7,7 +7,9 @@ import 'package:gradis/classes/ModuleSentiment.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/constants.dart';
 import 'package:gradis/services/SentimentAPI.dart';
+import 'package:gradis/services/GlobalSentimentAPI.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 Future<dynamic> buildFeedbackBottomSheet(
     BuildContext context, ModuleTile widget) {
@@ -38,6 +40,7 @@ class _FeedbackState extends State<Feedback> {
   double workLoad = 0;
   double difficulty = 0;
   bool isEdit = false;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +67,23 @@ class _FeedbackState extends State<Feedback> {
               fontWeight: FontWeight.bold,
             ),
           )),
-          WorkloadChart(),
-          DifficultyChart(),
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: Provider.of<GlobalSentimentAPI>(context, listen: false)
+                .getModuleSentiment(widget.widget.module.name),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                final moduleSentiments = snapshot.data!.docs
+                    .map((DocumentSnapshot<Map<String, dynamic>> document) {
+                  final data = document;
+                  return ModuleSentiment.fromFirestore(data);
+                }).toList();
+                Provider.of<GlobalSentimentAPI>(context, listen: false)
+                    .setSentiment(moduleSentiments);
+              }
+              return Column(
+                  children: <Widget>[WorkloadChart(), DifficultyChart()]);
+            },
+          ),
           Text("Word Cloud"),
           Card(
               elevation: 7.0,
@@ -74,8 +92,9 @@ class _FeedbackState extends State<Feedback> {
                   borderRadius: BorderRadius.circular(20)),
               child: StreamBuilder<ModuleSentiment>(
                 stream: Provider.of<SentimentAPI>(context, listen: false)
-                    .findOneModuleSentiment(widget.widget.module.name),
+                    .findOneModuleSentiment(widget.widget.module.id!),
                 builder: (context, snapshot) {
+                  print(snapshot.hasData);
                   if (snapshot.hasData && !isEdit) {
                     difficulty = snapshot.data!.difficulty.toDouble();
                     workLoad = snapshot.data!.workload.toDouble();
@@ -132,16 +151,19 @@ class _FeedbackState extends State<Feedback> {
                                 // Validate will return true if the form is valid, or false if
                                 // the form is invalid.
                                 Module module = widget.widget.module;
+                                print(module.id);
                                 ModuleSentiment sentiment = new ModuleSentiment(
                                     id: snapshot.hasData
                                         ? snapshot.data!.id
                                         : "",
+                                    modId: module.id!,
                                     name: module.name,
                                     ays: module.ays,
                                     done: module.done,
                                     difficulty: difficulty.floor(),
                                     workload: workLoad.floor(),
-                                    su: module.su);
+                                    su: module.su,
+                                    user: _auth.currentUser!.uid);
                                 // if (_formKey.currentState!.validate()) {
                                 //   // Process data.
                                 if (!isEdit) {
