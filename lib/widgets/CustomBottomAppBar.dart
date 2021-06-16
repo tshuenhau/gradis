@@ -65,43 +65,76 @@ class CustomBottomAppBar extends StatelessWidget {
                       builder: (BuildContext context) {
                         return Container(
                           height: 800,
-                          child: ListView(
-                            children: <Widget>[
-                              Text("Set Goal GPA", textAlign: TextAlign.center),
-                              TextField(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: ListView(
+                              children: <Widget>[
+                                Text(
+                                  "Set Goal GPA",
                                   textAlign: TextAlign.center,
-                                  onChanged: (value) {
-                                    goal = double.parse(value);
-                                  },
-                                  decoration: kTextFieldDecoration.copyWith(
-                                      hintText: 'Enter your Goal')),
-                              SizedBox(
-                                height: 8.0,
-                              ),
-                              Material(
-                                color: Highlight,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0)),
-                                elevation: 5.0,
-                                child: MaterialButton(
-                                  onPressed: () async {
-                                    FocusScope.of(context).unfocus();
-                                    print("Submit");
-                                    print(goal);
-                                    setGoalCAP(
-                                        goal); //TODO: ZQ HERE MUST CHANGE THE GOAL WITH API
-                                    //Implement registration functionality.
-                                  },
-                                  minWidth:
-                                      200.0, //!!! Why this size smaller when all other buttons also 200.0
-                                  height: 42.0,
-                                  child: Text(
-                                    'Submit',
-                                    style: TextStyle(color: Colors.black),
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                TextField(
+                                    textAlign: TextAlign.center,
+                                    onChanged: (value) {
+                                      goal = double.parse(value);
+                                    },
+                                    decoration: kTextFieldDecoration.copyWith(
+                                        hintText: 'Enter your Goal')),
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                Material(
+                                  color: Highlight,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0)),
+                                  elevation: 5.0,
+                                  child: MaterialButton(
+                                    onPressed: () async {
+                                      FocusScope.of(context).unfocus();
+                                      print("Submit");
+                                      print(goal);
+                                      setGoalCAP(
+                                          goal); //TODO: ZQ HERE MUST CHANGE THE GOAL WITH API
+                                      //Implement registration functionality.
+                                    },
+                                    minWidth:
+                                        200.0, //!!! Why this size smaller when all other buttons also 200.0
+                                    height: 42.0,
+                                    child: Text(
+                                      'Submit',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                Material(
+                                  color: Colors.redAccent,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0)),
+                                  elevation: 5.0,
+                                  child: MaterialButton(
+                                    onPressed: () async {
+                                      print("Log Out");
+                                      print(goal);
+                                      //TODO: ZQ HERE MAKE THE FCKER LOG OUT.
+                                    },
+                                    minWidth:
+                                        200.0, //!!! Why this size smaller when all other buttons also 200.0
+                                    height: 42.0,
+                                    child: Text(
+                                      'Log Out',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       });
