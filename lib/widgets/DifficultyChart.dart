@@ -62,7 +62,7 @@ class DifficultyChartState extends State<DifficultyChart> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: const EdgeInsets.only(
-              left: 8.0, right: 8.0, top: 8.0, bottom: 14.0),
+              left: 20.0, right: 20.0, top: 8.0, bottom: 14.0),
           child: Column(
             children: [
               Expanded(

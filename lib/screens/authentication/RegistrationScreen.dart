@@ -13,6 +13,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
+  String errorText = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +53,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   hintText: 'Enter your password'),
             ),
             SizedBox(
-              height: 24.0,
+              height: 12.0,
+            ),
+            Text(
+              errorText,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.redAccent),
+            ),
+            SizedBox(
+              height: 12.0,
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -72,10 +81,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                       Navigator.pushNamed(context, ConfirmEmailScreen.id);
                     } on FirebaseAuthException catch (e) {
-                      if (e.code == 'weak-password') {
+                      if (e.code == 'email-already-in-use') {
                         print('Your password is weak');
-                      } else if (e.code == 'email-already-in-use') {
+                        setState(() {
+                          errorText = 'Your password is too weak';
+                        });
+                      } else if (e.code == 'weak-password') {
                         print('The account already exists for that email.');
+                        setState(() {
+                          errorText =
+                              'The account already exists for that email.';
+                        });
                       }
                     } catch (e) {
                       print(e);

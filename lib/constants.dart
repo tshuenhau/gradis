@@ -92,6 +92,14 @@ const greenTextFieldDecoration = InputDecoration(
     borderSide: BorderSide(color: Highlight, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
+  errorBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.redAccent, width: 2.0),
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
+  focusedErrorBorder: OutlineInputBorder(
+    borderSide: BorderSide(color: Colors.redAccent, width: 2.0),
+    borderRadius: BorderRadius.all(Radius.circular(32.0)),
+  ),
 );
 
 const TextStyle capTextStyle = TextStyle(

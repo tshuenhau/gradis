@@ -19,6 +19,7 @@ class _FilterChipsState extends State<FilterChips> {
 
   List<Widget> chips = [];
   List<String> _options = [
+    'All',
     '2020 S1',
     '2020 S2',
     '2021 S1',
@@ -29,14 +30,15 @@ class _FilterChipsState extends State<FilterChips> {
     '2023 S2'
   ];
   Map<int, String> _hMap = {
-    0: '2020 S1',
-    1: '2020 S2',
-    2: '2021 S1',
-    3: '2021 S2',
-    4: '2022 S1',
-    5: '2022 S2',
-    6: '2023 S1',
-    7: '2023 S2'
+    0: 'All', //TODO THIS FILTER DOES NOT WORK.
+    1: '2020 S1',
+    2: '2020 S2',
+    3: '2021 S1',
+    4: '2021 S2',
+    5: '2022 S1',
+    6: '2022 S2',
+    7: '2023 S1',
+    8: '2023 S2'
   };
 
   Widget _buildChips() {

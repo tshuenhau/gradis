@@ -17,6 +17,7 @@ class ConfirmEmailScreen extends StatelessWidget {
           children: <Widget>[
             Text(
               'An email has just been sent to you. Click the link provided to complete registration',
+              textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
             Material(

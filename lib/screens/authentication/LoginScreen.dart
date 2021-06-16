@@ -13,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late String email;
   late String password;
+  String incorrectText = "";
+
   bool _firstPressed = false; // used to prevent login to happen multiple times
 
   final _auth = FirebaseAuth.instance;
@@ -47,20 +49,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: greenTextFieldDecoration.copyWith(
                     hintText: 'Enter your password'),
               ),
-              SizedBox(
-                height: 24.0,
-              ),
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 18.0),
+                          child: Text(incorrectText,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.redAccent)),
+                        ),
                         Material(
                           color: Highlight,
                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
                           elevation: 5.0,
                           child: MaterialButton(
                             onPressed: () async {
+                              FocusScope.of(context).unfocus();
+
                               //Implement registration functionality.
                               try {
                                 await _auth.signInWithEmailAndPassword(
@@ -70,6 +77,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _firstPressed = true;
                                 }
                               } on FirebaseAuthException catch (e) {
+                                setState(() {
+                                  incorrectText = "Incorrect email/password.";
+                                  print("SETSTTE");
+                                });
                                 if (e.code == 'user-not-found') {
                                   print('No user found for that email.');
                                 } else if (e.code == 'wrong-password') {

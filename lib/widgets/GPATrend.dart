@@ -144,6 +144,8 @@ class _GPATrendState extends State<GPATrend> {
                 return '3';
               case 4:
                 return '4';
+              case 5:
+                return '5';
             }
             return '';
           },
@@ -166,9 +168,6 @@ class _GPATrendState extends State<GPATrend> {
             FlSpot(1, 2),
             FlSpot(2, 5),
             FlSpot(3, 3.1),
-            // FlSpot(4, 4),
-            // FlSpot(5, 3),
-            // FlSpot(6, 4),
           ],
           isCurved: true,
           colors: gradientColors,
@@ -249,6 +248,8 @@ class _GPATrendState extends State<GPATrend> {
                 return '3';
               case 4:
                 return '4';
+              case 5:
+                return '5';
             }
             return '';
           },
