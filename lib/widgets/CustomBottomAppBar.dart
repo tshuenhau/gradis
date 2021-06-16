@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 class CustomBottomAppBar extends StatelessWidget {
   // const CustomBottomAppBar({Key? key}): super(key: key);
-
+  late double goal;
   final _auth = FirebaseAuth.instance;
 
   static final List<FloatingActionButtonLocation> centerLocations =
@@ -58,15 +58,53 @@ class CustomBottomAppBar extends StatelessWidget {
                 icon: const Icon(Icons.settings),
                 color: IconsColor,
                 onPressed: () {
-                  _auth.signOut();
-                  Navigator.pushNamed(context, WelcomeScreen.id);
-                  // showModalBottomSheet(
-                  //     context: context,
-                  //     builder: (BuildContext context) {
-                  //       return Container(
-                  //           height: 800,
-                  //           child: GoalCAPTextField(initialText: "", id: "0"));
-                  //     });
+                  // _auth.signOut();
+                  // Navigator.pushNamed(context, WelcomeScreen.id);
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: 800,
+                          child: ListView(
+                            children: <Widget>[
+                              Text("Set Goal GPA", textAlign: TextAlign.center),
+                              TextField(
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    goal = double.parse(value);
+                                  },
+                                  decoration: kTextFieldDecoration.copyWith(
+                                      hintText: 'Enter your Goal')),
+                              SizedBox(
+                                height: 8.0,
+                              ),
+                              Material(
+                                color: Highlight,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0)),
+                                elevation: 5.0,
+                                child: MaterialButton(
+                                  onPressed: () async {
+                                    FocusScope.of(context).unfocus();
+                                    print("Submit");
+                                    print(goal);
+                                    setGoalCAP(
+                                        goal); //TODO: ZQ HERE MUST CHANGE THE GOAL WITH API
+                                    //Implement registration functionality.
+                                  },
+                                  minWidth:
+                                      200.0, //!!! Why this size smaller when all other buttons also 200.0
+                                  height: 42.0,
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
                 },
               ),
             ],

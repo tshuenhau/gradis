@@ -116,11 +116,10 @@ class CustomTopAppBar extends StatelessWidget implements PreferredSizeWidget {
                               style: titleTextStyle,
                             ),
                             Text(
-                              "ERR",
-                              // Provider.of<UserAPI>(context, listen: false)
-                              //     .findGoalCAP().
-                              //     .toStringAsFixed(
-                              //         2), //TODO: findGoalCAP should return the same type as the other CAPs for standardization
+                              Provider.of<UserAPI>(context, listen: false)
+                                  .findGoalCAP()
+                                  .toStringAsFixed(
+                                      2), //TODO: ZQ findGoalCAP should return the same type as the other CAP stuff above for standardization. OR ELSE FIGURE OUT ANOTHER WAY TO SHOW.
                               textAlign: TextAlign.left,
                               style: capTextStyle,
                             ),
