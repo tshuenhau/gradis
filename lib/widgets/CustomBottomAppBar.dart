@@ -5,6 +5,7 @@ import 'package:gradis/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/screens/WelcomeScreen.dart';
 import 'package:gradis/widgets/EditGoalCAPTextField.dart';
+import 'package:gradis/classes/GoalCAP.dart';
 
 import 'package:provider/provider.dart';
 
@@ -88,8 +89,20 @@ class CustomBottomAppBar extends StatelessWidget {
                                     FocusScope.of(context).unfocus();
                                     print("Submit");
                                     print(goal);
-                                    setGoalCAP(
-                                        goal); //TODO: ZQ HERE MUST CHANGE THE GOAL WITH API
+                                    GoalCAP updatedGoalGPA = new GoalCAP(
+                                        id: Provider.of<UserAPI>(context,
+                                                        listen: false)
+                                                    .goalCAP !=
+                                                null
+                                            ? Provider.of<UserAPI>(context,
+                                                    listen: false)
+                                                .goalCAP!
+                                                .getGoalCapId()
+                                            : "",
+                                        goal: goal);
+                                    Provider.of<UserAPI>(context, listen: false)
+                                        .updateGoalCAP(
+                                            updatedGoalGPA); //TODO: ZQ HERE MUST CHANGE THE GOAL WITH API
                                     //Implement registration functionality.
                                   },
                                   minWidth:

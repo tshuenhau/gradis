@@ -11,7 +11,7 @@ class UserAPI extends ChangeNotifier {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late List<Module> modules = [];
-  double goalCAP = 0;
+  GoalCAP? goalCAP;
   late String ays = "2020 S1";
   // late List<String> allAys = [];
 
@@ -100,29 +100,38 @@ class UserAPI extends ChangeNotifier {
   }
 
   void setGoalCAP(GoalCAP goalCAP) {
-    this.goalCAP = goalCAP.goal;
+    this.goalCAP = goalCAP;
   }
 
   Stream<GoalCAP> findGoalCAP() {
     return _firestore
         .collection('goalCAP')
-        .doc(_auth.currentUser!.uid)
+        .where('user', isEqualTo: _auth.currentUser!.uid)
         .snapshots()
-        .map((snap) => GoalCAP.fromFirestore(snap));
+        .map((snap) {
+      print('wat' + snap.docs.toString());
+      if (snap.docs.isEmpty) {
+        return GoalCAP(id: '', goal: -1.00);
+      } else {
+        return GoalCAP.fromFirestore(snap.docs[0]);
+      }
+    });
   }
 
-  void updateGoalCAP(double goalCAP, String id) {
-    if (id == 'first-creation') {
+  void updateGoalCAP(GoalCAP goalGPA) {
+    if (goalGPA.id == '') {
       _firestore
           .collection('goalCAP')
-          .add({'CAP': goalCAP, 'user': _auth.currentUser!.uid});
+          .add({'GPA': goalGPA.goal, 'user': _auth.currentUser!.uid})
+          .then((value) => print("Goal GPA added!"))
+          .catchError((error) => print("Failed to add goal GPA: $error"));
     } else {
       _firestore
           .collection('goalCAP')
-          .doc(id)
-          .update({'CAP': goalCAP})
-          .then((value) => print("Goal CAP updated: " + goalCAP.toString()))
-          .catchError((error) => print("Failed to update goal CAP: $error"));
+          .doc(goalGPA.id)
+          .update({'GPA': goalGPA.goal})
+          .then((value) => print("Goal GPA updated: " + goalGPA.toString()))
+          .catchError((error) => print("Failed to update goal GPA: $error"));
     }
     notifyListeners();
   }

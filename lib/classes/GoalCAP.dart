@@ -25,11 +25,11 @@ class GoalCAP {
 
   factory GoalCAP.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     Map<String, dynamic> data = doc.data()!;
-    return GoalCAP(id: doc.id, goal: data['goal']);
+    return GoalCAP(id: doc.id, goal: data['GPA']);
   }
 
   @override
   String toString() {
-    return 'Module{id: $id,  goal: $goal}';
+    return 'Goal CAP{id: $id,  goal: $goal}';
   }
 }
