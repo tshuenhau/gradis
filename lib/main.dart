@@ -42,7 +42,9 @@ class MyApp extends StatelessWidget {
             ],
             child: MaterialApp(
               theme: gradisTheme,
-              home: isLoggedIn ? InputPage() : WelcomeScreen(),
+              initialRoute: FirebaseAuth.instance.currentUser != null
+                  ? InputPage.id
+                  : WelcomeScreen.id,
               routes: {
                 WelcomeScreen.id: (context) => WelcomeScreen(),
                 LoginScreen.id: (context) => LoginScreen(),
