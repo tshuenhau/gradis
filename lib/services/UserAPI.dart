@@ -12,7 +12,7 @@ class UserAPI extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   late List<Module> modules = [];
   GoalCAP? goalCAP;
-  late String ays = "2020 S1";
+  late String ays = "All";
   // late List<String> allAys = [];
 
   void setModules(List<Module> modules) {
@@ -56,6 +56,9 @@ class UserAPI extends ChangeNotifier {
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findModulesBySemester(
       String ays) {
+    if (ays == "All") {
+      return findAllModules();
+    }
     return _firestore
         .collection('modules')
         .orderBy("createdAt", descending: false)
