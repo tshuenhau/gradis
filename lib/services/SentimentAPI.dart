@@ -29,10 +29,20 @@ class SentimentAPI extends ChangeNotifier {
   }
 
   void deleleteModuleSentiment(String modId) {
-    _firestore.collection('sentiment').doc(modId).delete().then((value) {
-      print("Module sentiment deleted");
-    }).catchError(
-        (error) => print("Failed to delete module sentiment: $error"));
+    _firestore
+        .collection('sentiment')
+        .where('modId', isEqualTo: modId)
+        .get()
+        .then((snap) {
+      for (var doc in snap.docs) {
+        doc.reference.delete().then((value) {
+          print("Module sentiment deleted");
+        }).catchError((error) {
+          print("Failed to delete module sentiment: $error");
+        });
+      }
+    });
+
     notifyListeners();
   }
 
