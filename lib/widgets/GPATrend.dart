@@ -68,12 +68,12 @@ class _GPATrendState extends State<GPATrend> {
         child: Stack(
           children: <Widget>[
             Container(
-              height: 150,
+              height: 155,
               child: AspectRatio(
                 aspectRatio: 3,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      right: 35.0, left: 12.0, top: 24, bottom: 24),
+                      right: 35.0, left: 35.0, top: 24, bottom: 24),
                   child: LineChart(
                     showAvg ? avgData() : mainData(),
                   ),
@@ -81,10 +81,10 @@ class _GPATrendState extends State<GPATrend> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 140.0, top: 120),
+              padding: const EdgeInsets.only(left: 140.0, top: 140, bottom: 6),
               child: SizedBox(
                 width: 100,
-                height: 50,
+                height: 30,
                 child: TextButton(
                   onPressed: () {
                     setState(() {
@@ -115,10 +115,38 @@ class _GPATrendState extends State<GPATrend> {
   }
 
   LineChartData mainData() {
+    List<int> showIndexes = [for (var i = 0; i < semesters.length; i += 1) i];
+
+    var lineBarsDataDiscrete = [
+      LineChartBarData(
+        spots: discreteData,
+        showingIndicators: showIndexes, //! MAKE THIS DYNAMIC
+        isCurved: true,
+        colors: gradientColors,
+        barWidth: 5,
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          show: false,
+        ),
+        belowBarData: BarAreaData(
+          show: true,
+          colors:
+              gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+        ),
+      ),
+    ];
     return LineChartData(
+      showingTooltipIndicators: showIndexes.map((index) {
+        return ShowingTooltipIndicators([
+          LineBarSpot(
+              lineBarsDataDiscrete[0],
+              lineBarsDataDiscrete.indexOf(lineBarsDataDiscrete[0]),
+              lineBarsDataDiscrete[0].spots[index])
+        ]);
+      }).toList(),
       gridData: FlGridData(
         show: false,
-        drawVerticalLine: true,
+        drawVerticalLine: false,
         getDrawingHorizontalLine: (value) {
           return FlLine(
             color: const Color(0xff37434d),
@@ -143,34 +171,61 @@ class _GPATrendState extends State<GPATrend> {
           getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
-              fontSize: 16),
+              fontSize: 14),
           getTitles: (value) {
             return semesters[value.toInt()];
           },
-          margin: 8,
+          margin: 30,
         ),
         leftTitles: SideTitles(
-          showTitles: true,
+          showTitles: false,
           getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 12,
           ),
           getTitles: (value) {
-            for (double i =
-                    ((discreteGPA.reduce(min) * 2).round() / 2).toDouble();
-                i <= ((discreteGPA.reduce(max) * 2).round() / 2).toDouble();
-                i++) {
-              if (value == i) {
-                print("i" + i.toString());
-                return i.toString();
-              }
-            }
-
             return "";
           },
-          reservedSize: 28,
+          reservedSize: 12,
           margin: 12,
+        ),
+      ),
+      lineTouchData: LineTouchData(
+        enabled: false,
+        getTouchedSpotIndicator:
+            (LineChartBarData barData, List<int> spotIndexes) {
+          return spotIndexes.map((index) {
+            return TouchedSpotIndicatorData(
+              FlLine(
+                color: Colors.transparent,
+              ),
+              FlDotData(
+                show: true,
+                getDotPainter: (spot, percent, barData, index) =>
+                    FlDotCirclePainter(
+                  radius: 3,
+                  color: Colors.transparent,
+                  strokeWidth: 0.5,
+                  strokeColor: Colors.white,
+                ),
+              ),
+            );
+          }).toList();
+        },
+        touchTooltipData: LineTouchTooltipData(
+          tooltipBgColor: Colors.transparent,
+          tooltipRoundedRadius: 8,
+          tooltipMargin: 1,
+          getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+            return lineBarsSpot.map((lineBarSpot) {
+              return LineTooltipItem(
+                lineBarSpot.y.toString(),
+                const TextStyle(
+                    color: LightSilver, fontWeight: FontWeight.bold),
+              );
+            }).toList();
+          },
         ),
       ),
       borderData: FlBorderData(
@@ -180,29 +235,90 @@ class _GPATrendState extends State<GPATrend> {
       maxX: semesters.length.toDouble() - 1,
       minY: ((discreteGPA.reduce(min) * 2).round() / 2).toDouble(),
       maxY: ((discreteGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1,
-      lineBarsData: [
-        LineChartBarData(
-          spots: discreteData,
-          isCurved: true,
-          colors: gradientColors,
-          barWidth: 5,
-          isStrokeCapRound: true,
-          dotData: FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(
-            show: true,
-            colors:
-                gradientColors.map((color) => color.withOpacity(0.3)).toList(),
-          ),
-        ),
-      ],
+      lineBarsData: lineBarsDataDiscrete,
     );
   }
 
   LineChartData avgData() {
+    List<int> showIndexes = [for (var i = 0; i < semesters.length; i += 1) i];
+
+    var lineBarsDataCummulative = [
+      LineChartBarData(
+        spots: cummulativeData,
+        isCurved: true,
+        colors: [
+          ColorTween(begin: gradientColors[0], end: gradientColors[1])
+              .lerp(0.2)!,
+          ColorTween(begin: gradientColors[0], end: gradientColors[1])
+              .lerp(0.2)!,
+        ],
+        barWidth: 5,
+        isStrokeCapRound: true,
+        dotData: FlDotData(
+          show: true,
+          getDotPainter: (spot, percent, barData, index) => FlDotCirclePainter(
+            radius: 3,
+            color: Colors.transparent,
+            strokeWidth: 0.5,
+            strokeColor: Colors.white,
+          ),
+        ),
+        belowBarData: BarAreaData(show: true, colors: [
+          ColorTween(begin: gradientColors[0], end: gradientColors[1])
+              .lerp(0.2)!
+              .withOpacity(0.1),
+          ColorTween(begin: gradientColors[0], end: gradientColors[1])
+              .lerp(0.2)!
+              .withOpacity(0.1),
+        ]),
+      ),
+    ];
     return LineChartData(
-      lineTouchData: LineTouchData(enabled: false),
+      showingTooltipIndicators: showIndexes.map((index) {
+        return ShowingTooltipIndicators([
+          LineBarSpot(
+              lineBarsDataCummulative[0],
+              lineBarsDataCummulative.indexOf(lineBarsDataCummulative[0]),
+              lineBarsDataCummulative[0].spots[index])
+        ]);
+      }).toList(),
+      lineTouchData: LineTouchData(
+        enabled: false,
+        getTouchedSpotIndicator:
+            (LineChartBarData barData, List<int> spotIndexes) {
+          return spotIndexes.map((index) {
+            return TouchedSpotIndicatorData(
+              FlLine(
+                color: Colors.transparent,
+              ),
+              FlDotData(
+                show: true,
+                getDotPainter: (spot, percent, barData, index) =>
+                    FlDotCirclePainter(
+                  radius: 3,
+                  color: Colors.transparent,
+                  strokeWidth: 0.5,
+                  strokeColor: Colors.white,
+                ),
+              ),
+            );
+          }).toList();
+        },
+        touchTooltipData: LineTouchTooltipData(
+          tooltipBgColor: Colors.transparent,
+          tooltipRoundedRadius: 8,
+          tooltipMargin: 1,
+          getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+            return lineBarsSpot.map((lineBarSpot) {
+              return LineTooltipItem(
+                lineBarSpot.y.toString(),
+                const TextStyle(
+                    color: LightSilver, fontWeight: FontWeight.bold),
+              );
+            }).toList();
+          },
+        ),
+      ),
       gridData: FlGridData(
         show: false,
         drawHorizontalLine: true,
@@ -224,37 +340,27 @@ class _GPATrendState extends State<GPATrend> {
         bottomTitles: SideTitles(showTitles: false),
         topTitles: SideTitles(
           showTitles: true,
-          reservedSize: 22,
+          reservedSize: 15,
           getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
-              fontSize: 16),
+              fontSize: 14),
           getTitles: (value) {
             return semesters[value.toInt()];
           },
-          margin: 8,
+          margin: 30,
         ),
         leftTitles: SideTitles(
-          showTitles: true,
+          showTitles: false,
           getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
           getTitles: (value) {
-            for (double i =
-                    ((cummulativeGPA.reduce(min) * 2).round() / 2).toDouble();
-                i <= ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble();
-                i++) {
-              if (value == i) {
-                print("i" + i.toString());
-                return i.toString();
-              }
-            }
-
             return "";
           },
-          reservedSize: 28,
+          reservedSize: 12,
           margin: 12,
         ),
       ),
@@ -265,31 +371,7 @@ class _GPATrendState extends State<GPATrend> {
       maxX: semesters.length.toDouble() - 1,
       minY: ((cummulativeGPA.reduce(min) * 2).round() / 2).toDouble(),
       maxY: ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1,
-      lineBarsData: [
-        LineChartBarData(
-          spots: cummulativeData,
-          isCurved: true,
-          colors: [
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)!,
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)!,
-          ],
-          barWidth: 5,
-          isStrokeCapRound: true,
-          dotData: FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(show: true, colors: [
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)!
-                .withOpacity(0.1),
-            ColorTween(begin: gradientColors[0], end: gradientColors[1])
-                .lerp(0.2)!
-                .withOpacity(0.1),
-          ]),
-        ),
-      ],
+      lineBarsData: lineBarsDataCummulative,
     );
   }
 }
