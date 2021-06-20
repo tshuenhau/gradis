@@ -5,6 +5,7 @@ import 'package:gradis/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/screens/WelcomeScreen.dart';
 import 'package:gradis/widgets/EditGoalCAPTextField.dart';
+import 'package:gradis/classes/GoalCAP.dart';
 
 import 'package:provider/provider.dart';
 
@@ -72,6 +73,7 @@ class CustomBottomAppBar extends StatelessWidget {
                                 Text(
                                   "Set Goal GPA",
                                   textAlign: TextAlign.center,
+<<<<<<< HEAD
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 SizedBox(
@@ -131,6 +133,48 @@ class CustomBottomAppBar extends StatelessWidget {
                                       'Log Out',
                                       style: TextStyle(color: Colors.black),
                                     ),
+=======
+                                  onChanged: (value) {
+                                    goal = double.parse(value);
+                                  },
+                                  decoration: kTextFieldDecoration.copyWith(
+                                      hintText: 'Enter your Goal')),
+                              SizedBox(
+                                height: 8.0,
+                              ),
+                              Material(
+                                color: Highlight,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0)),
+                                elevation: 5.0,
+                                child: MaterialButton(
+                                  onPressed: () async {
+                                    FocusScope.of(context).unfocus();
+                                    print("Submit");
+                                    print(goal);
+                                    GoalCAP updatedGoalGPA = new GoalCAP(
+                                        id: Provider.of<UserAPI>(context,
+                                                        listen: false)
+                                                    .goalCAP !=
+                                                null
+                                            ? Provider.of<UserAPI>(context,
+                                                    listen: false)
+                                                .goalCAP!
+                                                .getGoalCapId()
+                                            : "",
+                                        goal: goal);
+                                    Provider.of<UserAPI>(context, listen: false)
+                                        .updateGoalCAP(
+                                            updatedGoalGPA); //TODO: ZQ HERE MUST CHANGE THE GOAL WITH API
+                                    //Implement registration functionality.
+                                  },
+                                  minWidth:
+                                      200.0, //!!! Why this size smaller when all other buttons also 200.0
+                                  height: 42.0,
+                                  child: Text(
+                                    'Submit',
+                                    style: TextStyle(color: Colors.black),
+>>>>>>> 541b2350a7cd57d147bd9d1814aec92fc531390d
                                   ),
                                 ),
                               ],
