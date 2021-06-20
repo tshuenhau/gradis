@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
+import 'dart:math';
 
 class GPATrend extends StatefulWidget {
   //TODO: Make the data here reactive to API call.
@@ -9,6 +10,14 @@ class GPATrend extends StatefulWidget {
 }
 
 class _GPATrendState extends State<GPATrend> {
+  List<String> semesters = [];
+  List<double> discreteGPA = [];
+
+  List<double> cummulativeGPA = [];
+
+  List<FlSpot> discreteData = [];
+  List<FlSpot> cummulativeData = [];
+
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -16,6 +25,25 @@ class _GPATrendState extends State<GPATrend> {
 
   bool showAvg = false;
   String type = "Discrete";
+
+  @override
+  void initState() {
+    semesters = [
+      "20 S1",
+      "20 S2",
+      "21 S1",
+      "22 S2",
+      "23 S1"
+    ]; // TODO FILL THIS WITH API ZQ
+    discreteGPA = [4.5, 4.29, 4.2, 4.3, 4.5]; // TODO FILL THIS WITH API ZQ
+    cummulativeGPA = [4.5, 4.2, 4.1, 4.0, 3.7]; // TODO FILL THIS WITH API ZQ
+    for (int i = 0; i < discreteGPA.length; i++) {
+      discreteData.add(FlSpot(i.toDouble(), discreteGPA[i]));
+      cummulativeData.add(FlSpot(i.toDouble(), cummulativeGPA[i]));
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,18 +139,7 @@ class _GPATrendState extends State<GPATrend> {
               fontWeight: FontWeight.bold,
               fontSize: 16),
           getTitles: (value) {
-            switch (value.toInt()) {
-              //! TODO:must change this to dynamic
-              case 0:
-                return '20 S1';
-              case 1:
-                return '20 S2';
-              case 2:
-                return '21 S1';
-              case 3:
-                return '21 S2';
-            }
-            return '';
+            return semesters[value.toInt()];
           },
           margin: 8,
         ),
@@ -131,23 +148,20 @@ class _GPATrendState extends State<GPATrend> {
           getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: 12,
           ),
           getTitles: (value) {
-            switch (value.toInt()) {
-              //! TODO:must change this to dynamic
-              case 1:
-                return '1';
-              case 2:
-                return '2';
-              case 3:
-                return '3';
-              case 4:
-                return '4';
-              case 5:
-                return '5';
+            for (double i =
+                    ((discreteGPA.reduce(min) * 2).round() / 2).toDouble();
+                i <= ((discreteGPA.reduce(max) * 2).round() / 2).toDouble();
+                i++) {
+              if (value == i) {
+                print("i" + i.toString());
+                return i.toString();
+              }
             }
-            return '';
+
+            return "";
           },
           reservedSize: 28,
           margin: 12,
@@ -157,18 +171,12 @@ class _GPATrendState extends State<GPATrend> {
           show: false,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      maxX: 3, //! TODO:must change this to dynamic
-      minY: 0,
-      maxY: 6,
+      maxX: semesters.length.toDouble() - 1,
+      minY: ((discreteGPA.reduce(min) * 2).round() / 2).toDouble(),
+      maxY: ((discreteGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1,
       lineBarsData: [
         LineChartBarData(
-          //! TODO:must change this to dynamic
-          spots: [
-            FlSpot(0, 3),
-            FlSpot(1, 2),
-            FlSpot(2, 5),
-            FlSpot(3, 3.1),
-          ],
+          spots: discreteData,
           isCurved: true,
           colors: gradientColors,
           barWidth: 5,
@@ -216,18 +224,7 @@ class _GPATrendState extends State<GPATrend> {
               fontWeight: FontWeight.bold,
               fontSize: 16),
           getTitles: (value) {
-            switch (value.toInt()) {
-              //! TODO: must change this to dynamic
-              case 0:
-                return '20 S1';
-              case 1:
-                return '20 S2';
-              case 2:
-                return '21 S1';
-              case 3:
-                return '21 S2';
-            }
-            return '';
+            return semesters[value.toInt()];
           },
           margin: 8,
         ),
@@ -239,44 +236,32 @@ class _GPATrendState extends State<GPATrend> {
             fontSize: 15,
           ),
           getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '1';
-              case 2:
-                return '2';
-              case 3:
-                return '3';
-              case 4:
-                return '4';
-              case 5:
-                return '5';
+            for (double i =
+                    ((cummulativeGPA.reduce(min) * 2).round() / 2).toDouble();
+                i <= ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble();
+                i++) {
+              if (value == i) {
+                print("i" + i.toString());
+                return i.toString();
+              }
             }
-            return '';
+
+            return "";
           },
           reservedSize: 28,
           margin: 12,
         ),
       ),
       borderData: FlBorderData(
-          //! TODO:must change this to dynamic
           show: false,
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
-      maxX: 3, //! TODO:must change this to dynamic
-
-      minY: 0,
-      maxY: 6,
+      maxX: semesters.length.toDouble() - 1,
+      minY: ((cummulativeGPA.reduce(min) * 2).round() / 2).toDouble(),
+      maxY: ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1,
       lineBarsData: [
         LineChartBarData(
-          spots: [
-            FlSpot(0, 3.44),
-            FlSpot(1, 3.44),
-            FlSpot(2, 3.44),
-            FlSpot(3, 3.44),
-            // FlSpot(8, 3.44),
-            // FlSpot(9.5, 3.44),
-            // FlSpot(11, 3.44),
-          ],
+          spots: cummulativeData,
           isCurved: true,
           colors: [
             ColorTween(begin: gradientColors[0], end: gradientColors[1])

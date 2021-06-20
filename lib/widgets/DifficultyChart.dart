@@ -39,10 +39,12 @@ class DifficultyChartState extends State<DifficultyChart> {
               colors: [Colors.lightBlueAccent, Colors.greenAccent])
         ],
       ));
-      if (value > maxY - 3) {
-        maxY = value + 3;
+      if (value > maxY) {
+        maxY = value;
+        print("MaxY: " + maxY.toString());
       }
     });
+    maxY += 1;
     barGroups = [for (var items in dataList) items];
   }
 
