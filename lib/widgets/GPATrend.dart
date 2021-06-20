@@ -34,7 +34,7 @@ class _GPATrendState extends State<GPATrend> {
       "21 S1",
       "22 S2",
       "23 S1"
-    ]; // TODO FILL THIS WITH API ZQ
+    ]; // TODO FILL THIS WITH API ZQ I THINK TO CHANGE FROM 2020 S1 to 20 S1, just output the string from 3rd character onwards.
     discreteGPA = [4.5, 4.29, 4.2, 4.3, 4.5]; // TODO FILL THIS WITH API ZQ
     cummulativeGPA = [4.5, 4.2, 4.1, 4.0, 3.7]; // TODO FILL THIS WITH API ZQ
     for (int i = 0; i < discreteGPA.length; i++) {
