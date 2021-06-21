@@ -416,10 +416,10 @@ class _GPATrendState extends State<GPATrend> {
       minX: 0,
       maxX: semesters.length.toDouble() - 1,
       minY: cummulativeGPA.length != 0
-          ? ((cummulativeGPA.reduce(min) * 2).floor() / 2).toDouble()
+          ? ((cummulativeGPA.reduce(min) * 2).floor() / 2).toDouble() - 0.5
           : 0.0,
       maxY: cummulativeGPA.length != 0
-          ? ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1
+          ? ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble() + 0.5
           : 5.0,
       lineBarsData: lineBarsDataCummulative,
     );
