@@ -81,6 +81,7 @@ class _ModuleTileState extends State<ModuleTile> {
                   createdAt: widget.module.createdAt);
               Provider.of<UserAPI>(context, listen: false)
                   .updateModule(updatedMod, widget.module.id);
+              // Provider.of<UserAPI>(context, listen: false).doneMods = [];
             });
           }),
       title: Consumer<UserAPI>(builder: (context, modulesData, child) {
