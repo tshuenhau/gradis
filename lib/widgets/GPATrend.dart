@@ -99,6 +99,9 @@ class _GPATrendState extends State<GPATrend> {
                       .toString());
               print("discrete GPA " + this.discreteGPA.toString());
               print("cumulative GPA " + this.cummulativeGPA.toString());
+              print("discreteData " + discreteData.toString());
+              print("cummulativeData " + cummulativeData.toString());
+
               return Stack(
                 children: <Widget>[
                   Container(
@@ -151,12 +154,14 @@ class _GPATrendState extends State<GPATrend> {
   }
 
   LineChartData mainData() {
-    List<int> showIndexes = [for (var i = 0; i < semesters.length; i += 1) i];
+    List<int> showIndexes = [
+      for (var i = 0; i < semesters.length; i += 1) i
+    ]; //! This needs to be DYNAMIC
 
     var lineBarsDataDiscrete = [
       LineChartBarData(
-        spots: discreteData,
-        showingIndicators: showIndexes, //! MAKE THIS DYNAMIC
+        spots: discreteData, //! This needs to be DYNAMIC
+        showingIndicators: showIndexes, //! This needs to be DYNAMIC
         isCurved: true,
         colors: gradientColors,
         barWidth: 5,
