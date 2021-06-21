@@ -13,13 +13,21 @@ class UserAPI extends ChangeNotifier {
   late List<Module> modules = [];
   GoalCAP? goalCAP;
   late String ays = "All";
-  // late List<String> allAys = [];
+  late List<Module> allModules = [];
+  late List<Module> doneMods = [];
 
   void setModules(List<Module> modules) {
     this.modules = modules;
     this.modules.insert(0, Module.createEmptyModule());
     this.modules.insert(1, Module.createEmptyModule());
     this.modules.insert(2, Module.createEmptyModule());
+  }
+
+  void setAllModules(List<Module> modules) {
+    this.allModules = modules;
+    this.allModules.insert(0, Module.createEmptyModule());
+    this.allModules.insert(1, Module.createEmptyModule());
+    this.allModules.insert(2, Module.createEmptyModule());
   }
 
   int numOfModules() {
@@ -45,6 +53,10 @@ class UserAPI extends ChangeNotifier {
         .catchError((error) => print("Failed to add module: $error"));
     notifyListeners();
   }
+
+  // Stream<String> findAllAysWithDoneMods() {
+  //   _firestore.collection('modules').where('user', isEqualTo: '_auth.currentUser!.uid').where('done', isEqualTo: true).snapshots().
+  // }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findAllModules() {
     return _firestore
@@ -161,12 +173,59 @@ class UserAPI extends ChangeNotifier {
     return Calculator.futureCAP(modules);
   }
 
+  // double calculateGPABySemester() {
+  //   return Calculator.calculateGPABySemester(allModules);
+  // }
+
   void changeAys(String value) {
     this.ays = value;
     notifyListeners();
   }
 
+  void setAllDoneModules() {
+    this.doneMods = this.allModules.where((mod) => mod.done).toList();
+  }
+
+  List<String> getAllDoneAys() {
+    List<String> doneAys = this.doneMods.map((mod) => mod.ays).toSet().toList();
+    doneAys.sort();
+    return doneAys;
+  }
+
+  List<double> calculateDiscreteGPA(List<String> doneAys) {
+    List<double> res = [];
+    for (String ays in doneAys) {
+      double credits = 0;
+      double grade = 0;
+      for (Module mod in this.doneMods) {
+        if (mod.ays == ays) {
+          credits += mod.credits;
+          grade += mod.grade * mod.credits;
+        }
+      }
+      res.add(grade / credits);
+    }
+    return res;
+  }
+
+  List<double> calculateCumulativeGPA(List<String> doneAys) {
+    List<double> res = [];
+    double totalCredits = 0;
+    double totalGrade = 0;
+    for (String ays in doneAys) {
+      for (Module mod in this.doneMods) {
+        if (mod.ays == ays) {
+          totalCredits += mod.credits;
+          totalGrade += mod.grade * mod.credits;
+        }
+      }
+      res.add(totalGrade / totalCredits);
+    }
+    return res;
+  }
+
   // Stream<String> getAllAys() {
   //   return _firestore.collection('AYS').doc(_auth.currentUser!.uid).snapshots().map((snap) => snap.ays);
   // }
+
 }

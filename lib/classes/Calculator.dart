@@ -61,4 +61,16 @@ class Calculator {
     }
     return diff / mods.length;
   }
+
+  static calculateGPABySemester(String ays, List<Module> mods) {
+    double credits = 0;
+    double grades = 0;
+    for (Module mod in mods) {
+      if (mod.done && mod.ays == ays) {
+        credits += mod.credits;
+        grades += mod.grade;
+      }
+    }
+    return grades / credits;
+  }
 }

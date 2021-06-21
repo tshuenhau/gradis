@@ -136,6 +136,7 @@ class CustomBottomAppBar extends StatelessWidget {
                                   child: MaterialButton(
                                     onPressed: () async {
                                       //TODO: ZQ HERE MAKE THE FCKER LOG OUT.
+                                      _auth.signOut();
                                     },
                                     minWidth:
                                         200.0, //!!! Why this size smaller when all other buttons also 200.0

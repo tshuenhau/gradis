@@ -2,6 +2,10 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'dart:math';
+import 'package:gradis/services/UserAPI.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:gradis/classes/module.dart';
 
 class GPATrend extends StatefulWidget {
   //TODO: Make the data here reactive to API call.
@@ -28,28 +32,28 @@ class _GPATrendState extends State<GPATrend> {
   bool showAvg = false;
   String type = "Discrete";
 
-  @override
-  void initState() {
-    rawSemesters = [
-      "2020 S1",
-      "2020 S2",
-      "2021 S1",
-      "2022 S2",
-      "2023 S1"
-    ]; // TODO FILL THIS WITH API ZQ. JUST FILL WITH THE SEMESTERS THAT HAVE DONE MODULES. MAYBE SORT IT WILL B GUD
+  // @override
+  // void initState() {
+  //   rawSemesters = [
+  //     "2020 S1",
+  //     "2020 S2",
+  //     "2021 S1",
+  //     "2022 S2",
+  //     "2023 S1"
+  //   ]; // TODO FILL THIS WITH API ZQ. JUST FILL WITH THE SEMESTERS THAT HAVE DONE MODULES. MAYBE SORT IT WILL B GUD
 
-    for (int i = 0; i < rawSemesters.length; i++) {
-      semesters.add(rawSemesters[i].substring(2, rawSemesters[i].length));
-    }
-    discreteGPA = [4.5, 4.29, 4.2, 4.3, 4.5]; // TODO FILL THIS WITH API ZQ
-    cummulativeGPA = [4.5, 4.2, 4.1, 4.0, 3.7]; // TODO FILL THIS WITH API ZQ
-    for (int i = 0; i < discreteGPA.length; i++) {
-      discreteData.add(FlSpot(i.toDouble(), discreteGPA[i]));
-      cummulativeData.add(FlSpot(i.toDouble(), cummulativeGPA[i]));
-    }
+  //   for (int i = 0; i < rawSemesters.length; i++) {
+  //     semesters.add(rawSemesters[i].substring(2, rawSemesters[i].length));
+  //   }
+  //   discreteGPA = [4.5, 4.29, 4.2, 4.3, 4.5]; // TODO FILL THIS WITH API ZQ
+  //   cummulativeGPA = [4.5, 4.2, 4.1, 4.0, 3.7]; // TODO FILL THIS WITH API ZQ
+  //   for (int i = 0; i < discreteGPA.length; i++) {
+  //     discreteData.add(FlSpot(i.toDouble(), discreteGPA[i]));
+  //     cummulativeData.add(FlSpot(i.toDouble(), cummulativeGPA[i]));
+  //   }
 
-    super.initState();
-  }
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -65,51 +69,83 @@ class _GPATrendState extends State<GPATrend> {
             )),
         color: ModuleTileColor,
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 1),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: 155,
-              child: AspectRatio(
-                aspectRatio: 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      right: 35.0, left: 35.0, top: 24, bottom: 24),
-                  child: LineChart(
-                    showAvg ? avgData() : mainData(),
+        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream:
+                Provider.of<UserAPI>(context, listen: false).findAllModules(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+                final modules = snapshot.data!.docs
+                    .map((DocumentSnapshot<Map<String, dynamic>> document) {
+                  final data = document;
+                  return Module.fromFirestore(data);
+                }).toList();
+                Provider.of<UserAPI>(context, listen: false)
+                    .setAllModules(modules);
+              }
+              Provider.of<UserAPI>(context, listen: false).setAllDoneModules();
+              this.rawSemesters =
+                  Provider.of<UserAPI>(context, listen: false).getAllDoneAys();
+              this.discreteGPA = Provider.of<UserAPI>(context, listen: false)
+                  .calculateDiscreteGPA(this.rawSemesters);
+              this.cummulativeGPA = Provider.of<UserAPI>(context, listen: false)
+                  .calculateCumulativeGPA(this.rawSemesters);
+              for (int i = 0; i < discreteGPA.length; i++) {
+                discreteData.add(FlSpot(i.toDouble(), discreteGPA[i]));
+                cummulativeData.add(FlSpot(i.toDouble(), cummulativeGPA[i]));
+              }
+              print("all ays " +
+                  Provider.of<UserAPI>(context, listen: false)
+                      .getAllDoneAys()
+                      .toString());
+              print("discrete GPA " + this.discreteGPA.toString());
+              print("cumulative GPA " + this.cummulativeGPA.toString());
+              return Stack(
+                children: <Widget>[
+                  Container(
+                    height: 155,
+                    child: AspectRatio(
+                      aspectRatio: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 35.0, left: 35.0, top: 24, bottom: 24),
+                        child: LineChart(
+                          showAvg ? avgData() : mainData(),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 140.0, top: 140, bottom: 6),
-              child: SizedBox(
-                width: 100,
-                height: 30,
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      showAvg = !showAvg;
-                      if (type == "Discrete") {
-                        type = "Cummulative";
-                        print(type);
-                      } else {
-                        type = "Discrete";
-                      }
-                    });
-                  },
-                  child: Text(
-                    type,
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: showAvg
-                            ? Colors.white.withOpacity(0.5)
-                            : Colors.white.withOpacity(0.5)),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 140.0, top: 140, bottom: 6),
+                    child: SizedBox(
+                      width: 100,
+                      height: 30,
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            showAvg = !showAvg;
+                            if (type == "Discrete") {
+                              type = "Cummulative";
+                              print(type);
+                            } else {
+                              type = "Discrete";
+                            }
+                          });
+                        },
+                        child: Text(
+                          type,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: showAvg
+                                  ? Colors.white.withOpacity(0.5)
+                                  : Colors.white.withOpacity(0.5)),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ],
-        ),
+                ],
+              );
+            }),
       ),
     );
   }
@@ -233,8 +269,12 @@ class _GPATrendState extends State<GPATrend> {
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
       maxX: semesters.length.toDouble() - 1,
-      minY: ((discreteGPA.reduce(min) * 2).round() / 2).toDouble(),
-      maxY: ((discreteGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1,
+      minY: discreteGPA.length != 0
+          ? ((discreteGPA.reduce(min) * 2).round() / 2).toDouble()
+          : 0.00,
+      maxY: discreteGPA.length != 0
+          ? ((discreteGPA.reduce(min) * 2).round() / 2).toDouble() + 0.1
+          : 0.00,
       lineBarsData: lineBarsDataDiscrete,
     );
   }
@@ -369,8 +409,12 @@ class _GPATrendState extends State<GPATrend> {
           border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
       maxX: semesters.length.toDouble() - 1,
-      minY: ((cummulativeGPA.reduce(min) * 2).round() / 2).toDouble(),
-      maxY: ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1,
+      minY: cummulativeGPA.length != 0
+          ? ((cummulativeGPA.reduce(min) * 2).round() / 2).toDouble()
+          : 0.0,
+      maxY: cummulativeGPA.length != 0
+          ? ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1
+          : 0.0,
       lineBarsData: lineBarsDataCummulative,
     );
   }

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          checkLoggedIn();
+          // checkLoggedIn();
 
           return MultiProvider(
             providers: [
@@ -65,14 +65,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-void checkLoggedIn() {
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user == null) {
-      print('User is currently signed out!');
-      isLoggedIn = false;
-    } else {
-      print('User is signed in!');
-      isLoggedIn = true;
-    }
-  });
-}
+// void checkLoggedIn() {
+//   FirebaseAuth.instance.authStateChanges().listen((User? user) {
+//     if (user == null) {
+//       print('User is currently signed out!');
+//       isLoggedIn = false;
+//     } else {
+//       print('User is signed in!');
+//       isLoggedIn = true;
+//     }
+//   });
+// }

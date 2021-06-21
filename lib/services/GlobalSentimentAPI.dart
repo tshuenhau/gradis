@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/classes/ModuleSentiment.dart';
 import 'package:gradis/classes/Calculator.dart';
 
@@ -34,7 +33,6 @@ class GlobalSentimentAPI extends ChangeNotifier {
   }
 
   Map<int, double> getWorkloadMap() {
-    //TODO: What happens when you delete a module?
     List<int> list = [for (var i = 0; i <= maxWorkload; i += 1) i];
 
     Map<int, double> workloadMap = Map<int, double>.fromIterable(list,
