@@ -262,7 +262,7 @@ class _GPATrendState extends State<GPATrend> {
           getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
             return lineBarsSpot.map((lineBarSpot) {
               return LineTooltipItem(
-                lineBarSpot.y.toString(),
+                lineBarSpot.y.toStringAsFixed(2),
                 const TextStyle(
                     color: LightSilver, fontWeight: FontWeight.bold),
               );
@@ -276,10 +276,10 @@ class _GPATrendState extends State<GPATrend> {
       minX: 0,
       maxX: semesters.length.toDouble() - 1,
       minY: discreteGPA.length != 0
-          ? ((discreteGPA.reduce(min) * 2).round() / 2).toDouble()
+          ? ((discreteGPA.reduce(min) * 2).round() / 2).toDouble() - 0.5
           : 0.0,
       maxY: discreteGPA.length != 0
-          ? ((discreteGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1
+          ? ((discreteGPA.reduce(max) * 2).round() / 2).toDouble() + 0.5
           : 5.0,
       lineBarsData: lineBarsDataDiscrete,
     );
@@ -357,7 +357,7 @@ class _GPATrendState extends State<GPATrend> {
           getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
             return lineBarsSpot.map((lineBarSpot) {
               return LineTooltipItem(
-                lineBarSpot.y.toString(),
+                lineBarSpot.y.toStringAsFixed(2),
                 const TextStyle(
                     color: LightSilver, fontWeight: FontWeight.bold),
               );
@@ -416,7 +416,7 @@ class _GPATrendState extends State<GPATrend> {
       minX: 0,
       maxX: semesters.length.toDouble() - 1,
       minY: cummulativeGPA.length != 0
-          ? ((cummulativeGPA.reduce(min) * 2).round() / 2).toDouble()
+          ? ((cummulativeGPA.reduce(min) * 2).floor() / 2).toDouble()
           : 0.0,
       maxY: cummulativeGPA.length != 0
           ? ((cummulativeGPA.reduce(max) * 2).round() / 2).toDouble() + 0.1
