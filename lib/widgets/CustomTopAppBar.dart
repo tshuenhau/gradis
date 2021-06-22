@@ -130,11 +130,15 @@ class CustomTopAppBar extends StatelessWidget implements PreferredSizeWidget {
                                           listen: false)
                                       .goalCAP);
                                   if (goalCAP.id == '') {
-                                    return Text('N/A');
+                                    return Text(
+                                      'N/A',
+                                      style: capTextStyle,
+                                    );
                                   } else {
-                                    return Text(goalCAP
-                                        .getGoalCap()
-                                        .toStringAsFixed(2));
+                                    return Text(
+                                      goalCAP.getGoalCap().toStringAsFixed(2),
+                                      style: capTextStyle,
+                                    );
                                   }
                                 } else {
                                   return Text('N/A');

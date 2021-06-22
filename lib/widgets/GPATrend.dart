@@ -90,7 +90,7 @@ class _GPATrendState extends State<GPATrend> {
                   .getAllDoneAys()
                   .toString());
           print("discrete GPA " + this.discreteGPA.toString());
-          print("cumulative GPA " + this.cummulativeGPA.toString());
+          print("cummulative GPA " + this.cummulativeGPA.toString());
 
           return Padding(
             padding: const EdgeInsets.only(top: 8.0),
