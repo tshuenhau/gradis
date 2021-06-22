@@ -41,7 +41,6 @@ class DifficultyChartState extends State<DifficultyChart> {
       ));
       if (value > maxY) {
         maxY = value;
-        print("MaxY: " + maxY.toString());
       }
     });
     maxY += 1;

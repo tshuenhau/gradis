@@ -106,7 +106,6 @@ class _FeedbackState extends State<Feedback> {
               );
             },
           ),
-          Text("Word Cloud"),
           Card(
               elevation: 7.0,
               color: ModuleTileColor,
