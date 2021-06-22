@@ -90,7 +90,7 @@ class _GPATrendState extends State<GPATrend> {
                   .getAllDoneAys()
                   .toString());
           print("discrete GPA " + this.discreteGPA.toString());
-          print("cummulative GPA " + this.cummulativeGPA.toString());
+          print("cumulative GPA " + this.cummulativeGPA.toString());
 
           return Padding(
             padding: const EdgeInsets.only(top: 8.0),
@@ -130,7 +130,7 @@ class _GPATrendState extends State<GPATrend> {
                             setState(() {
                               showAvg = !showAvg;
                               if (type == "Discrete") {
-                                type = "Cummulative";
+                                type = "Cumulative";
                                 print(type);
                               } else {
                                 type = "Discrete";
