@@ -29,6 +29,7 @@ class DifficultyChartState extends State<DifficultyChart> {
   late double maxY = 0;
 
   void processData(Map data) {
+    maxY = 0;
     List<BarChartGroupData> dataList = [];
     data.forEach((key, value) {
       dataList.add(BarChartGroupData(
@@ -45,6 +46,7 @@ class DifficultyChartState extends State<DifficultyChart> {
     });
     maxY += 1;
     barGroups = [for (var items in dataList) items];
+    print("MAXY " + maxY.toString());
   }
 
   @override

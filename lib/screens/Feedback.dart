@@ -44,15 +44,14 @@ class _FeedbackState extends State<Feedback> {
 
   @override
   void initState() {
-    super.initState();
     Provider.of<GlobalSentimentAPI>(context, listen: false).setSentiment([]);
+
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     //return SimpleBarChart();
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
     return Container(
       height: MediaQuery.of(context).size.height * (10.35 / 12),
       padding: EdgeInsets.all(20.0),
@@ -98,6 +97,8 @@ class _FeedbackState extends State<Feedback> {
               Map<int, double> workloadMap =
                   Provider.of<GlobalSentimentAPI>(context, listen: false)
                       .getWorkloadMap();
+              print("workloadMap" + workloadMap.toString());
+
               return Column(
                 children: <Widget>[
                   WorkloadChart(workloadMap),
