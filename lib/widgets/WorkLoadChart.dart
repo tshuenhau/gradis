@@ -15,7 +15,6 @@ class WorkloadChartState extends State<WorkloadChart> {
 
   void processData(Map data) {
     maxY = 0;
-
     List<BarChartGroupData> dataList = [];
     data.forEach((key, value) {
       dataList.add(BarChartGroupData(
