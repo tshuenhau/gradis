@@ -98,6 +98,8 @@ class _FeedbackState extends State<Feedback> {
               Map<int, double> workloadMap =
                   Provider.of<GlobalSentimentAPI>(context, listen: false)
                       .getWorkloadMap();
+              print('workload map ' + workloadMap.toString());
+
               return Column(
                 children: <Widget>[
                   WorkloadChart(workloadMap),
