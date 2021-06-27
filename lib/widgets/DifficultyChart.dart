@@ -46,6 +46,7 @@ class DifficultyChartState extends State<DifficultyChart> {
     });
     maxY += 1;
     barGroups = [for (var items in dataList) items];
+    print("MAXY " + maxY.toString());
   }
 
   @override
