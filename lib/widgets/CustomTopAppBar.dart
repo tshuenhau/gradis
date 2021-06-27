@@ -31,7 +31,9 @@ class CustomTopAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       title: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream: Provider.of<UserAPI>(context, listen: false).findAllModules(),
+          stream: Provider.of<UserAPI>(context, listen: false)
+              .findModulesBySemester(
+                  Provider.of<UserAPI>(context, listen: true).ays),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Container(

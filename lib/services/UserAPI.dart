@@ -162,6 +162,7 @@ class UserAPI extends ChangeNotifier {
   }
 
   double calculateCurrentCAP() {
+    print("WATWAT");
     return Calculator.currentCAP(modules);
   }
 
