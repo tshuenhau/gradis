@@ -66,7 +66,7 @@ class _FeedbackState extends State<Feedback> {
         children: <Widget>[
           Center(
               child: Text(
-            widget.widget.module.name,
+            widget.widget.module.name, //!
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -74,7 +74,7 @@ class _FeedbackState extends State<Feedback> {
           )),
           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: Provider.of<GlobalSentimentAPI>(context, listen: false)
-                .getModuleSentiment(widget.widget.module.name),
+                .getModuleSentiment(widget.widget.module.name), //!
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                 final moduleSentiments = snapshot.data!.docs
@@ -114,7 +114,7 @@ class _FeedbackState extends State<Feedback> {
                   borderRadius: BorderRadius.circular(20)),
               child: StreamBuilder<ModuleSentiment>(
                 stream: Provider.of<SentimentAPI>(context, listen: false)
-                    .findOneModuleSentiment(widget.widget.module.id!),
+                    .findOneModuleSentiment(widget.widget.module.id!), //!
                 builder: (context, snapshot) {
                   if (snapshot.hasData && !isEdit) {
                     difficulty = snapshot.data!.difficulty.toDouble();
@@ -171,7 +171,7 @@ class _FeedbackState extends State<Feedback> {
                               onPressed: () {
                                 // Validate will return true if the form is valid, or false if
                                 // the form is invalid.
-                                Module module = widget.widget.module;
+                                Module module = widget.widget.module; //!
                                 ModuleSentiment sentiment = new ModuleSentiment(
                                     id: snapshot.hasData
                                         ? snapshot.data!.id
