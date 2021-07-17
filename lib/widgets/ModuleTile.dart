@@ -40,8 +40,8 @@ class _ModuleTileState extends State<ModuleTile> {
               color: Onyx,
               icon: Icons.more_horiz,
               foregroundColor: Accent,
-              onTap: () => (buildFeedbackBottomSheet(
-                  context, widget)), //TODO: ADD THE FEEDBACK PAGE/ MORE PAGE
+              onTap: () => (buildFeedbackBottomSheet(context,
+                  widget.module)), //TODO: ADD THE FEEDBACK PAGE/ MORE PAGE
             ),
             IconSlideAction(
                 caption: "Delete",
