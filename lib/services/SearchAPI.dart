@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class SearchAPI extends ChangeNotifier {
   List<Module> allModules = [];
+  List<Module> results = [];
   final _firestore = FirebaseFirestore.instance;
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findAllModules() {
@@ -19,5 +20,12 @@ class SearchAPI extends ChangeNotifier {
 
   setModules(List<Module> mods) {
     allModules = mods;
+    results = mods;
+  }
+
+  setResults(List<Module> results) {
+    this.results = results;
+    print('results' + this.results.toString());
+    notifyListeners();
   }
 }

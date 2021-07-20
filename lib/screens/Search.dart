@@ -9,7 +9,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gradis/classes/module.dart';
 
 Future<dynamic> buildSearchPage(BuildContext context, bool hasData) {
-  List<Module> results = [];
   return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -39,7 +38,6 @@ Future<dynamic> buildSearchPage(BuildContext context, bool hasData) {
                         (module) => uniqueModuleNames.remove(module.name));
                     Provider.of<SearchAPI>(context, listen: false)
                         .setModules(modules);
-                    results = modules;
                   } else {
                     Provider.of<SearchAPI>(context, listen: false)
                         .setModules([]);
@@ -57,19 +55,25 @@ Future<dynamic> buildSearchPage(BuildContext context, bool hasData) {
                                 value); //TODO: SEARCH API: Probably need a new SearchAPI.dart file. then we can do Provider.of<SearchAPI>(context, listen: false).search(value). then this should
                             //TODO: return like a list of modules that match. If value = "" then match everything
                             //TODO: So here we keep calling that search function.
+
                             if (value != '') {
-                              results =
-                                  Provider.of<SearchAPI>(context, listen: false)
+                              Provider.of<SearchAPI>(context, listen: false)
+                                  .setResults(Provider.of<SearchAPI>(context,
+                                          listen: false)
                                       .allModules
                                       .where((a) => a.name
                                           .toLowerCase()
                                           .contains(value.toLowerCase()))
-                                      .toList();
-                              print("OIII" + results.toString());
+                                      .toList());
                             } else {
-                              results =
+                              Provider.of<SearchAPI>(context, listen: false)
+                                  .setResults(Provider.of<SearchAPI>(context,
+                                          listen: false)
+                                      .allModules);
+                              print('results' +
                                   Provider.of<SearchAPI>(context, listen: false)
-                                      .allModules;
+                                      .results
+                                      .toString());
                             }
                           },
                           decoration: kTextFieldDecoration.copyWith(
@@ -82,11 +86,14 @@ Future<dynamic> buildSearchPage(BuildContext context, bool hasData) {
                         color: ModuleTileColor,
                         height: MediaQuery.of(context).size.height * 4.7 / 12,
                         width: MediaQuery.of(context).size.width * 7 / 12,
-                        child: Consumer<UserAPI>(
+                        child: Consumer<SearchAPI>(
                             builder: (context, modules, child) {
                           return ListView.builder(
                             shrinkWrap: true,
-                            itemCount: results.length,
+                            itemCount:
+                                Provider.of<SearchAPI>(context, listen: false)
+                                    .results
+                                    .length,
                             itemBuilder: (context, index) {
                               if (hasData) {
                                 return Padding(
@@ -97,17 +104,22 @@ Future<dynamic> buildSearchPage(BuildContext context, bool hasData) {
                                     child: InkWell(
                                         borderRadius: BorderRadius.circular(20),
                                         splashColor: DarkCharcoal,
-                                        onTap: () => {
-                                              buildFeedbackBottomSheet(
-                                                  context, results[index])
-                                            },
+                                        onTap: () {
+                                          buildFeedbackBottomSheet(
+                                              context,
+                                              Provider.of<SearchAPI>(context,
+                                                      listen: false)
+                                                  .results[index]);
+                                        },
                                         child: SizedBox(
                                           height: 45,
                                           child: Center(
                                             child: Text(
-                                                results[index]
+                                                Provider.of<SearchAPI>(context,
+                                                        listen: false)
+                                                    .results[index]
                                                     .name
-                                                    .toString(), // TODO: replace with new API
+                                                    .toString(),
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontWeight:
