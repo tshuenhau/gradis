@@ -12,6 +12,7 @@ import 'package:gradis/screens/authentication/ConfirmEmailScreen.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:gradis/services/SentimentAPI.dart';
 import 'package:gradis/services/GlobalSentimentAPI.dart';
+import 'package:gradis/services/SearchAPI.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() => runApp(MyApp());
@@ -39,6 +40,8 @@ class MyApp extends StatelessWidget {
                   create: (context) => SentimentAPI()),
               ChangeNotifierProvider<GlobalSentimentAPI>(
                   create: (context) => GlobalSentimentAPI()),
+              ChangeNotifierProvider<SearchAPI>(
+                  create: (context) => SearchAPI())
             ],
             child: MaterialApp(
               theme: gradisTheme,
