@@ -13,7 +13,7 @@ class FilterChips extends StatefulWidget {
 }
 
 class _FilterChipsState extends State<FilterChips> {
-  int? _selectedIndex;
+  int? _selectedIndex = 0;
   String?
       _selectedSemester; //TODO: THIS NEEDS TO BE PASSED INTO GRADESLIST SO THAT IT CAN FILTER OR ITS PASSED INTO API OR SMTH
 
@@ -43,7 +43,6 @@ class _FilterChipsState extends State<FilterChips> {
 
   Widget _buildChips() {
     List<Widget> chips = [];
-
     for (int i = 0; i < _options.length; i++) {
       ChoiceChip choiceChip = ChoiceChip(
         selected: _selectedIndex == i,
