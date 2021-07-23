@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gradis/screens/authentication/LoginScreen.dart';
+import 'package:gradis/screens/WelcomeScreen.dart';
 import 'package:gradis/constants.dart';
 
 class ConfirmEmailScreen extends StatelessWidget {
@@ -20,18 +20,19 @@ class ConfirmEmailScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
+            SizedBox(height: 20),
             Material(
               color: GreenHighlight,
               borderRadius: BorderRadius.all(Radius.circular(30.0)),
               elevation: 5.0,
               child: MaterialButton(
                 onPressed: () async {
-                  Navigator.pushNamed(context, LoginScreen.id);
+                  Navigator.pushNamed(context, WelcomeScreen.id);
                 },
                 minWidth: 200.0,
                 height: 42.0,
                 child: Text(
-                  'Login',
+                  'Okay',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
