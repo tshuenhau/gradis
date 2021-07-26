@@ -57,8 +57,7 @@ class WorkloadChartState extends State<WorkloadChart> {
                 child: BarChart(
                   BarChartData(
                     alignment: BarChartAlignment.spaceAround,
-                    maxY:
-                        maxY, //TODO MAKE THIS DYNAMIC ACCORDING TO THE MAX Y OF DATA
+                    maxY: maxY,
                     barTouchData: BarTouchData(
                       enabled: false,
                       touchTooltipData: BarTouchTooltipData(
