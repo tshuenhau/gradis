@@ -50,7 +50,7 @@ class _AddModuleState extends State<AddModule> {
     ];
     //return SimpleBarChart();
     return Container(
-        height: MediaQuery.of(context).size.height * (7 / 12),
+        height: 450,
         padding: EdgeInsets.only(left: 45.0, right: 45, bottom: 45, top: 30),
         decoration: BoxDecoration(
           color: ModuleTileColor,

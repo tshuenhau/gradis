@@ -90,6 +90,7 @@ Future<dynamic> buildSettingsBottomSheet(BuildContext context) {
                     onPressed: () async {
                       //TODO: ZQ HERE MAKE THE FCKER LOG OUT.
                       _auth.signOut();
+                      Navigator.pushNamed(context, WelcomeScreen.id);
                     },
                     minWidth:
                         200.0, //!!! Why this size smaller when all other buttons also 200.0
