@@ -10,7 +10,7 @@ class ForumAPI extends ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   late List<Comment> comments = [];
 
-  void setComment(List<Comment> comments) {
+  void setComments(List<Comment> comments) {
     this.comments = comments;
   }
 
@@ -34,10 +34,10 @@ class ForumAPI extends ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> findAllComments(Comment com) {
+  Stream<QuerySnapshot<Map<String, dynamic>>> findAllComments(String module) {
     return _firestore
         .collection("comments")
-        .where('module', isEqualTo: com.module)
+        .where('module', isEqualTo: module)
         .orderBy("createdAt", descending: false)
         .snapshots();
   }

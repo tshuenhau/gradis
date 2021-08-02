@@ -99,7 +99,7 @@ Future<dynamic> buildSearchPage(BuildContext context, bool hasData) {
                                 return Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Material(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(10),
                                     color: Highlight,
                                     child: InkWell(
                                         borderRadius: BorderRadius.circular(20),
