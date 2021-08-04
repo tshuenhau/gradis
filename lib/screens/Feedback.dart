@@ -12,6 +12,7 @@ import 'package:gradis/services/ForumAPI.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/classes/Comment.dart';
+import 'package:gradis/screens/AddComments.dart';
 
 Future<dynamic> buildFeedbackBottomSheet(BuildContext context, Module module) {
   return showModalBottomSheet(
@@ -216,12 +217,15 @@ class _FeedbackState extends State<Feedback> {
                 stream: Provider.of<ForumAPI>(context, listen: false)
                     .findAllComments(widget.module.name),
                 builder: (context, snapshot) {
+                  print("WTF" + snapshot.hasData.toString());
+
                   if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                     final comments = snapshot.data!.docs
                         .map((DocumentSnapshot<Map<String, dynamic>> document) {
                       final data = document;
                       return Comment.fromFirestore(data);
                     }).toList();
+                    print('comments' + comments.toString());
                     Provider.of<ForumAPI>(context, listen: false)
                         .setComments(comments);
                     return ListView.builder(
@@ -258,7 +262,11 @@ class _FeedbackState extends State<Feedback> {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.greenAccent,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  //TODO: add popup to add comments
+                  buildSettingsBottomSheet(
+                      context, widget.module, workLoad, difficulty);
+                },
                 child: Center(
                   child: Text("Add Comment",
                       style: TextStyle(color: Colors.black)),

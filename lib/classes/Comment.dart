@@ -16,8 +16,8 @@ class Comment {
   final String name;
   final String module;
   final String comment;
-  final int workload;
-  final int difficulty;
+  final double workload;
+  final double difficulty;
   final int likes;
   final int dislikes;
   final Timestamp? createdAt;

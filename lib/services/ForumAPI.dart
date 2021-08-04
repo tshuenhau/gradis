@@ -29,7 +29,7 @@ class ForumAPI extends ChangeNotifier {
           'comment': com.comment,
           'createdAt': FieldValue.serverTimestamp()
         })
-        .then((value) => print("Module created: $com"))
+        .then((value) => print("Comment created: $com"))
         .catchError((error) => print("Failed to add module: $error"));
     notifyListeners();
   }
