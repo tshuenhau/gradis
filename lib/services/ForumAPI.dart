@@ -19,7 +19,7 @@ class ForumAPI extends ChangeNotifier {
         .collection('comments')
         .add({
           'name': com.name,
-          'credits': com.module,
+          'module': com.module,
           'workload': com.workload,
           'difficulty': com.difficulty,
           'ays': com.ays,
@@ -35,6 +35,7 @@ class ForumAPI extends ChangeNotifier {
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findAllComments(String module) {
+    print('module name' + module);
     return _firestore
         .collection("comments")
         .where('module', isEqualTo: module)
