@@ -217,87 +217,34 @@ class _FeedbackState extends State<Feedback> {
                 stream: Provider.of<ForumAPI>(context, listen: false)
                     .findAllComments(widget.module.name),
                 builder: (context, snapshot) {
+                  print("WTF" + snapshot.hasData.toString());
+
                   if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                     final comments = snapshot.data!.docs
                         .map((DocumentSnapshot<Map<String, dynamic>> document) {
                       final data = document;
                       return Comment.fromFirestore(data);
                     }).toList();
+                    print('comments' + comments.toString());
                     Provider.of<ForumAPI>(context, listen: false)
                         .setComments(comments);
-                    return Column(
-                      children: <Widget>[
-                        SizedBox(height: 5),
-                        Center(
+                    return ListView.builder(
+                      padding: const EdgeInsets.all(8),
+                      itemCount: Provider.of<ForumAPI>(context, listen: false)
+                          .comments
+                          .length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: 50,
+                          color: Colors.blue,
+                          child: Center(
                             child: Text(
-                          "Reviews",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                        SizedBox(
-                          height: 300,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.all(8),
-                            itemCount:
                                 Provider.of<ForumAPI>(context, listen: false)
-                                    .comments
-                                    .length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                color: ModuleTileColor,
-                                child: Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                    color: ModuleTileColor,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(5.0),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: BlueAccent,
-                                        offset: Offset(0.0, 1.0), //(x,y)
-                                        blurRadius: 6.0,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    children: <Widget>[
-                                      SizedBox(height: 10),
-                                      Text('Semester: ' +
-                                          Provider.of<ForumAPI>(context,
-                                                  listen: false)
-                                              .comments[index]
-                                              .ays),
-                                      SizedBox(height: 10),
-                                      Text('Workload: ' +
-                                          Provider.of<ForumAPI>(context,
-                                                  listen: false)
-                                              .comments[index]
-                                              .workload
-                                              .floor()
-                                              .toString() +
-                                          ' Difficulty: ' +
-                                          Provider.of<ForumAPI>(context,
-                                                  listen: false)
-                                              .comments[index]
-                                              .difficulty
-                                              .floor()
-                                              .toString()),
-                                      SizedBox(height: 10),
-                                      Text(Provider.of<ForumAPI>(context,
-                                              listen: false)
-                                          .comments[index]
-                                          .comment),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                                    .comments[index]
+                                    .comment),
                           ),
-                        )
-                      ],
+                        );
+                      },
                     );
                   } else {
                     return Container(
@@ -317,7 +264,7 @@ class _FeedbackState extends State<Feedback> {
                 ),
                 onPressed: () {
                   //TODO: add popup to add comments
-                  buildCommentsBottomSheet(
+                  buildSettingsBottomSheet(
                       context, widget.module, workLoad, difficulty);
                 },
                 child: Center(

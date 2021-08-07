@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gradis/services/UserAPI.dart';
 import 'package:gradis/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:gradis/screens/WelcomeScreen.dart';
+import 'package:gradis/widgets/EditGoalCAPTextField.dart';
+import 'package:gradis/classes/GoalCAP.dart';
 import 'package:provider/provider.dart';
 import 'package:gradis/services/ForumAPI.dart';
 import 'package:gradis/classes/Comment.dart';
 import 'package:gradis/classes/module.dart';
 
-Future<dynamic> buildCommentsBottomSheet(
+Future<dynamic> buildSettingsBottomSheet(
     BuildContext context, Module module, double workload, double difficulty) {
+  final _auth = FirebaseAuth.instance;
+  late double goal;
   late String name;
   late String comment;
   late String ays;
@@ -81,7 +87,6 @@ Future<dynamic> buildCommentsBottomSheet(
                   keyboardType: TextInputType.multiline,
                   minLines: null,
                   maxLines: null,
-                  maxLength: 150,
                   decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter your comment'),
                 ),
@@ -100,7 +105,7 @@ Future<dynamic> buildCommentsBottomSheet(
                           name: name,
                           comment: comment,
                           ays: ays,
-                          module: module.name,
+                          module: "",
                           workload: workload,
                           difficulty: difficulty,
                           likes: 0,
@@ -109,7 +114,8 @@ Future<dynamic> buildCommentsBottomSheet(
                           .createComment(newComment);
                       Navigator.pop(context);
                     },
-                    minWidth: 200.0,
+                    minWidth:
+                        200.0, //!!! Why this size smaller when all other buttons also 200.0
                     height: 42.0,
                     child: Text(
                       'Submit',

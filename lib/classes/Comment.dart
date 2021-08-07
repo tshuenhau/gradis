@@ -45,7 +45,7 @@ class Comment {
 
   @override
   String toString() {
-    return 'Comment{id: $id, name: $name, module: $module, comment: $comment,'
+    return 'Module{id: $id, name: $name, module: $module, comment: $comment,'
         ' workload: $workload, difficulty: $difficulty, ays: $ays, createdAt: $createdAt}';
   }
 }

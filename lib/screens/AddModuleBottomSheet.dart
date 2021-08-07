@@ -170,6 +170,12 @@ class _AddModuleState extends State<AddModule> {
                       done: false);
                   Provider.of<UserAPI>(context, listen: false)
                       .createModule(newMod);
+                  // if (scrollController.hasClients) {
+                  //   scrollController.animateTo(
+                  //       scrollController.position.maxScrollExtent,
+                  //       duration: Duration(microseconds: 300),
+                  //       curve: Curves.easeOut);
+                  // }
                   Navigator.pop(context);
                 },
                 minWidth: 200.0,
