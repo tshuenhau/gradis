@@ -3,6 +3,7 @@ import 'package:gradis/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/screens/InputPage.dart';
 import 'package:gradis/screens/authentication/ForgotPasswordScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   static const id = 'login_screen';
@@ -14,7 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
   late String email;
   late String password;
   String incorrectText = "";
-
   bool _firstPressed = false; // used to prevent login to happen multiple times
 
   final _auth = FirebaseAuth.instance;
@@ -81,7 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               } on FirebaseAuthException catch (e) {
                                 setState(() {
                                   incorrectText = "Incorrect email/password.";
-                                  print("SETSTTE");
                                 });
                                 if (e.code == 'user-not-found') {
                                   print('No user found for that email.');

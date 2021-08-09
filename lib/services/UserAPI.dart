@@ -15,6 +15,21 @@ class UserAPI extends ChangeNotifier {
   late String ays = "All";
   late List<Module> allModules = [];
   late List<Module> doneMods = [];
+  late String school = "NUS";
+
+  void setSchool() async {
+    _firestore
+        .collection('users')
+        .where('uid', isEqualTo: _auth.currentUser!.uid)
+        .snapshots()
+        .map((snap) {
+      if (snap.docs.isEmpty) {
+        this.school = "";
+      } else {
+        this.school = snap.docs[0].data()['school'];
+      }
+    });
+  }
 
   void setModules(List<Module> modules) {
     this.modules = modules;
@@ -35,7 +50,28 @@ class UserAPI extends ChangeNotifier {
   }
 
   void createModule(Module mod) {
+    // _firestore
+    //     .collection('modules')
+    //     .add({
+    //       'name': mod.name,
+    //       'credits': mod.credits,
+    //       'grade': mod.grade,
+    //       'workload': mod.workload,
+    //       'difficulty': mod.difficulty,
+    //       'ays': mod.ays,
+    //       'su': mod.su,
+    //       'user': _auth.currentUser!.uid,
+    //       'done': mod.done,
+    //       'createdAt': FieldValue.serverTimestamp()
+    //     })
+    //     .then((value) => print("Module created: $mod"))
+    //     .catchError((error) => print("Failed to add module: $error"));
+
     _firestore
+        .collection('schools')
+        .doc(this.school)
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
         .collection('modules')
         .add({
           'name': mod.name,
@@ -59,23 +95,43 @@ class UserAPI extends ChangeNotifier {
   // }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findAllModules() {
+    // return _firestore
+    //     .collection("modules")
+    //     .where('user', isEqualTo: _auth.currentUser!.uid)
+    //     .orderBy("createdAt", descending: false)
+    //     .snapshots();
+
     return _firestore
-        .collection("modules")
-        .where('user', isEqualTo: _auth.currentUser!.uid)
+        .collection('schools')
+        .doc(this.school)
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
+        .collection('modules')
         .orderBy("createdAt", descending: false)
         .snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> findModulesBySemester(
       String ays) {
+    print('ays ' + ays);
     if (ays == "All") {
       return findAllModules();
     }
+    // return _firestore
+    //     .collection('modules')
+    //     .orderBy("createdAt", descending: false)
+    //     .where('ays', isEqualTo: ays)
+    //     .where('user', isEqualTo: _auth.currentUser!.uid)
+    //     .snapshots();
+
     return _firestore
+        .collection('schools')
+        .doc(this.school)
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
         .collection('modules')
         .orderBy("createdAt", descending: false)
         .where('ays', isEqualTo: ays)
-        .where('user', isEqualTo: _auth.currentUser!.uid)
         .snapshots();
   }
 
@@ -85,6 +141,10 @@ class UserAPI extends ChangeNotifier {
       return;
     }
     _firestore
+        .collection('schools')
+        .doc(this.school)
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
         .collection('modules')
         .doc(id)
         .update({
@@ -105,7 +165,18 @@ class UserAPI extends ChangeNotifier {
   }
 
   void deleteModule(Module module) {
+    // _firestore
+    //     .collection('modules')
+    //     .doc(module.getID())
+    //     .delete()
+    //     .then((value) => print("Module Deleted"))
+    //     .catchError((error) => print("Failed to delete module: $error"));
+    // notifyListeners();
     _firestore
+        .collection('schools')
+        .doc(this.school)
+        .collection('users')
+        .doc(_auth.currentUser!.uid)
         .collection('modules')
         .doc(module.getID())
         .delete()
@@ -124,7 +195,6 @@ class UserAPI extends ChangeNotifier {
         .where('user', isEqualTo: _auth.currentUser!.uid)
         .snapshots()
         .map((snap) {
-      print('wat' + snap.docs.toString());
       if (snap.docs.isEmpty) {
         return GoalCAP(id: '', goal: -1.00);
       } else {
@@ -162,7 +232,6 @@ class UserAPI extends ChangeNotifier {
   }
 
   double calculateCurrentCAP() {
-    print("WATWAT");
     return Calculator.currentCAP(modules);
   }
 
@@ -180,6 +249,7 @@ class UserAPI extends ChangeNotifier {
 
   void changeAys(String value) {
     this.ays = value;
+    print('change ays ' + value);
     notifyListeners();
   }
 

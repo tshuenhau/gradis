@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradis/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gradis/screens/authentication/ConfirmEmailScreen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -11,8 +12,10 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
   late String email;
   late String password;
+  late String school;
   String errorText = "";
   @override
   Widget build(BuildContext context) {
@@ -63,6 +66,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               style: TextStyle(color: Colors.redAccent),
             ),
             SizedBox(
+              height: 8.0,
+            ),
+            Text("Select your school", textAlign: TextAlign.center),
+            SizedBox(height: 8.0),
+            DropdownButton<String>(
+              items: <String>['NUS', 'NTU', 'SMU'].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: new Text(value),
+                );
+              }).toList(),
+              onChanged: (value) {
+                this.school = value ?? '';
+              },
+            ),
+            SizedBox(
               height: 12.0,
             ),
             Padding(
@@ -81,6 +100,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                       await newUser.user!.sendEmailVerification();
 
+                      _firestore
+                          .collection('schools')
+                          .doc(this.school)
+                          .collection('users')
+                          .add({
+                            'uid': newUser.user!.uid,
+                          })
+                          .then((value) => print('school added'))
+                          .catchError((error) => print('failed to add school'));
+                      _firestore.collection('users').add(
+                          {"uid": newUser.user!.uid, "school": this.school});
                       Navigator.pushNamed(context, ConfirmEmailScreen.id);
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'email-already-in-use') {

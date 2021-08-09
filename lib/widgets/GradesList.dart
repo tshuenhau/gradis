@@ -34,15 +34,21 @@ class _GradesListState extends State<GradesList> {
               .findModulesBySemester(
                   Provider.of<UserAPI>(context, listen: true).ays),
           builder: (context, snapshot) {
+            print('docs ' + snapshot.data.toString());
+            print(snapshot.hasData.toString() + 'has data');
             if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+              print("WHAT");
               hasData = true;
               final modules = snapshot.data!.docs
                   .map((DocumentSnapshot<Map<String, dynamic>> document) {
                 final data = document;
                 return Module.fromFirestore(data);
               }).toList();
+
               Provider.of<UserAPI>(context, listen: false).setModules(modules);
             } else {
+              print("TF IS GOING ON" +
+                  Provider.of<UserAPI>(context, listen: true).ays);
               hasData = false;
               Provider.of<UserAPI>(context, listen: false).setModules([]);
             }

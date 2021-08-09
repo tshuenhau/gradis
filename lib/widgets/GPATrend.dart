@@ -85,12 +85,6 @@ class _GPATrendState extends State<GPATrend> {
             discreteData.add(FlSpot(i.toDouble(), discreteGPA[i]));
             cummulativeData.add(FlSpot(i.toDouble(), cummulativeGPA[i]));
           }
-          print("all ays " +
-              Provider.of<UserAPI>(context, listen: false)
-                  .getAllDoneAys()
-                  .toString());
-          print("discrete GPA " + this.discreteGPA.toString());
-          print("cumulative GPA " + this.cummulativeGPA.toString());
 
           return Padding(
             padding: const EdgeInsets.only(top: 8.0),

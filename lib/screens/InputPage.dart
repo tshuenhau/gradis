@@ -5,6 +5,8 @@ import 'package:gradis/widgets/CustomBottomAppBar.dart';
 import 'package:gradis/widgets/CustomTopAppBar.dart';
 import 'package:gradis/widgets/CustomSideNavBar.dart';
 import 'package:gradis/widgets/AddModuleFAB.dart';
+import 'package:provider/provider.dart';
+import 'package:gradis/services/UserAPI.dart';
 
 class InputPage extends StatefulWidget {
   static const String id = 'input_screen';
@@ -33,6 +35,8 @@ class _InputPageState extends State<InputPage> {
   @override
   void initState() {
     super.initState();
+    Provider.of<UserAPI>(context, listen: false).setSchool();
+    print("WATWATWAT");
     getCurrentUser();
   }
 
