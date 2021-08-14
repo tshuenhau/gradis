@@ -22,6 +22,7 @@ Future<dynamic> buildSettingsBottomSheet(
   return showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
+      isScrollControlled: true,
       builder: (BuildContext context) {
         return AnimatedPadding(
           duration: const Duration(milliseconds: 250),
@@ -30,7 +31,9 @@ Future<dynamic> buildSettingsBottomSheet(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Container(
-            height: 800,
+            height: 450,
+            padding:
+                EdgeInsets.only(left: 45.0, right: 45, bottom: 45, top: 30),
             decoration: BoxDecoration(
               color: ModuleTileColor,
               borderRadius: BorderRadius.only(
@@ -38,16 +41,14 @@ Future<dynamic> buildSettingsBottomSheet(
                 topRight: Radius.circular(20.0),
               ),
             ),
-            child: ListView(
+            child: Column(
               children: <Widget>[
                 Text(
                   "Name",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16),
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
+                SizedBox(height: 8),
                 TextField(
                   textAlign: TextAlign.center,
                   onChanged: (value) {
@@ -56,13 +57,14 @@ Future<dynamic> buildSettingsBottomSheet(
                   decoration: kTextFieldDecoration.copyWith(
                       hintText: 'Enter your name'),
                 ),
+                SizedBox(height: 15),
                 Text(
                   "Semester",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 8.0,
                 ),
                 TextField(
                   textAlign: TextAlign.center,
@@ -73,7 +75,7 @@ Future<dynamic> buildSettingsBottomSheet(
                       hintText: 'Enter your semester'),
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 15.0,
                 ),
                 Text(
                   "Comment",
@@ -81,7 +83,7 @@ Future<dynamic> buildSettingsBottomSheet(
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 8.0,
                 ),
                 TextField(
                   textAlign: TextAlign.center,
@@ -95,7 +97,7 @@ Future<dynamic> buildSettingsBottomSheet(
                       hintText: 'Enter your comment'),
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 15.0,
                 ),
                 Material(
                   color: Highlight,
