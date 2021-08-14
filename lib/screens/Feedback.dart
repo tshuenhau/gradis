@@ -132,6 +132,7 @@ class _FeedbackState extends State<Feedback> {
                   child: Container(
                     child: Column(
                       children: [
+                        SizedBox(height: 10),
                         Text(
                           "Your Sentiment",
                           style: TextStyle(
