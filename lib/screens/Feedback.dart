@@ -14,6 +14,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gradis/classes/Comment.dart';
 import 'package:gradis/screens/AddComments.dart';
 
+List<String> DUMMY_COMMENT = [
+  "COmment1",
+  "Comment2",
+  "SEX",
+  "SEXYDOGFUCKERMOTHERCUCKERCOCKSUCKER",
+  "LOREM IPSUM FUCKERMOTHERCUCKERCOCKSUCKER OWKIN ALL HAIL FUCKEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+];
 Future<dynamic> buildFeedbackBottomSheet(BuildContext context, Module module) {
   return showModalBottomSheet(
       context: context,
@@ -213,6 +220,34 @@ class _FeedbackState extends State<Feedback> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             child: Column(children: <Widget>[
+              SizedBox(height: 10),
+              Text(
+                "Comments",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Align(
+                child: SizedBox(
+                  height: 5,
+                  width: 50,
+                  child: Container(
+                      decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment(0.8,
+                          0.0), // 10% of the width, so there are ten blinds.
+                      colors: <Color>[
+                        BlueAccent,
+                        Highlight,
+                      ], // red to yellow
+                      // repeats the gradient over the canvas
+                    ),
+                  )),
+                ),
+              ),
               StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: Provider.of<ForumAPI>(context, listen: false)
                     .findAllComments(widget.module.name),
@@ -248,30 +283,76 @@ class _FeedbackState extends State<Feedback> {
                     );
                   } else {
                     return Container(
+                        height: 250,
                         child: Center(
-                      child: Text("No comments",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white70)),
-                    ));
+                          child: ListView.separated(
+                            itemCount: DUMMY_COMMENT.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                color: Colors.transparent,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 20.0),
+                                  child: Center(
+                                    child: Text(
+                                      DUMMY_COMMENT[index],
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return Align(
+                                child: SizedBox(
+                                  height: 2,
+                                  width: 150,
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment(0.8,
+                                          0.0), // 10% of the width, so there are ten blinds.
+                                      colors: <Color>[
+                                        Accent,
+                                        Highlight,
+                                      ], // red to yellow
+                                      // repeats the gradient over the canvas
+                                    ),
+                                  )),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+
+                        // Text("No comments",
+                        //     style: TextStyle(
+                        //         fontWeight: FontWeight.bold,
+                        //         color: Colors.white70)),
+                        );
                   }
                 },
               ),
               SizedBox(height: 10),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.greenAccent,
+              Container(
+                width: 200,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.greenAccent,
+                  ),
+                  onPressed: () {
+                    //TODO: add popup to add comments
+                    buildSettingsBottomSheet(
+                        context, widget.module, workLoad, difficulty);
+                  },
+                  child: Center(
+                    child: Text("Add Comment",
+                        style: TextStyle(color: Colors.black)),
+                  ),
                 ),
-                onPressed: () {
-                  //TODO: add popup to add comments
-                  buildSettingsBottomSheet(
-                      context, widget.module, workLoad, difficulty);
-                },
-                child: Center(
-                  child: Text("Add Comment",
-                      style: TextStyle(color: Colors.black)),
-                ),
-              )
+              ),
+              SizedBox(height: 10),
             ]),
           ),
         ],

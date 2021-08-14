@@ -23,17 +23,21 @@ Future<dynamic> buildSettingsBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
-        return Container(
-          height: 800,
-          decoration: BoxDecoration(
-            color: ModuleTileColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
-            ),
+        return AnimatedPadding(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.decelerate,
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
+          child: Container(
+            height: 800,
+            decoration: BoxDecoration(
+              color: ModuleTileColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+            ),
             child: ListView(
               children: <Widget>[
                 Text(
