@@ -88,7 +88,6 @@ Future<dynamic> buildSettingsBottomSheet(BuildContext context) {
                   elevation: 5.0,
                   child: MaterialButton(
                     onPressed: () async {
-                      //TODO: ZQ HERE MAKE THE FCKER LOG OUT.
                       _auth.signOut();
                       Navigator.pushNamed(context, WelcomeScreen.id);
                     },

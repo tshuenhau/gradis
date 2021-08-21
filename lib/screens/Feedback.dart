@@ -253,8 +253,6 @@ class _FeedbackState extends State<Feedback> {
                 stream: Provider.of<ForumAPI>(context, listen: false)
                     .findAllComments(widget.module.name),
                 builder: (context, snapshot) {
-                  print("WTF" + snapshot.hasData.toString());
-
                   if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
                     final comments = snapshot.data!.docs
                         .map((DocumentSnapshot<Map<String, dynamic>> document) {
@@ -264,74 +262,62 @@ class _FeedbackState extends State<Feedback> {
                     print('comments' + comments.toString());
                     Provider.of<ForumAPI>(context, listen: false)
                         .setComments(comments);
-                    return ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemCount: Provider.of<ForumAPI>(context, listen: false)
-                          .comments
-                          .length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: 50,
-                          color: Colors.blue,
-                          child: Center(
-                            child: Text(
-                                Provider.of<ForumAPI>(context, listen: false)
-                                    .comments[index]
-                                    .comment),
-                          ),
-                        );
-                      },
-                    );
-                  } else {
                     return Container(
                         height: 250,
                         child: Center(
-                          child: ListView.separated(
-                            itemCount: DUMMY_COMMENT.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                color: Colors.transparent,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 20.0),
-                                  child: Center(
-                                    child: Text(
-                                      DUMMY_COMMENT[index],
-                                      textAlign: TextAlign.center,
-                                    ),
+                            child: ListView.separated(
+                          itemCount:
+                              Provider.of<ForumAPI>(context, listen: false)
+                                  .comments
+                                  .length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              color: Colors.transparent,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20.0),
+                                child: Center(
+                                  child: Text(
+                                    Provider.of<ForumAPI>(context,
+                                            listen: false)
+                                        .comments[index]
+                                        .comment,
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return Align(
-                                child: SizedBox(
-                                  height: 2,
-                                  width: 150,
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment(0.8,
-                                          0.0), // 10% of the width, so there are ten blinds.
-                                      colors: <Color>[
-                                        Accent,
-                                        Highlight,
-                                      ], // red to yellow
-                                      // repeats the gradient over the canvas
-                                    ),
-                                  )),
-                                ),
-                              );
-                            },
-                          ),
-                        )
-
-                        // Text("No comments",
-                        //     style: TextStyle(
-                        //         fontWeight: FontWeight.bold,
-                        //         color: Colors.white70)),
-                        );
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return Align(
+                              child: SizedBox(
+                                height: 2,
+                                width: 150,
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment(0.8,
+                                        0.0), // 10% of the width, so there are ten blinds.
+                                    colors: <Color>[
+                                      Accent,
+                                      Highlight,
+                                    ], // red to yellow
+                                    // repeats the gradient over the canvas
+                                  ),
+                                )),
+                              ),
+                            );
+                          },
+                        )));
+                  } else {
+                    return Container(
+                      height: 250,
+                      child: Text("No comments",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white70)),
+                    );
                   }
                 },
               ),
@@ -343,7 +329,6 @@ class _FeedbackState extends State<Feedback> {
                     primary: Colors.greenAccent,
                   ),
                   onPressed: () {
-                    //TODO: add popup to add comments
                     buildSettingsBottomSheet(
                         context, widget.module, workLoad, difficulty);
                   },

@@ -51,11 +51,6 @@ Future<dynamic> buildSearchPage(BuildContext context, bool hasData) {
                       child: TextField(
                           textAlign: TextAlign.center,
                           onChanged: (value) {
-                            print(
-                                value); //TODO: SEARCH API: Probably need a new SearchAPI.dart file. then we can do Provider.of<SearchAPI>(context, listen: false).search(value). then this should
-                            //TODO: return like a list of modules that match. If value = "" then match everything
-                            //TODO: So here we keep calling that search function.
-
                             if (value != '') {
                               Provider.of<SearchAPI>(context, listen: false)
                                   .setResults(Provider.of<SearchAPI>(context,
