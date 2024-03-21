@@ -1,7 +1,6 @@
 # Gradis: Your Academic Companion
 
-![Gradis Banner](https://drive.google.com/file/d/1nuBfEYgqeYrxyLW3jX9OnzHhbCxV8pLd/view?usp=drive_link)  
-*Insert a direct link to your poster image here for visual appeal.*
+![Gradis Banner](https://github.com/tshuenhau/gradis/blob/master/2580.png?raw=true)
 
 Welcome to **Gradis**, the ultimate academic tracker designed to empower students in managing their academic journey with ease and precision. Built with Flutter and backed by Firebase, Gradis offers a seamless, intuitive experience for monitoring grades, planning semesters, and setting goals towards academic excellence.
 
